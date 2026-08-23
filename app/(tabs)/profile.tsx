@@ -11,7 +11,8 @@ import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, xpForLevel, VIP_LEVELS, MINES } from '../../constants/gameData';
-import { ADMIN_EMAIL, WA_CHANNEL_URL, PLAYSTORE_URL } from '../../constants/legalContent';
+import { WA_CHANNEL_URL, PLAYSTORE_URL } from '../../constants/legalContent';
+import { getUserShortId } from '../../services/authService';
 import { useAlert } from '@/template';
 import * as Clipboard from 'expo-clipboard';
 
@@ -27,11 +28,14 @@ export default function ProfileScreen() {
 
   if (!user || !gameState) return null;
 
+  // ID user & kode referral = 6 digit akhir nomor HP
+  const shortId = getUserShortId(user.phone);
+
   const xpNeeded = xpForLevel(user.level);
   const xpProgress = Math.min(user.xp / xpNeeded, 1);
   const vipInfo = VIP_LEVELS[user.vipLevel] || VIP_LEVELS[0];
   const currentMine = MINES.find(m => m.id === gameState.currentMineId) || MINES[0];
-  const referralLink = `${PLAYSTORE_URL}&referrer=${user.referralCode}`;
+  const referralLink = `${PLAYSTORE_URL}&referrer=${shortId}`;
 
   const handleCopyReferral = async () => {
     await Clipboard.setStringAsync(referralLink);
@@ -41,17 +45,13 @@ export default function ProfileScreen() {
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `Main INDOMINE bareng aku! Download di sini: ${referralLink}\nGunakan kode referral ${user.referralCode} saat daftar, kita berdua dapat bonus 250 koin! ⛏️`,
+        message: `Main INDOMINE bareng aku! Download di sini: ${referralLink}\nGunakan kode referral ${shortId} saat daftar, kita berdua dapat bonus 250 koin! ⛏️`,
       });
     } catch {}
   };
 
   const handleOpenWA = async () => {
     try { await Linking.openURL(WA_CHANNEL_URL); } catch {}
-  };
-
-  const handleEmailAdmin = async () => {
-    try { await Linking.openURL(`mailto:${ADMIN_EMAIL}?subject=INDOMINE%20Support`); } catch {}
   };
 
   const handleLogout = () => {
@@ -62,10 +62,10 @@ export default function ProfileScreen() {
   };
 
   const stats = [
-    { label: 'Total Koin', value: formatCoins(gameState.totalEarned), icon: 'coin', color: Colors.primary },
-    { label: 'Mining Rate', value: `${formatCoins(gameState.miningRate)}/min`, icon: 'trending-up', color: Colors.success },
-    { label: 'Total Upgrade', value: `${gameState.totalUpgrades}x`, icon: 'arrow-up-circle', color: Colors.info },
-    { label: 'Area Saat Ini', value: currentMine.name, icon: 'location', color: Colors.warning },
+    { label: 'Koin', value: formatCoins(gameState.totalEarned), icon: 'coin', color: Colors.primary },
+    { label: 'Rate', value: `${formatCoins(gameState.miningRate)}/m`, icon: 'trending-up', color: Colors.success },
+    { label: 'Upgrade', value: `${gameState.totalUpgrades}x`, icon: 'arrow-up-circle', color: Colors.info },
+    { label: 'Area', value: currentMine.name, icon: 'location', color: Colors.warning },
   ];
 
   return (
@@ -90,7 +90,7 @@ export default function ProfileScreen() {
           </Pressable>
 
           <Text style={styles.username}>{user.username}</Text>
-          <Text style={styles.userId}>{user.id}</Text>
+          <Text style={styles.userId}>ID: {shortId}</Text>
 
           {/* VIP badge */}
           {user.vipLevel > 0 && (
@@ -110,18 +110,15 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        {/* AdMob Banner */}
+        {/* Banner */}
         <AdBanner />
 
-        {/* WhatsApp Channel */}
+        {/* WhatsApp */}
         <Pressable style={styles.waCard} onPress={handleOpenWA}>
           <View style={styles.waIconWrap}>
             <Ionicons name="logo-whatsapp" size={26} color="#FFFFFF" />
           </View>
-          <View style={styles.waTextWrap}>
-            <Text style={styles.waTitle}>Channel WhatsApp INDOMINE</Text>
-            <Text style={styles.waSubtitle}>Info event, bonus & update terbaru</Text>
-          </View>
+          <Text style={styles.waTitle}>WHATSAPP</Text>
           <Ionicons name="chevron-forward" size={18} color="#25D366" />
         </Pressable>
 
@@ -147,7 +144,7 @@ export default function ProfileScreen() {
           <View style={styles.referralTop}>
             <View>
               <Text style={styles.referralLabel}>Kode Referralmu</Text>
-              <Text style={styles.referralCode}>{user.referralCode}</Text>
+              <Text style={styles.referralCode}>{shortId}</Text>
             </View>
             <View style={styles.referralActions}>
               <Pressable style={styles.refBtn} onPress={handleCopyReferral} hitSlop={8}>
@@ -191,19 +188,16 @@ export default function ProfileScreen() {
         {/* Settings */}
         <Text style={styles.sectionTitle}>PENGATURAN</Text>
         {[
-          { label: 'Kontak Admin', icon: 'mail', action: handleEmailAdmin, sub: ADMIN_EMAIL },
+          { label: 'Kontak Admin', icon: 'chatbubbles', action: handleOpenWA },
           { label: 'Disclaimer', icon: 'warning', action: () => router.push('/legal/disclaimer') },
           { label: 'Kebijakan Privasi', icon: 'shield-checkmark', action: () => router.push('/legal/privacy') },
           { label: 'Tentang Aplikasi', icon: 'information-circle', action: () => router.push('/legal/about') },
-          { label: 'Sesi Login', icon: 'phone-portrait', action: () => showAlert('Sesi Aktif', `ID: ${user.id}\nLogin terakhir: Sekarang`) },
+          { label: 'Sesi Login', icon: 'phone-portrait', action: () => showAlert('Sesi Aktif', `ID: ${shortId}\nLogin terakhir: Sekarang`) },
         ].map(item => (
           <Pressable key={item.label} style={styles.settingRow} onPress={item.action}>
             <View style={styles.settingLeft}>
               <Ionicons name={item.icon as any} size={18} color={Colors.textSecondary} />
-              <View>
-                <Text style={styles.settingLabel}>{item.label}</Text>
-                {'sub' in item && item.sub ? <Text style={styles.settingSub}>{item.sub}</Text> : null}
-              </View>
+              <Text style={styles.settingLabel}>{item.label}</Text>
             </View>
             <Ionicons name="chevron-forward" size={16} color={Colors.textMuted} />
           </Pressable>

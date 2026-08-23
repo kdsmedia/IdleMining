@@ -1,6 +1,5 @@
 // AdMob service — INDOMINE
-// Konfigurasi ID unit iklan AdMob. Saat ini memakai ID test resmi Google.
-// Ganti dengan ID unit produksi dari AdMob console sebelum rilis.
+// Unit produksi AdMob milik ALTOMEDIA; di dev mode memakai test unit Google.
 
 import mobileAds, {
   TestIds,
@@ -11,9 +10,9 @@ import mobileAds, {
 } from 'react-native-google-mobile-ads';
 
 export const AD_UNITS = {
-  banner: __DEV__ ? TestIds.BANNER : 'ca-app-pub-3940256099942544/6300978111',
-  interstitial: __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-3940256099942544/1033173712',
-  rewarded: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-3940256099942544/5224354917',
+  banner: __DEV__ ? TestIds.BANNER : 'ca-app-pub-6881903056221433/1046349704',
+  interstitial: __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6881903056221433/7420186360',
+  rewarded: __DEV__ ? TestIds.REWARDED : 'ca-app-pub-6881903056221433/1055912398',
 };
 
 export const INTERSTITIAL_INTERVAL_MS = 20 * 60 * 1000; // 20 menit

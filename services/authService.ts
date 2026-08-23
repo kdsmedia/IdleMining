@@ -14,7 +14,11 @@ export interface User {
   createdAt: string;
 }
 
-const generateReferralCode = () => Math.random().toString(36).substring(2, 8).toUpperCase();
+// ID user / kode referral = 6 digit angka akhir nomor HP
+export const getUserShortId = (phone: string): string => {
+  const digits = phone.replace(/[^0-9]/g, '');
+  return digits.slice(-6).padStart(6, '0');
+};
 
 const cacheUser = (user: User) => storage.set('current_user', user);
 
@@ -31,7 +35,7 @@ export const authService = {
         let referredBy = '';
         if (referralCode) {
           const ref = await db().collection('users')
-            .where('referralCode', '==', referralCode.toUpperCase()).limit(1).get();
+            .where('referralCode', '==', referralCode.trim()).limit(1).get();
           if (!ref.empty) referredBy = ref.docs[0].id;
         }
 
@@ -43,7 +47,7 @@ export const authService = {
           level: 1,
           xp: 0,
           vipLevel: 0,
-          referralCode: generateReferralCode(),
+          referralCode: getUserShortId(phone),
           referredBy,
           createdAt: new Date().toISOString(),
         };

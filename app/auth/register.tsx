@@ -123,9 +123,10 @@ export default function RegisterScreen() {
               style={styles.input}
               value={referral}
               onChangeText={setReferral}
-              placeholder="Masukkan kode referral"
+              placeholder="6 digit akhir nomor HP pengundang"
               placeholderTextColor={Colors.textMuted}
-              autoCapitalize="characters"
+              keyboardType="number-pad"
+              maxLength={6}
             />
           </View>
 

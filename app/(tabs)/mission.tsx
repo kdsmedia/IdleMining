@@ -13,6 +13,7 @@ import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/t
 import { DAILY_MISSIONS, formatCoins } from '../../constants/gameData';
 import { PLAYSTORE_URL } from '../../constants/legalContent';
 import { showRewardedAd, ensureRewardedLoaded } from '../../services/adService';
+import { getUserShortId } from '../../services/authService';
 import { useAlert } from '@/template';
 
 export default function MissionScreen() {
@@ -60,9 +61,10 @@ export default function MissionScreen() {
 
   const handleShareReferral = async () => {
     if (!user) return;
+    const code = getUserShortId(user.phone);
     try {
       await Share.share({
-        message: `Main INDOMINE bareng aku! Download di Play Store: ${PLAYSTORE_URL}&referrer=${user.referralCode}\nMasukkan kode referral ${user.referralCode} saat daftar - kita berdua dapat bonus 250 koin!`,
+        message: `Main INDOMINE bareng aku! Download di Play Store: ${PLAYSTORE_URL}&referrer=${code}\nMasukkan kode referral ${code} saat daftar - kita berdua dapat bonus 250 koin!`,
       });
     } catch {}
   };
