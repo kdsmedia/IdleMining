@@ -44,14 +44,8 @@ export default function LoginScreen() {
         {/* Logo */}
         <View style={styles.logoWrap}>
           <Image source={require('../../assets/images/logo.png')} style={styles.logo} contentFit="contain" />
-          <Text style={styles.appName}>IDLE MINING</Text>
+          <Text style={styles.appName}>INDOMINE</Text>
           <Text style={styles.tagline}>Tambang koin, raih reward</Text>
-        </View>
-
-        {/* MOCK badge */}
-        <View style={styles.mockBadge}>
-          <Ionicons name="information-circle" size={14} color={Colors.warning} />
-          <Text style={styles.mockText}>DEMO LOGIN — test@demo.com / 123456 (gunakan HP 081234567890 / 123456)</Text>
         </View>
 
         {/* Form */}
@@ -116,22 +110,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.body,
     color: Colors.textSecondary,
     marginTop: Spacing.xs,
-  },
-  mockBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.xs,
-    backgroundColor: '#2A1E00',
-    borderRadius: Radius.sm,
-    padding: Spacing.sm,
-    marginBottom: Spacing.lg,
-    borderWidth: 1,
-    borderColor: Colors.warning,
-  },
-  mockText: {
-    fontSize: FontSize.xs,
-    color: Colors.warning,
-    flex: 1,
   },
   form: { gap: Spacing.sm, marginBottom: Spacing.xl },
   inputLabel: {
