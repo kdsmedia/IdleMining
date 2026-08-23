@@ -48,7 +48,7 @@ export function MiningAnimation({ miningRate, isActive, currentMine }: Props) {
       glowLoop.stop();
       coinLoop.stop();
     };
-  }, [isActive]);
+  }, [isActive, pickaxeAnim, glowAnim, coinAnim]);
 
   const pickaxeRotate = pickaxeAnim.interpolate({ inputRange: [0, 1], outputRange: ['-25deg', '25deg'] });
   const glowOpacity = glowAnim.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] });

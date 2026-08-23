@@ -10,7 +10,7 @@ import { GoldButton } from '../../components/ui/GoldButton';
 import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
-import { formatCoins, formatRupiah, xpForLevel, VIP_LEVELS, MINES } from '../../constants/gameData';
+import { formatCoins, xpForLevel, VIP_LEVELS, MINES } from '../../constants/gameData';
 import { ADMIN_EMAIL, WA_CHANNEL_URL, PLAYSTORE_URL } from '../../constants/legalContent';
 import { useAlert } from '@/template';
 import * as Clipboard from 'expo-clipboard';
@@ -130,11 +130,11 @@ export default function ProfileScreen() {
         <View style={styles.statsGrid}>
           {stats.map(s => (
             <View key={s.label} style={styles.statCard}>
-              s.icon === 'coin' ? (
-              <CoinIcon size={20} />
-            ) : (
-              <Ionicons name={s.icon as any} size={20} color={s.color} />
-            )
+              {s.icon === 'coin' ? (
+                <CoinIcon size={20} />
+              ) : (
+                <Ionicons name={s.icon as any} size={20} color={s.color} />
+              )}
               <Text style={styles.statValue}>{s.value}</Text>
               <Text style={styles.statLabel}>{s.label}</Text>
             </View>

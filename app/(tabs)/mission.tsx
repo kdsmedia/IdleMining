@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Share } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { Share } from 'react-native';
 import { useGame } from '../../hooks/useGame';
 import { useAuth } from '../../hooks/useAuth';
 import { GoldButton } from '../../components/ui/GoldButton';

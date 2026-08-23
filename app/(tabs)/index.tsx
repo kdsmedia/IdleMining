@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,7 +9,6 @@ import { DailyRewardModal } from '../../components/feature/DailyRewardModal';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
 import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
-import { GoldButton } from '../../components/ui/GoldButton';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, formatRupiah, MINES, xpForLevel } from '../../constants/gameData';
 
@@ -18,24 +17,22 @@ export default function MiningScreen() {
   const { user } = useAuth();
   const {
     gameState, showDailyModal,
-    dailyReward, dailyDay,
     claimDaily, dismissDailyModal,
     claimMiningTick,
   } = useGame();
 
-  const [elapsed, setElapsed] = useState(0);
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Mining tick every 10 seconds
+  const gameExists = !!gameState;
   useEffect(() => {
-    if (!gameState) return;
+    if (!gameExists) return;
     if (tickRef.current) clearInterval(tickRef.current);
     tickRef.current = setInterval(() => {
       claimMiningTick(10 / 60); // 10 seconds = 10/60 minutes
-      setElapsed(e => e + 10);
     }, 10000);
     return () => { if (tickRef.current) clearInterval(tickRef.current); };
-  }, [gameState?.miningRate, claimMiningTick]);
+  }, [gameState?.miningRate, gameExists, claimMiningTick]);
 
   if (!gameState || !user) return null;
 

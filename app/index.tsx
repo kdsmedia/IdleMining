@@ -15,7 +15,7 @@ export default function SplashRedirect() {
     } else {
       router.replace('/auth/login');
     }
-  }, [user, loading]);
+  }, [user, loading, router]);
 
   return (
     <View style={styles.container}>

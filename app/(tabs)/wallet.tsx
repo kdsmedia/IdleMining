@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList, Modal, TextInput, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Modal, TextInput, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useGame } from '../../hooks/useGame';
