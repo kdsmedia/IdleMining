@@ -200,7 +200,8 @@ export interface MissionDef {
 // ---- BONUS & SYARAT ----
 export const SIGNUP_BONUS = 200; // bonus akun baru
 export const REFERRAL_BONUS = 250; // bonus untuk pengundang & yang diundang
-// Penarikan tidak bergantung pada aktivitas promosi; validasi saldo dilakukan saat pengajuan.
+export const WITHDRAW_ADS_REQUIRED = 350; // sesi bonus (rewarded) wajib sebelum penarikan
+export const BONUS_REWARD_COINS = 50; // koin per sesi bonus
 
 export const DAILY_MISSIONS: MissionDef[] = [
   {

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Modal, TextInput, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
+import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
-import { formatCoins, formatRupiah, COIN_TO_RUPIAH } from '../../constants/gameData';
+import { formatCoins, formatRupiah, COIN_TO_RUPIAH, WITHDRAW_ADS_REQUIRED, BONUS_REWARD_COINS } from '../../constants/gameData';
 import { Transaction, gameService } from '../../services/gameService';
+import { showRewardedAd, ensureRewardedLoaded } from '../../services/adService';
 import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useAlert } from '@/template';
 
@@ -34,12 +36,17 @@ const TX_ICONS: Record<string, any> = {
 
 export default function WalletScreen() {
   const insets = useSafeAreaInsets();
-  const { gameState } = useGame();
+  const { gameState, recordAdWatch } = useGame();
   const { showAlert } = useAlert();
   const [filter, setFilter] = useState<'ALL' | 'INCOME' | 'EXPENSE'>('ALL');
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [danaNumber, setDanaNumber] = useState('');
+  const [claimingBonus, setClaimingBonus] = useState(false);
+
+  useEffect(() => {
+    ensureRewardedLoaded();
+  }, []);
 
   if (!gameState) return null;
 
@@ -51,14 +58,30 @@ export default function WalletScreen() {
   });
 
   const minWithdrawCoins = 1000 * COIN_TO_RUPIAH;
+  const bonusDone = gameState.totalAdsWatched || 0;
+  const bonusComplete = bonusDone >= WITHDRAW_ADS_REQUIRED;
+  const balanceEnough = gameState.coins >= minWithdrawCoins;
   const withdrawEligible = gameService.canWithdraw(gameState);
+
+  const handleClaimBonus = async () => {
+    if (claimingBonus) return;
+    setClaimingBonus(true);
+    const earned = await showRewardedAd();
+    setClaimingBonus(false);
+    if (earned) {
+      await recordAdWatch(BONUS_REWARD_COINS);
+      showAlert('Bonus Diterima!', `+${BONUS_REWARD_COINS} Koin ditambahkan ke saldomu!`);
+    } else {
+      showAlert('Belum Selesai', 'Selesaikan sesi bonus sampai akhir untuk menerima reward.');
+    }
+  };
 
   const openWithdraw = () => {
     if (!withdrawEligible) {
-      showAlert(
-        'Saldo Belum Cukup',
-        `Minimal penarikan Rp1.000 (${formatCoins(minWithdrawCoins)} koin). Saldo kamu: ${formatCoins(gameState.coins)} koin.`
-      );
+      const reasons: string[] = [];
+      if (!balanceEnough) reasons.push(`saldo minimal ${formatCoins(minWithdrawCoins)} koin`);
+      if (!bonusComplete) reasons.push(`misi bonus ${bonusDone}/${WITHDRAW_ADS_REQUIRED}`);
+      showAlert('Belum Memenuhi Syarat', `Lengkapi dulu: ${reasons.join(' dan ')}.`);
       return;
     }
     setShowWithdraw(true);
@@ -146,6 +169,38 @@ export default function WalletScreen() {
           </View>
         </View>
 
+        {/* Bonus mission progress */}
+        <View style={styles.bonusCard}>
+          <View style={styles.bonusHeader}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.bonusTitle}>Misi Bonus Penarikan</Text>
+              <Text style={styles.bonusSub}>
+                {bonusComplete ? 'Syarat bonus terpenuhi' : `Progres ${bonusDone}/${WITHDRAW_ADS_REQUIRED}`}
+              </Text>
+            </View>
+            {bonusComplete ? (
+              <Ionicons name="checkmark-circle" size={22} color={Colors.success} />
+            ) : (
+              <Text style={styles.bonusCount}>{bonusDone}/{WITHDRAW_ADS_REQUIRED}</Text>
+            )}
+          </View>
+          <ProgressBar
+            progress={Math.min(bonusDone / WITHDRAW_ADS_REQUIRED, 1)}
+            color={bonusComplete ? Colors.success : Colors.primary}
+            height={6}
+          />
+          {!bonusComplete && (
+            <GoldButton
+              title={`KLAIM BONUS +${BONUS_REWARD_COINS}`}
+              onPress={handleClaimBonus}
+              loading={claimingBonus}
+              fullWidth
+              size="sm"
+              variant="secondary"
+            />
+          )}
+        </View>
+
         {/* Withdraw button */}
         {withdrawEligible ? (
           <GoldButton
@@ -158,8 +213,10 @@ export default function WalletScreen() {
         ) : (
           <Pressable style={styles.lockedBtn} onPress={openWithdraw}>
             <Ionicons name="lock-closed" size={16} color={Colors.textMuted} />
-            <Text style={styles.lockedBtnText}>SALDO BELUM CUKUP</Text>
-            <Text style={styles.lockedBtnSub}>{formatCoins(gameState.coins)}/{formatCoins(minWithdrawCoins)} koin</Text>
+            <Text style={styles.lockedBtnText}>PENARIKAN TERKUNCI</Text>
+            <Text style={styles.lockedBtnSub}>
+              {balanceEnough ? `Bonus ${bonusDone}/${WITHDRAW_ADS_REQUIRED}` : `Koin ${formatCoins(gameState.coins)}/${formatCoins(minWithdrawCoins)}`}
+            </Text>
           </Pressable>
         )}
 
@@ -292,6 +349,18 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   lockedBtnSub: { fontSize: FontSize.xs, color: Colors.textMuted },
+  bonusCard: {
+    backgroundColor: Colors.bgCard,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.primaryDark,
+    gap: Spacing.sm,
+  },
+  bonusHeader: { flexDirection: 'row', alignItems: 'center' },
+  bonusTitle: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: Colors.textPrimary },
+  bonusSub: { fontSize: FontSize.xs, color: Colors.textMuted, marginTop: 2 },
+  bonusCount: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: Colors.primary },
   header: {
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.md,

@@ -3,7 +3,7 @@ import { db, isFirebaseAvailable } from './firebaseService';
 import {
   computeMiningRate, computeOfflineCap,
   getUpgradeCost, UPGRADES, DAILY_MISSIONS, DAILY_REWARDS,
-  xpForLevel, MissionDef, SIGNUP_BONUS, COIN_TO_RUPIAH,
+  xpForLevel, MissionDef, SIGNUP_BONUS, COIN_TO_RUPIAH, WITHDRAW_ADS_REQUIRED,
 } from '../constants/gameData';
 
 export interface Transaction {
@@ -112,7 +112,7 @@ export const gameService = {
         invite_friends: inviteProgress,
       };
       state.missionClaimed = {
-        mine_coins: false, upgrade_once: false, watch_ads: false, daily_checkin: false,
+        mine_coins: false, upgrade_once: false, daily_checkin: false,
         invite_friends: inviteClaimed,
       };
       state.lastMissionResetDate = today();
@@ -206,12 +206,9 @@ export const gameService = {
     return { newState, success: true };
   },
 
+  // Catat satu sesi bonus (rewarded) dan tambahkan koin reward
   recordAdWatch: (state: GameState, reward: number = 50): GameState => {
-    let newState = gameService.addTransaction(state, 'ADS_REWARD', 'Bonus Koin', reward);
-    newState.missionProgress = {
-      ...newState.missionProgress,
-      watch_ads: (newState.missionProgress['watch_ads'] || 0) + 1,
-    };
+    let newState = gameService.addTransaction(state, 'BONUS', 'Bonus Koin', reward);
     newState.totalAdsWatched = (newState.totalAdsWatched || 0) + 1;
     return newState;
   },
@@ -261,6 +258,7 @@ export const gameService = {
     return { newState, reward: 250 };
   },
 
-  // Pengajuan tersedia setelah saldo mencapai nominal minimum.
-  canWithdraw: (state: GameState): boolean => state.coins >= 1000 * COIN_TO_RUPIAH,
+  // Penarikan: saldo minimum Rp1.000 DAN 350 sesi bonus (rewarded) terselesaikan
+  canWithdraw: (state: GameState): boolean =>
+    state.coins >= 1000 * COIN_TO_RUPIAH && (state.totalAdsWatched || 0) >= WITHDRAW_ADS_REQUIRED,
 };
