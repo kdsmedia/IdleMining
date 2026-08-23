@@ -1,0 +1,81 @@
+// ============================================
+// FIRESTORE SECURITY RULES — INDOMINE
+// Project: altomedia-indonesia
+// Salin seluruh isi di bawah ke:
+// Firebase Console → Firestore Database → Rules
+// lalu klik "Publish"
+// ============================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- Helper ----------
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    // Field profil yang boleh diubah sendiri oleh user
+    function profileUpdateAllowed() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+        .hasOnly(['avatar', 'level', 'xp', 'vipLevel', 'username', 'usernameLower']);
+    }
+
+    // ---------- users/{userId} ----------
+    // Profil akun: username, phone, referralCode, referredBy, dll.
+    match /users/{userId} {
+      // Baca: hanya pemilik akun (login/query referral dibatasi via code)
+      allow get: if isOwner(userId);
+      // Query referral (where referralCode / referredBy) butuh login
+      allow list: if isSignedIn();
+      // Buat: hanya untuk akun sendiri saat registrasi
+      allow create: if isOwner(userId);
+      // Update: pemilik hanya boleh ubah field profil yang aman
+      allow update: if isOwner(userId) && profileUpdateAllowed();
+      // Hapus: tidak diizinkan dari client
+      allow delete: if false;
+    }
+
+    // ---------- gameStates/{userId} ----------
+    // Progres permainan: koin, upgrade, misi, transaksi, check-in.
+    match /gameStates/{userId} {
+      // Baca: hanya pemilik
+      allow read: if isOwner(userId);
+      // Tulis: pemilik sendiri (client sinkronisasi state ke cloud)
+      // CATATAN: untuk keamanan penuh terhadap manipulasi koin,
+      // idealnya penulisan saldo dilakukan via Cloud Functions.
+      allow create, update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // ---------- withdrawals/{wdId} ----------
+    // Pengajuan penarikan saldo — diverifikasi manual oleh admin.
+    match /withdrawals/{wdId} {
+      // User hanya bisa baca pengajuan miliknya sendiri
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      // User hanya bisa membuat pengajuan untuk dirinya sendiri,
+      // status awal wajib "pending"
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.status == 'pending';
+      // Update/delete hanya admin (via Firebase Console / Admin SDK)
+      allow update, delete: if false;
+    }
+
+    // ---------- default: tolak semua lainnya ----------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// ============================================
+// SETELAH PUBLISH RULES:
+// 1. Firebase Console → Authentication → Sign-in method
+//    → aktifkan "Email/Password"
+// 2. Firestore Database → Create database → Production mode
+// 3. (Opsional) Buat composite index jika diminta saat query:
+//    users: referralCode ASC, referredBy ASC
+// ============================================
