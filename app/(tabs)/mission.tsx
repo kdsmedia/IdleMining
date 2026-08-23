@@ -12,7 +12,6 @@ import { CoinIcon } from '../../components/ui/CoinIcon';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { DAILY_MISSIONS, formatCoins } from '../../constants/gameData';
 import { PLAYSTORE_URL } from '../../constants/legalContent';
-import { showRewardedAd, ensureRewardedLoaded } from '../../services/adService';
 import { getUserShortId } from '../../services/authService';
 import { useAlert } from '@/template';
 
@@ -20,36 +19,14 @@ export default function MissionScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { user } = useAuth();
-  const { gameState, claimMission, recordAdWatch, checkInDaily, canCheckInToday } = useGame();
+  const { gameState, claimMission, checkInDaily, canCheckInToday } = useGame();
   const { showAlert } = useAlert();
   const [claimingId, setClaimingId] = useState<string | null>(null);
-  const [watchingAd, setWatchingAd] = useState(false);
-
-  React.useEffect(() => { ensureRewardedLoaded(); }, []);
-
-  const handleWatchAd = async () => {
-    setWatchingAd(true);
-    const earned = await showRewardedAd();
-    setWatchingAd(false);
-    if (earned) {
-      await recordAdWatch();
-      showAlert('Bonus Koin', '+50 Koin ditambahkan ke saldomu!');
-    } else {
-      showAlert('Bonus Belum Siap', 'Coba lagi beberapa saat lagi.');
-    }
-  };
 
   // Check-in harian
   const handleCheckIn = async () => {
     if (!canCheckInToday) {
       showAlert('Sudah Check-in', 'Kamu sudah check-in hari ini. Kembali lagi besok!');
-      return;
-    }
-    setWatchingAd(true);
-    const earned = await showRewardedAd();
-    setWatchingAd(false);
-    if (!earned) {
-      showAlert('Belum Siap', 'Coba lagi beberapa saat lagi.');
       return;
     }
     await checkInDaily();
@@ -162,7 +139,7 @@ export default function MissionScreen() {
                 {claimed ? (
                   <View style={styles.claimedRow}>
                     <Ionicons name="checkmark-circle" size={14} color={Colors.success} />
-                    <Text style={styles.claimedText}>Diklaim</Text>
+                    <Text style={styles.claimedText}>Selesai</Text>
                   </View>
                 ) : completed ? (
                   <GoldButton
@@ -200,7 +177,7 @@ export default function MissionScreen() {
                   />
                 ) : mission.type === 'mining' ? (
                   <GoldButton
-                    title="MINING"
+                    title="GALI"
                     onPress={() => router.push('/')}
                     size="sm"
                     variant="secondary"
@@ -208,7 +185,7 @@ export default function MissionScreen() {
                   />
                 ) : mission.type === 'upgrade' ? (
                   <GoldButton
-                    title="UPGRADE"
+                    title="NAIK"
                     onPress={() => router.push('/upgrade')}
                     size="sm"
                     variant="secondary"
