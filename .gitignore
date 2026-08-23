@@ -40,3 +40,4 @@ app-example
 
 # local machine config
 android/local.properties
+credentials.json
