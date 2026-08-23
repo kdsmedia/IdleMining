@@ -7,7 +7,6 @@ import { useAuth } from '../../hooks/useAuth';
 import { MiningAnimation } from '../../components/feature/MiningAnimation';
 import { DailyRewardModal } from '../../components/feature/DailyRewardModal';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
-import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, formatRupiah, MINES, xpForLevel, computeHashRate, MINING_ALGORITHM } from '../../constants/gameData';
@@ -25,6 +24,7 @@ export default function MiningScreen() {
 
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [isOnline, setIsOnline] = React.useState(true);
+  const [appState, setAppState] = React.useState(AppState.currentState);
   const appStateRef = useRef(AppState.currentState);
 
   // Aplikasi wajib internet: pantau koneksi & status aplikasi
@@ -34,6 +34,7 @@ export default function MiningScreen() {
     });
     const unsubApp = AppState.addEventListener('change', next => {
       appStateRef.current = next;
+      setAppState(next);
     });
     return () => {
       unsubNet();
@@ -42,7 +43,7 @@ export default function MiningScreen() {
   }, []);
 
   // Mining aktif hanya saat aplikasi dibuka & ada internet
-  const miningActive = isOnline && appStateRef.current === 'active';
+  const miningActive = isOnline && appState === 'active';
 
   // Tick mining setiap 60 detik; berhenti saat offline / aplikasi ditutup
   const gameExists = !!gameState;
@@ -54,7 +55,7 @@ export default function MiningScreen() {
       if (appStateRef.current === 'active' && isOnline) {
         claimMiningTick(1); // 1 menit mining
       }
-    }, 60000);
+    }, 90000);
     return () => { if (tickRef.current) clearInterval(tickRef.current); };
   }, [gameState?.miningRate, gameExists, claimMiningTick, miningActive, isOnline]);
 
@@ -128,12 +129,12 @@ export default function MiningScreen() {
           <View style={styles.statCard}>
             <Ionicons name="timer" size={18} color={Colors.info} />
             <Text style={styles.statValue}>{gameState.offlineCapHours}j</Text>
-            <Text style={styles.statLabel}>Offline</Text>
+            <Text style={styles.statLabel}>Simpan</Text>
           </View>
           <View style={styles.statCard}>
             <Ionicons name="trending-up" size={18} color={Colors.success} />
             <Text style={styles.statValue}>{formatCoins(gameState.miningRate)}/m</Text>
-            <Text style={styles.statLabel}>Rate</Text>
+            <Text style={styles.statLabel}>Laju</Text>
           </View>
           <View style={styles.statCard}>
             <Ionicons name="flash" size={18} color={Colors.vip} />
