@@ -8,6 +8,7 @@ import { MiningAnimation } from '../../components/feature/MiningAnimation';
 import { DailyRewardModal } from '../../components/feature/DailyRewardModal';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
 import { ProgressBar } from '../../components/ui/ProgressBar';
+import { AdBanner } from '../../components/ui/AdBanner';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, formatRupiah, MINES, xpForLevel, computeHashRate, MINING_ALGORITHM } from '../../constants/gameData';
 import { AppState } from 'react-native';
