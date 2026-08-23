@@ -151,6 +151,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
+    "babel-preset-expo": "^13.2.5",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
     "react-dev-inspector": "^2.0.1",
