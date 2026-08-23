@@ -149,20 +149,10 @@ export default function MissionScreen() {
                     size="sm"
                     fullWidth
                   />
-                ) : mission.type === 'ads' ? (
-                  <GoldButton
-                    title="BONUS +50"
-                    onPress={handleWatchAd}
-                    loading={watchingAd}
-                    size="sm"
-                    variant="secondary"
-                    fullWidth
-                  />
                 ) : mission.type === 'checkin' ? (
                   <GoldButton
                     title={canCheckInToday ? 'CHECK-IN' : 'SUDAH'}
                     onPress={handleCheckIn}
-                    loading={watchingAd}
                     size="sm"
                     variant={canCheckInToday ? 'primary' : 'secondary'}
                     fullWidth
