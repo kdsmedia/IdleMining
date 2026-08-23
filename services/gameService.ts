@@ -3,7 +3,7 @@ import { db, isFirebaseAvailable } from './firebaseService';
 import {
   computeMiningRate, computeOfflineCap,
   getUpgradeCost, UPGRADES, DAILY_MISSIONS, DAILY_REWARDS,
-  xpForLevel, MissionDef, SIGNUP_BONUS, WITHDRAW_ADS_REQUIRED,
+  xpForLevel, MissionDef, SIGNUP_BONUS, COIN_TO_RUPIAH,
 } from '../constants/gameData';
 
 export interface Transaction {
@@ -53,8 +53,8 @@ const defaultState = (userId: string): GameState => ({
   currentMineId: 'mine1',
   dailyStreak: 0,
   lastDailyClaimDate: '',
-  missionProgress: { mine_coins: 0, upgrade_once: 0, watch_ads: 0, daily_checkin: 0, invite_friends: 0 },
-  missionClaimed: { mine_coins: false, upgrade_once: false, watch_ads: false, daily_checkin: false, invite_friends: false },
+  missionProgress: { mine_coins: 0, upgrade_once: 0, daily_checkin: 0, invite_friends: 0 },
+  missionClaimed: { mine_coins: false, upgrade_once: false, daily_checkin: false, invite_friends: false },
   lastMissionResetDate: today(),
   transactions: [{
     id: genTxId(),
@@ -108,7 +108,7 @@ export const gameService = {
       const inviteProgress = state.missionProgress['invite_friends'] || 0;
       const inviteClaimed = state.missionClaimed['invite_friends'] || false;
       state.missionProgress = {
-        mine_coins: 0, upgrade_once: 0, watch_ads: 0, daily_checkin: 0,
+        mine_coins: 0, upgrade_once: 0, daily_checkin: 0,
         invite_friends: inviteProgress,
       };
       state.missionClaimed = {
@@ -221,7 +221,6 @@ export const gameService = {
     if (!mission) return { newState: state, reward: 0 };
     if (state.missionClaimed[missionId]) return { newState: state, reward: 0 };
 
-    // Misi check-in wajib melalui checkInDaily (menonton video)
     if (missionId === 'daily_checkin' && state.lastCheckinDate !== today()) {
       return { newState: state, reward: 0 };
     }
@@ -234,7 +233,7 @@ export const gameService = {
     return { newState, reward: mission.reward };
   },
 
-  // Check-in harian: hanya bisa sekali per hari (setelah menonton video)
+  // Check-in harian: hanya bisa sekali per hari
   checkInDaily: (state: GameState): GameState => {
     const newState = { ...state, lastCheckinDate: today() };
     newState.missionProgress = {
@@ -262,10 +261,6 @@ export const gameService = {
     return { newState, reward: 250 };
   },
 
-  // Syarat penarikan: minimal 350x menonton iklan
-  canWithdraw: (state: GameState): boolean =>
-    (state.totalAdsWatched || 0) >= WITHDRAW_ADS_REQUIRED,
-
-  withdrawAdsProgress: (state: GameState): number =>
-    Math.min(state.totalAdsWatched || 0, WITHDRAW_ADS_REQUIRED),
+  // Pengajuan tersedia setelah saldo mencapai nominal minimum.
+  canWithdraw: (state: GameState): boolean => state.coins >= 1000 * COIN_TO_RUPIAH,
 };
