@@ -8,6 +8,7 @@ import { MiningAnimation } from '../../components/feature/MiningAnimation';
 import { DailyRewardModal } from '../../components/feature/DailyRewardModal';
 import { OfflineRewardModal } from '../../components/feature/OfflineRewardModal';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
+import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
@@ -84,6 +85,9 @@ export default function MiningScreen() {
             currentMine={currentMine.name}
           />
         </View>
+
+        {/* AdMob Banner */}
+        <AdBanner />
 
         {/* Stats row */}
         <View style={styles.statsRow}>

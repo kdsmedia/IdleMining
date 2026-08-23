@@ -6,6 +6,7 @@ import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useAuth } from '../../hooks/useAuth';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
+import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, formatRupiah, xpForLevel, VIP_LEVELS, MINES } from '../../constants/gameData';
@@ -96,6 +97,9 @@ export default function ProfileScreen() {
             <ProgressBar progress={xpProgress} color={Colors.info} height={8} />
           </View>
         </View>
+
+        {/* AdMob Banner */}
+        <AdBanner />
 
         {/* Stats grid */}
         <Text style={styles.sectionTitle}>STATISTIK</Text>

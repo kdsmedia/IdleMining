@@ -36,7 +36,24 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-web-browser"
+
+      "expo-web-browser",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "minSdkVersion": 21
+          }
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3940256099942544~3347511713"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
