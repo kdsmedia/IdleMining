@@ -114,6 +114,7 @@
     "react-native-elements": "^3.4.3",
     "react-native-fade-in-image": "^1.6.1",
     "react-native-gesture-handler": "~2.24.0",
+    "react-native-google-mobile-ads": "^16.5.0",
     "react-native-infinite-scroll-view": "^0.4.5",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-keyboard-controller": "^1.17.5",
