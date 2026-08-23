@@ -7,7 +7,6 @@ import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useAuth } from '../../hooks/useAuth';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
-import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, xpForLevel, VIP_LEVELS, MINES } from '../../constants/gameData';
@@ -110,9 +109,6 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        {/* Banner */}
-        <AdBanner />
-
         {/* WhatsApp */}
         <Pressable style={styles.waCard} onPress={handleOpenWA}>
           <View style={styles.waIconWrap}>
@@ -125,7 +121,7 @@ export default function ProfileScreen() {
         {/* Stats grid */}
         <Text style={styles.sectionTitle}>STATISTIK</Text>
         <View style={styles.statsGrid}>
-          {stats.map(s => (
+          {stats.slice(0, 3).map(s => (
             <View key={s.label} style={styles.statCard}>
               {s.icon === 'coin' ? (
                 <CoinIcon size={20} />
@@ -188,11 +184,11 @@ export default function ProfileScreen() {
         {/* Settings */}
         <Text style={styles.sectionTitle}>PENGATURAN</Text>
         {[
-          { label: 'Kontak Admin', icon: 'chatbubbles', action: handleOpenWA },
+          { label: 'Admin', icon: 'chatbubbles', action: handleOpenWA },
           { label: 'Disclaimer', icon: 'warning', action: () => router.push('/legal/disclaimer') },
-          { label: 'Kebijakan Privasi', icon: 'shield-checkmark', action: () => router.push('/legal/privacy') },
-          { label: 'Tentang Aplikasi', icon: 'information-circle', action: () => router.push('/legal/about') },
-          { label: 'Sesi Login', icon: 'phone-portrait', action: () => showAlert('Sesi Aktif', `ID: ${shortId}\nLogin terakhir: Sekarang`) },
+          { label: 'Privasi', icon: 'shield-checkmark', action: () => router.push('/legal/privacy') },
+          { label: 'Tentang', icon: 'information-circle', action: () => router.push('/legal/about') },
+          { label: 'Sesi', icon: 'phone-portrait', action: () => showAlert('Sesi Aktif', `ID: ${shortId}\nLogin: Sekarang`) },
         ].map(item => (
           <Pressable key={item.label} style={styles.settingRow} onPress={item.action}>
             <View style={styles.settingLeft}>
@@ -204,7 +200,7 @@ export default function ProfileScreen() {
         ))}
 
         <View style={styles.logoutSection}>
-          <GoldButton title="Keluar dari Akun" onPress={handleLogout} variant="danger" fullWidth size="md" />
+          <GoldButton title="Keluar" onPress={handleLogout} variant="danger" fullWidth size="md" />
         </View>
 
         <View style={{ height: 20 }} />
@@ -285,10 +281,10 @@ const styles = StyleSheet.create({
   },
   statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
   statCard: {
-    width: '47%',
+    width: '31.5%',
     backgroundColor: Colors.bgCard,
     borderRadius: Radius.md,
-    padding: Spacing.md,
+    padding: Spacing.sm,
     gap: 4,
     borderWidth: 1,
     borderColor: Colors.border,
