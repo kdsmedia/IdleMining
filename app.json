@@ -65,7 +65,12 @@
     },
     "extra": {
       "developer": "ALTOMEDIA",
-      "contact": "altomediaindonesia@gmail.com"
-    }
+      "contact": "altomediaindonesia@gmail.com",
+      "router": {},
+      "eas": {
+        "projectId": "88310c30-67a1-4962-ac43-3dc0f95f9282"
+      }
+    },
+    "owner": "sidhanie"
   }
 }
