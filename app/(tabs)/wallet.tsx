@@ -7,6 +7,7 @@ import { GoldButton } from '../../components/ui/GoldButton';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, formatRupiah, COIN_TO_RUPIAH, WITHDRAW_ADS_REQUIRED } from '../../constants/gameData';
 import { Transaction, gameService } from '../../services/gameService';
+import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useAlert } from '@/template';
 
 const WITHDRAW_OPTIONS = [1000, 2000, 5000, 10000, 20000, 50000];
@@ -56,7 +57,7 @@ export default function WalletScreen() {
     if (!withdrawEligible) {
       showAlert(
         'Belum Memenuhi Syarat',
-        `Penarikan saldo memerlukan ${WITHDRAW_ADS_REQUIRED}x menonton iklan. Progres kamu: ${adsWatched}/${WITHDRAW_ADS_REQUIRED} iklan.`
+        `Penarikan saldo memerlukan pemenuhan misi bonus. Progres kamu: ${adsWatched}/${WITHDRAW_ADS_REQUIRED}.`
       );
       return;
     }
@@ -115,7 +116,7 @@ export default function WalletScreen() {
         <View style={styles.balanceCard}>
           <Text style={styles.balanceLabel}>Total Koin</Text>
           <View style={styles.balanceRow}>
-            <Ionicons name="logo-bitcoin" size={32} color={Colors.primary} />
+            <CoinIcon size={32} />
             <Text style={styles.balanceAmount}>{formatCoins(gameState.coins)}</Text>
           </View>
           <View style={styles.rupiahRow}>
@@ -158,7 +159,7 @@ export default function WalletScreen() {
           <Pressable style={styles.lockedBtn} onPress={openWithdraw}>
             <Ionicons name="lock-closed" size={16} color={Colors.textMuted} />
             <Text style={styles.lockedBtnText}>BELUM MEMENUHI SYARAT</Text>
-            <Text style={styles.lockedBtnSub}>{adsWatched}/{WITHDRAW_ADS_REQUIRED} iklan</Text>
+            <Text style={styles.lockedBtnSub}>Progres {adsWatched}/{WITHDRAW_ADS_REQUIRED}</Text>
           </Pressable>
         )}
 
@@ -166,7 +167,7 @@ export default function WalletScreen() {
         <View style={styles.notice}>
           <Ionicons name="information-circle" size={14} color={Colors.info} />
           <Text style={styles.noticeText}>
-            Min. Rp1.000 · 100 Koin = Rp1 · Syarat penarikan: {WITHDRAW_ADS_REQUIRED}x nonton iklan
+            Min. Rp1.000 · 100 Koin = Rp1
           </Text>
         </View>
 

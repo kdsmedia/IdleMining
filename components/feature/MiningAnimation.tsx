@@ -3,14 +3,17 @@ import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, FontSize, FontWeight, Spacing, Radius } from '../../constants/theme';
 import { formatCoins } from '../../constants/gameData';
+import { CoinIcon } from '../ui/CoinIcon';
 
 interface Props {
   miningRate: number;
+  hashRate?: number;
+  algorithm?: string;
   isActive: boolean;
   currentMine: string;
 }
 
-export function MiningAnimation({ miningRate, isActive, currentMine }: Props) {
+export function MiningAnimation({ miningRate, hashRate, algorithm, isActive, currentMine }: Props) {
   const pickaxeAnim = useRef(new Animated.Value(0)).current;
   const glowAnim = useRef(new Animated.Value(0)).current;
   const coinAnim = useRef(new Animated.Value(0)).current;
@@ -70,15 +73,23 @@ export function MiningAnimation({ miningRate, isActive, currentMine }: Props) {
       </Animated.View>
 
       {/* Floating coin indicator */}
-      <Animated.View style={[styles.floatingCoin, { transform: [{ translateY: coinY }], opacity: coinOpacity }]}>
-        <Ionicons name="logo-bitcoin" size={16} color={Colors.primary} />
-        <Text style={styles.floatingText}>+{Math.ceil(miningRate / 60)}</Text>
-      </Animated.View>
+      {isActive && (
+        <Animated.View style={[styles.floatingCoin, { transform: [{ translateY: coinY }], opacity: coinOpacity }]}>
+          <CoinIcon size={16} />
+          <Text style={styles.floatingText}>+{miningRate}</Text>
+        </Animated.View>
+      )}
 
       {/* Rate display */}
       <View style={styles.rateDisplay}>
         <Text style={styles.rateLabel}>Mining Rate</Text>
         <Text style={styles.rateValue}>{formatCoins(miningRate)} <Text style={styles.rateUnit}>koin/menit</Text></Text>
+        {(hashRate !== undefined || algorithm) && (
+          <Text style={styles.hashText}>
+            Hash Rate: <Text style={styles.hashValue}>{hashRate ?? 0} H/s</Text>
+            {algorithm ? <Text style={styles.hashAlgo}> · {algorithm}</Text> : null}
+          </Text>
+        )}
       </View>
 
       {/* Mine name */}
@@ -177,6 +188,18 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     color: Colors.textSecondary,
     fontWeight: FontWeight.regular,
+  },
+  hashText: {
+    fontSize: FontSize.xs,
+    color: Colors.textMuted,
+    marginTop: 2,
+  },
+  hashValue: {
+    color: Colors.info,
+    fontWeight: FontWeight.bold,
+  },
+  hashAlgo: {
+    color: Colors.textMuted,
   },
   mineNameBadge: {
     flexDirection: 'row',

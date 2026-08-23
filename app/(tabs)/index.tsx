@@ -10,7 +10,9 @@ import { CoinDisplay } from '../../components/ui/CoinDisplay';
 import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
-import { formatCoins, formatRupiah, MINES, xpForLevel } from '../../constants/gameData';
+import { formatCoins, formatRupiah, MINES, xpForLevel, computeHashRate, MINING_ALGORITHM } from '../../constants/gameData';
+import { AppState } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 
 export default function MiningScreen() {
   const insets = useSafeAreaInsets();
@@ -22,19 +24,43 @@ export default function MiningScreen() {
   } = useGame();
 
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [isOnline, setIsOnline] = React.useState(true);
+  const appStateRef = useRef(AppState.currentState);
 
-  // Mining tick every 10 seconds
+  // Aplikasi wajib internet: pantau koneksi & status aplikasi
+  useEffect(() => {
+    const unsubNet = NetInfo.addEventListener(state => {
+      setIsOnline(state.isConnected !== false);
+    });
+    const unsubApp = AppState.addEventListener('change', next => {
+      appStateRef.current = next;
+    });
+    return () => {
+      unsubNet();
+      unsubApp.remove();
+    };
+  }, []);
+
+  // Mining aktif hanya saat aplikasi dibuka & ada internet
+  const miningActive = isOnline && appStateRef.current === 'active';
+
+  // Tick mining setiap 60 detik; berhenti saat offline / aplikasi ditutup
   const gameExists = !!gameState;
   useEffect(() => {
     if (!gameExists) return;
     if (tickRef.current) clearInterval(tickRef.current);
+    if (!miningActive) return;
     tickRef.current = setInterval(() => {
-      claimMiningTick(10 / 60); // 10 seconds = 10/60 minutes
-    }, 10000);
+      if (appStateRef.current === 'active' && isOnline) {
+        claimMiningTick(1); // 1 menit mining
+      }
+    }, 60000);
     return () => { if (tickRef.current) clearInterval(tickRef.current); };
-  }, [gameState?.miningRate, gameExists, claimMiningTick]);
+  }, [gameState?.miningRate, gameExists, claimMiningTick, miningActive, isOnline]);
 
   if (!gameState || !user) return null;
+
+  const hashRate = computeHashRate(gameState.upgradeLevels);
 
   const currentMine = MINES.find(m => m.id === gameState.currentMineId) || MINES[0];
   const xpNeeded = xpForLevel(user.level);
@@ -73,34 +99,46 @@ export default function MiningScreen() {
           </Pressable>
         )}
 
+        {/* Status mining */}
+        {!miningActive && (
+          <View style={styles.offlineBanner}>
+            <Ionicons name="cloud-offline" size={16} color={Colors.error} />
+            <Text style={styles.offlineText}>
+              {isOnline ? 'Mining berhenti saat aplikasi ditutup' : 'Tidak ada internet — mining berhenti'}
+            </Text>
+          </View>
+        )}
+
         {/* Mining area */}
         <View style={styles.mineCard}>
           <MiningAnimation
             miningRate={gameState.miningRate}
-            isActive={true}
+            hashRate={hashRate}
+            algorithm={MINING_ALGORITHM}
+            isActive={miningActive}
             currentMine={currentMine.name}
           />
         </View>
 
-        {/* AdMob Banner */}
+        {/* Banner */}
         <AdBanner />
 
-        {/* Stats row */}
+        {/* Statistik mini — 3 sebaris */}
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
-            <Ionicons name="timer" size={20} color={Colors.info} />
+            <Ionicons name="timer" size={18} color={Colors.info} />
             <Text style={styles.statValue}>{gameState.offlineCapHours}j</Text>
-            <Text style={styles.statLabel}>Offline Cap</Text>
+            <Text style={styles.statLabel}>Offline</Text>
           </View>
           <View style={styles.statCard}>
-            <Ionicons name="trending-up" size={20} color={Colors.success} />
-            <Text style={styles.statValue}>{formatCoins(gameState.miningRate)}</Text>
-            <Text style={styles.statLabel}>Koin/Menit</Text>
+            <Ionicons name="trending-up" size={18} color={Colors.success} />
+            <Text style={styles.statValue}>{formatCoins(gameState.miningRate)}/m</Text>
+            <Text style={styles.statLabel}>Rate</Text>
           </View>
           <View style={styles.statCard}>
-            <Ionicons name="layers" size={20} color={Colors.vip} />
-            <Text style={styles.statValue}>{Object.values(gameState.upgradeLevels).reduce((a, b) => a + b, 0)}</Text>
-            <Text style={styles.statLabel}>Total Upg.</Text>
+            <Ionicons name="flash" size={18} color={Colors.vip} />
+            <Text style={styles.statValue}>{hashRate} H/s</Text>
+            <Text style={styles.statLabel}>Hash</Text>
           </View>
         </View>
 
@@ -216,14 +254,27 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     overflow: 'hidden',
   },
+  offlineBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+    backgroundColor: Colors.errorBg,
+    borderRadius: Radius.sm,
+    padding: Spacing.sm,
+    marginBottom: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.error,
+  },
+  offlineText: { flex: 1, fontSize: FontSize.xs, color: Colors.error },
   statsRow: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.md },
   statCard: {
     flex: 1,
     backgroundColor: Colors.bgCard,
-    borderRadius: Radius.md,
-    padding: Spacing.md,
+    borderRadius: Radius.sm,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.xs,
     alignItems: 'center',
-    gap: 4,
+    gap: 2,
     borderWidth: 1,
     borderColor: Colors.border,
   },

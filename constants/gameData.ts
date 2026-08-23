@@ -70,7 +70,7 @@ export const UPGRADES: UpgradeDef[] = [
   {
     id: 'storage',
     name: 'Storage',
-    description: 'Perluas kapasitas offline mining',
+    description: 'Perluas kapasitas penyimpanan',
     icon: 'archive',
     maxLevel: 20,
     baseCost: 2000,
@@ -89,6 +89,61 @@ export const UPGRADES: UpgradeDef[] = [
     baseBonus: 0.06,
     unit: '% Efisiensi',
   },
+  {
+    id: 'drill',
+    name: 'Bor',
+    description: 'Gali lapisan lebih dalam',
+    icon: 'construct',
+    maxLevel: 40,
+    baseCost: 2500,
+    growthRate: 1.19,
+    baseBonus: 0.09,
+    unit: '% Mining',
+  },
+  {
+    id: 'dynamite',
+    name: 'Dinamit',
+    description: 'Ledakkan batuan keras',
+    icon: 'flame',
+    maxLevel: 30,
+    baseCost: 4000,
+    growthRate: 1.22,
+    baseBonus: 0.15,
+    unit: '% Output',
+  },
+  {
+    id: 'radar',
+    name: 'Radar',
+    description: 'Deteksi urat koin terbaik',
+    icon: 'locate',
+    maxLevel: 30,
+    baseCost: 3200,
+    growthRate: 1.18,
+    baseBonus: 0.07,
+    unit: '% Akurasi',
+  },
+  {
+    id: 'tunnel',
+    name: 'Terowongan',
+    description: 'Akses jalur tambang baru',
+    icon: 'trail',
+    maxLevel: 25,
+    baseCost: 6000,
+    growthRate: 1.24,
+    baseBonus: 0.18,
+    unit: '% Akses',
+  },
+  {
+    id: 'refinery',
+    name: 'Refinery',
+    description: 'Pemurnian ore jadi koin',
+    icon: 'flask',
+    maxLevel: 20,
+    baseCost: 8000,
+    growthRate: 1.25,
+    baseBonus: 0.20,
+    unit: '% Output',
+  },
 ];
 
 export const getUpgradeCost = (baseCost: number, growthRate: number, level: number): number => {
@@ -101,17 +156,26 @@ export const getUpgradeTotalBonus = (upgrade: UpgradeDef, level: number): number
 };
 
 // ---- MINING ----
-export const BASE_MINING_RATE = 10; // coins per minute
+// Rate dasar sengaja rendah agar hasil mining tidak terlalu cepat
+export const BASE_MINING_RATE = 1; // koin per menit
+export const MINING_ALGORITHM = 'SHA-256';
+export const BASE_HASH_RATE = 5; // hashes per detik
 export const BASE_OFFLINE_CAP_HOURS = 1;
 export const MAX_OFFLINE_CAP_HOURS = 12;
 
 export const computeMiningRate = (upgradeLevels: Record<string, number>): number => {
-  const pickaxeBonus = (upgradeLevels['pickaxe'] || 0) * 0.10;
-  const speedBonus = (upgradeLevels['mining_speed'] || 0) * 0.08;
-  const workerBonus = (upgradeLevels['worker'] || 0) * 0.12;
-  const conveyorBonus = (upgradeLevels['conveyor'] || 0) * 0.06;
-  const totalMultiplier = 1 + pickaxeBonus + speedBonus + workerBonus + conveyorBonus;
-  return Math.floor(BASE_MINING_RATE * totalMultiplier);
+  let multiplier = 1;
+  for (const upg of UPGRADES) {
+    if (upg.id === 'storage') continue; // storage menambah kapasitas, bukan rate
+    multiplier += (upgradeLevels[upg.id] || 0) * upg.baseBonus;
+  }
+  return Math.max(BASE_MINING_RATE, Math.floor(BASE_MINING_RATE * multiplier));
+};
+
+export const computeHashRate = (upgradeLevels: Record<string, number>): number => {
+  const levelsSum = Object.values(upgradeLevels).reduce((a, b) => a + b, 0);
+  const rate = computeMiningRate(upgradeLevels);
+  return Math.floor(BASE_HASH_RATE * rate + levelsSum * 2); // H/s
 };
 
 export const computeOfflineCap = (storageLevel: number): number => {
@@ -136,13 +200,13 @@ export interface MissionDef {
 // ---- BONUS & SYARAT ----
 export const SIGNUP_BONUS = 200; // bonus akun baru
 export const REFERRAL_BONUS = 250; // bonus untuk pengundang & yang diundang
-export const WITHDRAW_ADS_REQUIRED = 350; // syarat penarikan: 350x nonton iklan
+export const WITHDRAW_ADS_REQUIRED = 350;
 
 export const DAILY_MISSIONS: MissionDef[] = [
   {
     id: 'mine_coins',
     title: 'Gali Koin',
-    description: 'Kumpulkan koin dari mining',
+    description: 'Kumpulkan 5.000 koin dari mining',
     type: 'mining',
     target: 5000,
     reward: 1000,
@@ -150,7 +214,7 @@ export const DAILY_MISSIONS: MissionDef[] = [
   },
   {
     id: 'upgrade_once',
-    title: 'Upgrade Tambang',
+    title: 'Upgrade',
     description: 'Lakukan upgrade 1 kali',
     type: 'upgrade',
     target: 1,
@@ -159,8 +223,8 @@ export const DAILY_MISSIONS: MissionDef[] = [
   },
   {
     id: 'watch_ads',
-    title: 'Tonton Iklan',
-    description: 'Tonton 50 iklan video (50 koin/iklan)',
+    title: 'Bonus Koin',
+    description: 'Klaim bonus koin harian (50x)',
     type: 'ads',
     target: 50,
     reward: 2500,
@@ -168,8 +232,8 @@ export const DAILY_MISSIONS: MissionDef[] = [
   },
   {
     id: 'daily_checkin',
-    title: 'Check-in Harian',
-    description: 'Check-in hari ini (tonton 1 video saat klaim)',
+    title: 'Check-in',
+    description: 'Check-in hari ini',
     type: 'checkin',
     target: 1,
     reward: 75,
@@ -177,8 +241,8 @@ export const DAILY_MISSIONS: MissionDef[] = [
   },
   {
     id: 'invite_friends',
-    title: 'Undang 10 Teman',
-    description: 'Undang 10 teman dengan referral valid',
+    title: 'Undang Teman',
+    description: 'Undang 10 teman pakai kode referral',
     type: 'referral',
     target: 10,
     reward: 10000,

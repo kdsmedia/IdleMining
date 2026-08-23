@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { Colors, FontSize, FontWeight, Spacing } from '../../constants/theme';
 import { formatCoins } from '../../constants/gameData';
+import { CoinIcon } from './CoinIcon';
 
 interface Props {
   coins: number;
@@ -15,7 +15,7 @@ export function CoinDisplay({ coins, size = 'md', showRupiah = false, rupiah }: 
   const styles = getStyles(size);
   return (
     <View style={styles.container}>
-      <Ionicons name="logo-bitcoin" size={size === 'lg' ? 28 : size === 'md' ? 20 : 16} color={Colors.primary} />
+      <CoinIcon size={size === 'lg' ? 28 : size === 'md' ? 20 : 16} />
       <Text style={styles.amount}>{formatCoins(coins)}</Text>
       {showRupiah && rupiah !== undefined && (
         <Text style={styles.rupiah}>≈ Rp{rupiah.toLocaleString('id-ID')}</Text>

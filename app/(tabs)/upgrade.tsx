@@ -8,6 +8,7 @@ import { CoinDisplay } from '../../components/ui/CoinDisplay';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { UPGRADES, getUpgradeCost, getUpgradeTotalBonus, formatCoins, computeMiningRate } from '../../constants/gameData';
+import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useAlert } from '@/template';
 
 export default function UpgradeScreen() {
@@ -118,7 +119,7 @@ export default function UpgradeScreen() {
               {!isMaxed && (
                 <View style={styles.upgradeFooter}>
                   <View style={styles.costRow}>
-                    <Ionicons name="logo-bitcoin" size={14} color={canAfford ? Colors.primary : Colors.textMuted} />
+                    <CoinIcon size={14} />
                     <Text style={[styles.costText, !canAfford && styles.costInsufficient]}>
                       {formatCoins(cost)} Koin
                     </Text>
@@ -154,7 +155,7 @@ export default function UpgradeScreen() {
               <>
                 <Text style={styles.confirmName}>{confirmDef.name} → Lv.{confirmLevel + 1}</Text>
                 <View style={styles.confirmCostRow}>
-                  <Ionicons name="logo-bitcoin" size={20} color={Colors.primary} />
+                  <CoinIcon size={20} />
                   <Text style={styles.confirmCost}>{formatCoins(confirmCost)} Koin</Text>
                 </View>
                 <View style={styles.confirmBtns}>

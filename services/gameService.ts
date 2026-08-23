@@ -46,8 +46,8 @@ const defaultState = (userId: string): GameState => ({
   userId,
   coins: SIGNUP_BONUS,
   totalEarned: SIGNUP_BONUS,
-  upgradeLevels: { pickaxe: 0, mining_speed: 0, worker: 0, storage: 0, conveyor: 0 },
-  miningRate: 10,
+  upgradeLevels: Object.fromEntries(UPGRADES.map(u => [u.id, 0])),
+  miningRate: computeMiningRate({}),
   offlineCapHours: 1,
   lastActiveAt: new Date().toISOString(),
   currentMineId: 'mine1',
@@ -207,7 +207,7 @@ export const gameService = {
   },
 
   recordAdWatch: (state: GameState, reward: number = 50): GameState => {
-    let newState = gameService.addTransaction(state, 'ADS_REWARD', 'Reward Iklan', reward);
+    let newState = gameService.addTransaction(state, 'ADS_REWARD', 'Bonus Koin', reward);
     newState.missionProgress = {
       ...newState.missionProgress,
       watch_ads: (newState.missionProgress['watch_ads'] || 0) + 1,
