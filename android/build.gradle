@@ -32,6 +32,15 @@ allprojects {
     mavenCentral()
     maven { url 'https://www.jitpack.io' }
   }
+
+  // play-services-ads 25.x is compiled with Kotlin 2.3 metadata, which the
+  // project's Kotlin 2.0 toolchain cannot read. Cap the ads SDK at the last
+  // Kotlin-2.0-compatible release.
+  configurations.all {
+    resolutionStrategy {
+      force 'com.google.android.gms:play-services-ads:24.6.0'
+    }
+  }
 }
 
 apply plugin: "expo-root-project"
