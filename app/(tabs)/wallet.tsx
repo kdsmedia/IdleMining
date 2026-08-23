@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, FlatList, Modal, TextInput, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
@@ -102,7 +101,7 @@ export default function WalletScreen() {
         <View style={styles.balanceCard}>
           <Text style={styles.balanceLabel}>Total Koin</Text>
           <View style={styles.balanceRow}>
-            <CoinIcon size={32} />
+            <Ionicons name="logo-bitcoin" size={32} color={Colors.primary} />
             <Text style={styles.balanceAmount}>{formatCoins(gameState.coins)}</Text>
           </View>
           <View style={styles.rupiahRow}>

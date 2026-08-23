@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Modal, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { CoinIcon } from '../ui/CoinIcon';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins } from '../../constants/gameData';
 import { GoldButton } from '../ui/GoldButton';
@@ -26,7 +25,7 @@ export function OfflineRewardModal({ visible, reward, onClaim }: Props) {
           <View style={styles.rewardCard}>
             <Text style={styles.rewardLabel}>⛏️ Offline Mining</Text>
             <View style={styles.rewardRow}>
-              <CoinIcon size={32} />
+              <Ionicons name="logo-bitcoin" size={32} color={Colors.primary} />
               <Text style={styles.rewardAmount}>+{formatCoins(reward)}</Text>
             </View>
             <Text style={styles.rewardSubtext}>Koin</Text>

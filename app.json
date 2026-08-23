@@ -36,28 +36,14 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-web-browser",
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 36,
-            "targetSdkVersion": 36,
-            "minSdkVersion": 21
-          }
-        }
-      ]
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "developer": "ALTOMEDIA",
-      "contact": "altomediaindonesia@gmail.com",
-      "eas": {
-        "projectId": "88310c30-67a1-4962-ac43-3dc0f95f9282"
-      }
-    },
-    "owner": "sidhanie"
+      "contact": "altomediaindonesia@gmail.com"
+    }
   }
 }
