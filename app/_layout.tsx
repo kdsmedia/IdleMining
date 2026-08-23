@@ -5,6 +5,8 @@ import { AlertProvider } from '@/template';
 import { AuthProvider } from '../contexts/AuthContext';
 import { GameProvider } from '../contexts/GameContext';
 import { initAds, startInterstitialCycle } from '../services/adService';
+import { WhatsAppChannelPopup } from '../components/ui/WhatsAppChannelPopup';
+import { PlayStoreRatingPopup } from '../components/ui/PlayStoreRatingPopup';
 
 export default function RootLayout() {
   useEffect(() => {
@@ -24,8 +26,11 @@ export default function RootLayout() {
               <Stack.Screen name="index" />
               <Stack.Screen name="auth/login" />
               <Stack.Screen name="auth/register" />
+              <Stack.Screen name="legal/[page]" />
               <Stack.Screen name="(tabs)" />
             </Stack>
+            <WhatsAppChannelPopup />
+            <PlayStoreRatingPopup />
           </GameProvider>
         </AuthProvider>
       </SafeAreaProvider>

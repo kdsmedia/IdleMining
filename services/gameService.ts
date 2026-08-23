@@ -3,7 +3,7 @@ import { db, isFirebaseAvailable } from './firebaseService';
 import {
   computeMiningRate, computeOfflineCap,
   getUpgradeCost, UPGRADES, DAILY_MISSIONS, DAILY_REWARDS,
-  xpForLevel, MissionDef,
+  xpForLevel, MissionDef, SIGNUP_BONUS, WITHDRAW_ADS_REQUIRED,
 } from '../constants/gameData';
 
 export interface Transaction {
@@ -33,6 +33,10 @@ export interface GameState {
   lastMissionResetDate: string;
   transactions: Transaction[];
   totalUpgrades: number;
+  totalAdsWatched: number;
+  referralCount: number;
+  referralBonusGranted: boolean;
+  lastCheckinDate: string;
 }
 
 const genTxId = () => 'TX-' + Date.now() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
@@ -40,8 +44,8 @@ const today = () => new Date().toISOString().split('T')[0];
 
 const defaultState = (userId: string): GameState => ({
   userId,
-  coins: 200,
-  totalEarned: 200,
+  coins: SIGNUP_BONUS,
+  totalEarned: SIGNUP_BONUS,
   upgradeLevels: { pickaxe: 0, mining_speed: 0, worker: 0, storage: 0, conveyor: 0 },
   miningRate: 10,
   offlineCapHours: 1,
@@ -49,20 +53,24 @@ const defaultState = (userId: string): GameState => ({
   currentMineId: 'mine1',
   dailyStreak: 0,
   lastDailyClaimDate: '',
-  missionProgress: { mine_coins: 0, upgrade_once: 0, watch_ads: 0 },
-  missionClaimed: { mine_coins: false, upgrade_once: false, watch_ads: false },
+  missionProgress: { mine_coins: 0, upgrade_once: 0, watch_ads: 0, daily_checkin: 0, invite_friends: 0 },
+  missionClaimed: { mine_coins: false, upgrade_once: false, watch_ads: false, daily_checkin: false, invite_friends: false },
   lastMissionResetDate: today(),
   transactions: [{
     id: genTxId(),
     type: 'BONUS',
     label: 'Welcome Bonus',
-    amount: 200,
+    amount: SIGNUP_BONUS,
     balanceBefore: 0,
-    balanceAfter: 200,
+    balanceAfter: SIGNUP_BONUS,
     timestamp: new Date().toISOString(),
     status: 'success',
   }],
   totalUpgrades: 0,
+  totalAdsWatched: 0,
+  referralCount: 0,
+  referralBonusGranted: false,
+  lastCheckinDate: '',
 });
 
 export const gameService = {
@@ -89,10 +97,24 @@ export const gameService = {
   },
 
   _applyDailyReset: (state: GameState): GameState => {
-    // Reset daily missions if date changed
+    // Migrasi field baru untuk state lama
+    if (state.totalAdsWatched === undefined) state.totalAdsWatched = 0;
+    if (state.referralCount === undefined) state.referralCount = 0;
+    if (state.referralBonusGranted === undefined) state.referralBonusGranted = false;
+    if (state.lastCheckinDate === undefined) state.lastCheckinDate = '';
+
+    // Reset misi harian jika ganti tanggal (invite_friends TIDAK di-reset — kumulatif)
     if (state.lastMissionResetDate !== today()) {
-      state.missionProgress = { mine_coins: 0, upgrade_once: 0, watch_ads: 0 };
-      state.missionClaimed = { mine_coins: false, upgrade_once: false, watch_ads: false };
+      const inviteProgress = state.missionProgress['invite_friends'] || 0;
+      const inviteClaimed = state.missionClaimed['invite_friends'] || false;
+      state.missionProgress = {
+        mine_coins: 0, upgrade_once: 0, watch_ads: 0, daily_checkin: 0,
+        invite_friends: inviteProgress,
+      };
+      state.missionClaimed = {
+        mine_coins: false, upgrade_once: false, watch_ads: false, daily_checkin: false,
+        invite_friends: inviteClaimed,
+      };
       state.lastMissionResetDate = today();
       storage.set(`game_${state.userId}`, state);
       gameService._syncToCloud(state);
@@ -184,12 +206,13 @@ export const gameService = {
     return { newState, success: true };
   },
 
-  recordAdWatch: (state: GameState): GameState => {
-    let newState = gameService.addTransaction(state, 'ADS_REWARD', 'Reward Iklan', 50);
+  recordAdWatch: (state: GameState, reward: number = 50): GameState => {
+    let newState = gameService.addTransaction(state, 'ADS_REWARD', 'Reward Iklan', reward);
     newState.missionProgress = {
       ...newState.missionProgress,
       watch_ads: (newState.missionProgress['watch_ads'] || 0) + 1,
     };
+    newState.totalAdsWatched = (newState.totalAdsWatched || 0) + 1;
     return newState;
   },
 
@@ -198,6 +221,11 @@ export const gameService = {
     if (!mission) return { newState: state, reward: 0 };
     if (state.missionClaimed[missionId]) return { newState: state, reward: 0 };
 
+    // Misi check-in wajib melalui checkInDaily (menonton video)
+    if (missionId === 'daily_checkin' && state.lastCheckinDate !== today()) {
+      return { newState: state, reward: 0 };
+    }
+
     const progress = state.missionProgress[missionId] || 0;
     if (progress < mission.target) return { newState: state, reward: 0 };
 
@@ -205,4 +233,39 @@ export const gameService = {
     newState.missionClaimed = { ...newState.missionClaimed, [missionId]: true };
     return { newState, reward: mission.reward };
   },
+
+  // Check-in harian: hanya bisa sekali per hari (setelah menonton video)
+  checkInDaily: (state: GameState): GameState => {
+    const newState = { ...state, lastCheckinDate: today() };
+    newState.missionProgress = {
+      ...newState.missionProgress,
+      daily_checkin: 1,
+    };
+    return newState;
+  },
+
+  canCheckIn: (state: GameState): boolean => state.lastCheckinDate !== today(),
+
+  // Progres misi undang teman dari jumlah referral valid
+  syncReferralProgress: (state: GameState, referralCount: number): GameState => {
+    const newState = { ...state, referralCount };
+    newState.missionProgress = {
+      ...newState.missionProgress,
+      invite_friends: Math.min(referralCount, 10),
+    };
+    return newState;
+  },
+
+  // Bonus referral 250 koin untuk akun yang diundang (sekali seumur akun)
+  claimReferralBonus: (state: GameState): { newState: GameState; reward: number } => {
+    const newState = gameService.addTransaction(state, 'BONUS', 'Bonus Referral', 250);
+    return { newState, reward: 250 };
+  },
+
+  // Syarat penarikan: minimal 350x menonton iklan
+  canWithdraw: (state: GameState): boolean =>
+    (state.totalAdsWatched || 0) >= WITHDRAW_ADS_REQUIRED,
+
+  withdrawAdsProgress: (state: GameState): number =>
+    Math.min(state.totalAdsWatched || 0, WITHDRAW_ADS_REQUIRED),
 };

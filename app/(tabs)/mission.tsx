@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { Share } from 'react-native';
 import { useGame } from '../../hooks/useGame';
+import { useAuth } from '../../hooks/useAuth';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { DAILY_MISSIONS, formatCoins } from '../../constants/gameData';
+import { PLAYSTORE_URL } from '../../constants/legalContent';
 import { showRewardedAd, ensureRewardedLoaded } from '../../services/adService';
 import { useAlert } from '@/template';
 
 export default function MissionScreen() {
   const insets = useSafeAreaInsets();
-  const { gameState, claimMission, recordAdWatch } = useGame();
+  const { user } = useAuth();
+  const { gameState, claimMission, recordAdWatch, checkInDaily, canCheckInToday } = useGame();
   const { showAlert } = useAlert();
   const [claimingId, setClaimingId] = useState<string | null>(null);
   const [watchingAd, setWatchingAd] = useState(false);
@@ -30,6 +34,35 @@ export default function MissionScreen() {
     } else {
       showAlert('Iklan Belum Siap', 'Coba lagi beberapa saat lagi.');
     }
+  };
+
+  // Check-in harian: wajib tonton video, lalu klaim otomatis 75 koin
+  const handleCheckIn = async () => {
+    if (!canCheckInToday) {
+      showAlert('Sudah Check-in', 'Kamu sudah check-in hari ini. Kembali lagi besok!');
+      return;
+    }
+    setWatchingAd(true);
+    const earned = await showRewardedAd();
+    setWatchingAd(false);
+    if (!earned) {
+      showAlert('Iklan Belum Siap', 'Tonton video untuk menyelesaikan check-in. Coba lagi.');
+      return;
+    }
+    await checkInDaily();
+    const reward = await claimMission('daily_checkin');
+    if (reward > 0) {
+      showAlert('Check-in Berhasil!', `+${formatCoins(reward)} Koin ditambahkan ke saldomu!`);
+    }
+  };
+
+  const handleShareReferral = async () => {
+    if (!user) return;
+    try {
+      await Share.share({
+        message: `Main INDOMINE bareng aku! Download di Play Store: ${PLAYSTORE_URL}&referrer=${user.referralCode}\nMasukkan kode referral ${user.referralCode} saat daftar - kita berdua dapat bonus 250 koin!`,
+      });
+    } catch {}
   };
 
   if (!gameState) return null;
@@ -143,6 +176,25 @@ export default function MissionScreen() {
                     title="TONTON IKLAN (+50)"
                     onPress={handleWatchAd}
                     loading={watchingAd}
+                    size="sm"
+                    variant="secondary"
+                  />
+                </View>
+              ) : mission.type === 'checkin' ? (
+                <View style={styles.claimRow}>
+                  <GoldButton
+                    title={canCheckInToday ? 'CHECK-IN (TONTON VIDEO)' : 'SUDAH CHECK-IN'}
+                    onPress={handleCheckIn}
+                    loading={watchingAd}
+                    size="sm"
+                    variant={canCheckInToday ? 'primary' : 'secondary'}
+                  />
+                </View>
+              ) : mission.type === 'referral' ? (
+                <View style={styles.claimRow}>
+                  <GoldButton
+                    title="UNDANG TEMAN"
+                    onPress={handleShareReferral}
                     size="sm"
                     variant="secondary"
                   />

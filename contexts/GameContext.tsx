@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback, ReactNode, useRef } from 'react';
 import { gameService, GameState } from '../services/gameService';
+import { authService } from '../services/authService';
 import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 
@@ -13,7 +14,10 @@ interface GameContextType {
   dismissDailyModal: () => void;
   upgrade: (upgradeId: string) => Promise<{ success: boolean; error?: string }>;
   claimMission: (missionId: string) => Promise<number>;
-  recordAdWatch: () => Promise<void>;
+  recordAdWatch: (reward?: number) => Promise<void>;
+  checkInDaily: () => Promise<void>;
+  canCheckInToday: boolean;
+  grantReferralBonus: () => Promise<void>;
   claimMiningTick: (minutes: number) => void;
   refreshState: () => Promise<void>;
 }
@@ -31,7 +35,17 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const loadState = useCallback(async () => {
     if (!auth?.user) { setLoading(false); return; }
-    const state = await gameService.getState(auth.user.id);
+    let state = await gameService.getState(auth.user.id);
+
+    // Sinkronkan progres misi undang teman dari Firestore (referral valid)
+    try {
+      const refCount = await authService.countReferrals(auth.user.id);
+      if (refCount !== (state.referralCount || 0)) {
+        state = gameService.syncReferralProgress(state, refCount);
+        await gameService.saveState(state);
+      }
+    } catch {}
+
     setGameState(state);
 
     // Check daily
@@ -50,6 +64,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     }
   }, [auth?.user, loadState]);
+
+  // Berikan bonus referral sekali setelah state dimuat
+  useEffect(() => {
+    if (gameState && auth?.user && !gameState.referralBonusGranted) {
+      grantReferralBonus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState?.userId]);
 
   // Auto-save every 30 seconds
   useEffect(() => {
@@ -94,10 +116,27 @@ export function GameProvider({ children }: { children: ReactNode }) {
     return reward;
   };
 
-  const recordAdWatch = async () => {
+  const recordAdWatch = async (reward: number = 50) => {
     if (!gameState) return;
-    await save(gameService.recordAdWatch(gameState));
+    await save(gameService.recordAdWatch(gameState, reward));
   };
+
+  const checkInDaily = async () => {
+    if (!gameState) return;
+    await save(gameService.checkInDaily(gameState));
+  };
+
+  const grantReferralBonus = async () => {
+    if (!gameState || !auth?.user) return;
+    if (!auth.user.referredBy || gameState.referralBonusGranted) return;
+    const { newState } = gameService.claimReferralBonus(gameState);
+    newState.referralBonusGranted = true;
+    await save(newState);
+    // Bonus untuk pengundang
+    try { await authService.grantReferrerBonus(auth.user.referredBy); } catch {}
+  };
+
+  const canCheckInToday = gameState ? gameService.canCheckIn(gameState) : false;
 
   const claimMiningTick = useCallback((minutes: number) => {
     if (!gameState) return;
@@ -117,7 +156,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       gameState, loading,
       showDailyModal, dailyReward, dailyDay,
       claimDaily, dismissDailyModal,
-      upgrade, claimMission, recordAdWatch, claimMiningTick, refreshState,
+      upgrade, claimMission, recordAdWatch, checkInDaily, canCheckInToday, grantReferralBonus,
+      claimMiningTick, refreshState,
     }}>
       {children}
     </GameContext.Provider>

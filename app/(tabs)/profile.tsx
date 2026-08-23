@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Share } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Share, Linking } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useAuth } from '../../hooks/useAuth';
 import { useGame } from '../../hooks/useGame';
@@ -10,6 +11,7 @@ import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, formatRupiah, xpForLevel, VIP_LEVELS, MINES } from '../../constants/gameData';
+import { ADMIN_EMAIL, WA_CHANNEL_URL, PLAYSTORE_URL } from '../../constants/legalContent';
 import { useAlert } from '@/template';
 import * as Clipboard from 'expo-clipboard';
 
@@ -17,6 +19,7 @@ const AVATARS = ['⛏️', '💎', '🪨', '🔥', '⚡', '🏔️', '🌟', '�
 
 export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const { user, logout } = useAuth();
   const { gameState } = useGame();
   const { showAlert } = useAlert();
@@ -28,18 +31,27 @@ export default function ProfileScreen() {
   const xpProgress = Math.min(user.xp / xpNeeded, 1);
   const vipInfo = VIP_LEVELS[user.vipLevel] || VIP_LEVELS[0];
   const currentMine = MINES.find(m => m.id === gameState.currentMineId) || MINES[0];
+  const referralLink = `${PLAYSTORE_URL}&referrer=${user.referralCode}`;
 
   const handleCopyReferral = async () => {
-    await Clipboard.setStringAsync(user.referralCode);
-    showAlert('Tersalin!', `Kode referral ${user.referralCode} telah disalin`);
+    await Clipboard.setStringAsync(referralLink);
+    showAlert('Tersalin!', `Link referral kamu telah disalin:\n${referralLink}`);
   };
 
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `Main Idle Mining bareng aku! Gunakan kode referral ${user.referralCode} saat daftar dan dapatkan bonus koin! ⛏️`,
+        message: `Main INDOMINE bareng aku! Download di sini: ${referralLink}\nGunakan kode referral ${user.referralCode} saat daftar, kita berdua dapat bonus 250 koin! ⛏️`,
       });
     } catch {}
+  };
+
+  const handleOpenWA = async () => {
+    try { await Linking.openURL(WA_CHANNEL_URL); } catch {}
+  };
+
+  const handleEmailAdmin = async () => {
+    try { await Linking.openURL(`mailto:${ADMIN_EMAIL}?subject=INDOMINE%20Support`); } catch {}
   };
 
   const handleLogout = () => {
@@ -100,6 +112,18 @@ export default function ProfileScreen() {
 
         {/* AdMob Banner */}
         <AdBanner />
+
+        {/* WhatsApp Channel */}
+        <Pressable style={styles.waCard} onPress={handleOpenWA}>
+          <View style={styles.waIconWrap}>
+            <Ionicons name="logo-whatsapp" size={26} color="#FFFFFF" />
+          </View>
+          <View style={styles.waTextWrap}>
+            <Text style={styles.waTitle}>Channel WhatsApp INDOMINE</Text>
+            <Text style={styles.waSubtitle}>Info event, bonus & update terbaru</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color="#25D366" />
+        </Pressable>
 
         {/* Stats grid */}
         <Text style={styles.sectionTitle}>STATISTIK</Text>
@@ -167,14 +191,19 @@ export default function ProfileScreen() {
         {/* Settings */}
         <Text style={styles.sectionTitle}>PENGATURAN</Text>
         {[
-          { label: 'Ubah Password', icon: 'lock-closed', action: () => showAlert('Info', 'Fitur ini membutuhkan backend aktif') },
-          { label: 'Sesi Login', icon: 'phone-portrait', action: () => showAlert('Sesi Aktif', `Device: ${user.id}\nLogin terakhir: Sekarang`) },
-          { label: 'Tentang Aplikasi', icon: 'information-circle', action: () => showAlert('INDOMINE', 'Versi 1.0 — oleh ALTOMEDIA\nDeveloper: ALTOMEDIA\nKontak: altomediaindonesia@gmail.com\n100 Koin = Rp1') },
+          { label: 'Kontak Admin', icon: 'mail', action: handleEmailAdmin, sub: ADMIN_EMAIL },
+          { label: 'Disclaimer', icon: 'warning', action: () => router.push('/legal/disclaimer') },
+          { label: 'Kebijakan Privasi', icon: 'shield-checkmark', action: () => router.push('/legal/privacy') },
+          { label: 'Tentang Aplikasi', icon: 'information-circle', action: () => router.push('/legal/about') },
+          { label: 'Sesi Login', icon: 'phone-portrait', action: () => showAlert('Sesi Aktif', `ID: ${user.id}\nLogin terakhir: Sekarang`) },
         ].map(item => (
           <Pressable key={item.label} style={styles.settingRow} onPress={item.action}>
             <View style={styles.settingLeft}>
               <Ionicons name={item.icon as any} size={18} color={Colors.textSecondary} />
-              <Text style={styles.settingLabel}>{item.label}</Text>
+              <View>
+                <Text style={styles.settingLabel}>{item.label}</Text>
+                {'sub' in item && item.sub ? <Text style={styles.settingSub}>{item.sub}</Text> : null}
+              </View>
             </View>
             <Ionicons name="chevron-forward" size={16} color={Colors.textMuted} />
           </Pressable>
@@ -338,5 +367,27 @@ const styles = StyleSheet.create({
   },
   settingLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
   settingLabel: { fontSize: FontSize.body, color: Colors.textSecondary, fontWeight: FontWeight.medium },
+  settingSub: { fontSize: FontSize.xs, color: Colors.textMuted, marginTop: 2 },
+  waCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    backgroundColor: 'rgba(37,211,102,0.10)',
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+    borderWidth: 1,
+    borderColor: 'rgba(37,211,102,0.4)',
+  },
+  waIconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#25D366',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  waTextWrap: { flex: 1 },
+  waTitle: { fontSize: FontSize.body, fontWeight: FontWeight.bold, color: Colors.textPrimary },
+  waSubtitle: { fontSize: FontSize.xs, color: Colors.textMuted, marginTop: 2 },
   logoutSection: { marginTop: Spacing.sm },
 });

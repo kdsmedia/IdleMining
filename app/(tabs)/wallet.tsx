@@ -5,8 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
-import { formatCoins, formatRupiah, COIN_TO_RUPIAH } from '../../constants/gameData';
-import { Transaction } from '../../services/gameService';
+import { formatCoins, formatRupiah, COIN_TO_RUPIAH, WITHDRAW_ADS_REQUIRED } from '../../constants/gameData';
+import { Transaction, gameService } from '../../services/gameService';
 import { useAlert } from '@/template';
 
 const WITHDRAW_OPTIONS = [1000, 2000, 5000, 10000, 20000, 50000];
@@ -48,6 +48,20 @@ export default function WalletScreen() {
     if (filter === 'EXPENSE') return tx.amount < 0;
     return true;
   });
+
+  const adsWatched = gameState.totalAdsWatched || 0;
+  const withdrawEligible = gameService.canWithdraw(gameState);
+
+  const openWithdraw = () => {
+    if (!withdrawEligible) {
+      showAlert(
+        'Belum Memenuhi Syarat',
+        `Penarikan saldo memerlukan ${WITHDRAW_ADS_REQUIRED}x menonton iklan. Progres kamu: ${adsWatched}/${WITHDRAW_ADS_REQUIRED} iklan.`
+      );
+      return;
+    }
+    setShowWithdraw(true);
+  };
 
   const handleWithdraw = () => {
     if (!selectedAmount) { showAlert('Pilih Nominal', 'Pilih nominal penarikan terlebih dahulu'); return; }
@@ -132,18 +146,28 @@ export default function WalletScreen() {
         </View>
 
         {/* Withdraw button */}
-        <GoldButton
-          title="TARIK SALDO (DANA)"
-          onPress={() => setShowWithdraw(true)}
-          fullWidth
-          size="lg"
-          icon={<Ionicons name="cash-outline" size={18} color={Colors.bg} />}
-        />
+        {withdrawEligible ? (
+          <GoldButton
+            title="TARIK SALDO (DANA)"
+            onPress={openWithdraw}
+            fullWidth
+            size="lg"
+            icon={<Ionicons name="cash-outline" size={18} color={Colors.bg} />}
+          />
+        ) : (
+          <Pressable style={styles.lockedBtn} onPress={openWithdraw}>
+            <Ionicons name="lock-closed" size={16} color={Colors.textMuted} />
+            <Text style={styles.lockedBtnText}>BELUM MEMENUHI SYARAT</Text>
+            <Text style={styles.lockedBtnSub}>{adsWatched}/{WITHDRAW_ADS_REQUIRED} iklan</Text>
+          </Pressable>
+        )}
 
         {/* Min withdraw notice */}
         <View style={styles.notice}>
           <Ionicons name="information-circle" size={14} color={Colors.info} />
-          <Text style={styles.noticeText}>Min. Rp1.000 · 100 Koin = Rp1 · Fitur payout butuh verifikasi backend</Text>
+          <Text style={styles.noticeText}>
+            Min. Rp1.000 · 100 Koin = Rp1 · Syarat penarikan: {WITHDRAW_ADS_REQUIRED}x nonton iklan
+          </Text>
         </View>
 
         {/* Filter */}
@@ -249,6 +273,24 @@ export default function WalletScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.bg },
+  lockedBtn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+    backgroundColor: Colors.bgCard,
+    borderRadius: Radius.md,
+    paddingVertical: Spacing.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderStyle: 'dashed',
+  },
+  lockedBtnText: {
+    fontSize: FontSize.body,
+    fontWeight: FontWeight.extrabold,
+    color: Colors.textMuted,
+    letterSpacing: 0.5,
+  },
+  lockedBtnSub: { fontSize: FontSize.xs, color: Colors.textMuted },
   header: {
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.md,

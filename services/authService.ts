@@ -118,6 +118,32 @@ export const authService = {
     return storage.get<User>('current_user');
   },
 
+  // Hitung jumlah referral valid (akun yang mendaftar via kode user ini)
+  countReferrals: async (userId: string): Promise<number> => {
+    if (!isFirebaseAvailable()) return 0;
+    try {
+      const snap = await db().collection('users').where('referredBy', '==', userId).get();
+      return snap.size;
+    } catch {
+      return 0;
+    }
+  },
+
+  // Berikan 250 koin bonus ke pengundang (atasan)
+  grantReferrerBonus: async (referrerId: string): Promise<void> => {
+    if (!isFirebaseAvailable()) return;
+    try {
+      const { gameService } = require('./gameService');
+      const state = await gameService.getState(referrerId);
+      const { newState } = gameService.claimReferralBonus(state);
+      newState.missionProgress = {
+        ...newState.missionProgress,
+        invite_friends: Math.min((newState.referralCount || 0) + 1, 10),
+      };
+      await gameService.saveState(newState);
+    } catch {}
+  },
+
   updateUser: async (updates: Partial<User>): Promise<User | null> => {
     const current = await storage.get<User>('current_user');
     if (!current) return null;

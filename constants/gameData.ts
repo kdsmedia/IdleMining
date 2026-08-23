@@ -127,11 +127,16 @@ export interface MissionDef {
   id: string;
   title: string;
   description: string;
-  type: 'mining' | 'upgrade' | 'login' | 'ads';
+  type: 'mining' | 'upgrade' | 'login' | 'ads' | 'referral' | 'checkin';
   target: number;
   reward: number;
   rewardType: 'coins';
 }
+
+// ---- BONUS & SYARAT ----
+export const SIGNUP_BONUS = 200; // bonus akun baru
+export const REFERRAL_BONUS = 250; // bonus untuk pengundang & yang diundang
+export const WITHDRAW_ADS_REQUIRED = 350; // syarat penarikan: 350x nonton iklan
 
 export const DAILY_MISSIONS: MissionDef[] = [
   {
@@ -159,6 +164,24 @@ export const DAILY_MISSIONS: MissionDef[] = [
     type: 'ads',
     target: 50,
     reward: 2500,
+    rewardType: 'coins',
+  },
+  {
+    id: 'daily_checkin',
+    title: 'Check-in Harian',
+    description: 'Check-in hari ini (tonton 1 video saat klaim)',
+    type: 'checkin',
+    target: 1,
+    reward: 75,
+    rewardType: 'coins',
+  },
+  {
+    id: 'invite_friends',
+    title: 'Undang 10 Teman',
+    description: 'Undang 10 teman dengan referral valid',
+    type: 'referral',
+    target: 10,
+    reward: 10000,
     rewardType: 'coins',
   },
 ];
