@@ -4,3 +4,4 @@ export { GoldButton } from './ui/GoldButton';
 export { MiningAnimation } from './feature/MiningAnimation';
 export { DailyRewardModal } from './feature/DailyRewardModal';
 export { OfflineRewardModal } from './feature/OfflineRewardModal';
+export { CoinIcon } from './ui/CoinIcon';

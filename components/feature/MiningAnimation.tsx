@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { CoinIcon } from '../ui/CoinIcon';
 import { Colors, FontSize, FontWeight, Spacing, Radius } from '../../constants/theme';
 import { formatCoins } from '../../constants/gameData';
 
@@ -71,7 +72,7 @@ export function MiningAnimation({ miningRate, isActive, currentMine }: Props) {
 
       {/* Floating coin indicator */}
       <Animated.View style={[styles.floatingCoin, { transform: [{ translateY: coinY }], opacity: coinOpacity }]}>
-        <Ionicons name="logo-bitcoin" size={16} color={Colors.primary} />
+        <CoinIcon size={16} />
         <Text style={styles.floatingText}>+{Math.ceil(miningRate / 60)}</Text>
       </Animated.View>
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { ProgressBar } from '../../components/ui/ProgressBar';
@@ -86,7 +87,7 @@ export default function MissionScreen() {
                   <Text style={styles.missionDesc}>{mission.description}</Text>
                 </View>
                 <View style={styles.rewardBadge}>
-                  <Ionicons name="logo-bitcoin" size={12} color={Colors.primary} />
+                  <CoinIcon size={12} />
                   <Text style={styles.rewardText}>+{formatCoins(mission.reward)}</Text>
                 </View>
               </View>

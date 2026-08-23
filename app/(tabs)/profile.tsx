@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Share } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useAuth } from '../../hooks/useAuth';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
@@ -48,7 +49,7 @@ export default function ProfileScreen() {
   };
 
   const stats = [
-    { label: 'Total Koin', value: formatCoins(gameState.totalEarned), icon: 'logo-bitcoin', color: Colors.primary },
+    { label: 'Total Koin', value: formatCoins(gameState.totalEarned), icon: 'coin', color: Colors.primary },
     { label: 'Mining Rate', value: `${formatCoins(gameState.miningRate)}/min`, icon: 'trending-up', color: Colors.success },
     { label: 'Total Upgrade', value: `${gameState.totalUpgrades}x`, icon: 'arrow-up-circle', color: Colors.info },
     { label: 'Area Saat Ini', value: currentMine.name, icon: 'location', color: Colors.warning },
@@ -101,7 +102,11 @@ export default function ProfileScreen() {
         <View style={styles.statsGrid}>
           {stats.map(s => (
             <View key={s.label} style={styles.statCard}>
+              s.icon === 'coin' ? (
+              <CoinIcon size={20} />
+            ) : (
               <Ionicons name={s.icon as any} size={20} color={s.color} />
+            )
               <Text style={styles.statValue}>{s.value}</Text>
               <Text style={styles.statLabel}>{s.label}</Text>
             </View>

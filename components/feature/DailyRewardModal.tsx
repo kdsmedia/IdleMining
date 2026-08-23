@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Modal, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { CoinIcon } from '../ui/CoinIcon';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { DAILY_REWARDS, formatCoins } from '../../constants/gameData';
 import { GoldButton } from '../ui/GoldButton';
@@ -36,11 +37,11 @@ export function DailyRewardModal({ visible, currentStreak, onClaim, onClose }: P
               return (
                 <View key={day} style={[styles.dayCell, isClaimed && styles.dayClaimed, isToday && styles.dayToday]}>
                   <Text style={[styles.dayNum, isToday && styles.dayNumToday]}>H{day}</Text>
-                  <Ionicons
-                    name={isClaimed ? 'checkmark-circle' : 'logo-bitcoin'}
-                    size={18}
-                    color={isClaimed ? Colors.success : isToday ? Colors.primary : Colors.textMuted}
-                  />
+                  {isClaimed ? (
+                    <Ionicons name="checkmark-circle" size={18} color={Colors.success} />
+                  ) : (
+                    <CoinIcon size={18} />
+                  )}
                   <Text style={[styles.dayReward, isToday && styles.dayRewardToday]}>{formatCoins(r)}</Text>
                 </View>
               );
@@ -51,7 +52,7 @@ export function DailyRewardModal({ visible, currentStreak, onClaim, onClose }: P
           <View style={styles.todayReward}>
             <Text style={styles.todayLabel}>Hari {nextDay} — Reward Hari Ini</Text>
             <View style={styles.rewardRow}>
-              <Ionicons name="logo-bitcoin" size={24} color={Colors.primary} />
+              <CoinIcon size={24} />
               <Text style={styles.rewardAmount}>+{formatCoins(reward)} Koin</Text>
             </View>
           </View>

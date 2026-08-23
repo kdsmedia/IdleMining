@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
@@ -118,7 +119,7 @@ export default function UpgradeScreen() {
               {!isMaxed && (
                 <View style={styles.upgradeFooter}>
                   <View style={styles.costRow}>
-                    <Ionicons name="logo-bitcoin" size={14} color={canAfford ? Colors.primary : Colors.textMuted} />
+                    <CoinIcon size={14} />
                     <Text style={[styles.costText, !canAfford && styles.costInsufficient]}>
                       {formatCoins(cost)} Koin
                     </Text>
@@ -154,7 +155,7 @@ export default function UpgradeScreen() {
               <>
                 <Text style={styles.confirmName}>{confirmDef.name} → Lv.{confirmLevel + 1}</Text>
                 <View style={styles.confirmCostRow}>
-                  <Ionicons name="logo-bitcoin" size={20} color={Colors.primary} />
+                  <CoinIcon size={20} />
                   <Text style={styles.confirmCost}>{formatCoins(confirmCost)} Koin</Text>
                 </View>
                 <View style={styles.confirmBtns}>
