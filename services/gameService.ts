@@ -32,7 +32,6 @@ export interface GameState {
   lastMissionResetDate: string;
   transactions: Transaction[];
   totalUpgrades: number;
-  offlineClaimedToday: boolean;
 }
 
 const genTxId = () => 'TX-' + Date.now() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
@@ -49,8 +48,8 @@ const defaultState = (userId: string): GameState => ({
   currentMineId: 'mine1',
   dailyStreak: 0,
   lastDailyClaimDate: '',
-  missionProgress: { mine_coins: 0, upgrade_once: 0, claim_offline: 0 },
-  missionClaimed: { mine_coins: false, upgrade_once: false, claim_offline: false },
+  missionProgress: { mine_coins: 0, upgrade_once: 0, watch_ads: 0 },
+  missionClaimed: { mine_coins: false, upgrade_once: false, watch_ads: false },
   lastMissionResetDate: today(),
   transactions: [{
     id: genTxId(),
@@ -63,7 +62,6 @@ const defaultState = (userId: string): GameState => ({
     status: 'success',
   }],
   totalUpgrades: 0,
-  offlineClaimedToday: false,
 });
 
 export const gameService = {
@@ -76,10 +74,9 @@ export const gameService = {
     }
     // Reset daily missions if date changed
     if (saved.lastMissionResetDate !== today()) {
-      saved.missionProgress = { mine_coins: 0, upgrade_once: 0, claim_offline: 0 };
-      saved.missionClaimed = { mine_coins: false, upgrade_once: false, claim_offline: false };
+      saved.missionProgress = { mine_coins: 0, upgrade_once: 0, watch_ads: 0 };
+      saved.missionClaimed = { mine_coins: false, upgrade_once: false, watch_ads: false };
       saved.lastMissionResetDate = today();
-      saved.offlineClaimedToday = false;
       await storage.set(`game_${userId}`, saved);
     }
     return saved;
@@ -108,30 +105,6 @@ export const gameService = {
       totalEarned: amount > 0 ? state.totalEarned + amount : state.totalEarned,
       transactions: [tx, ...state.transactions].slice(0, 200),
     };
-  },
-
-  claimOffline: (state: GameState): { newState: GameState; reward: number } => {
-    const now = new Date();
-    const lastActive = new Date(state.lastActiveAt);
-    const diffMs = now.getTime() - lastActive.getTime();
-    const diffMinutes = diffMs / (1000 * 60);
-    const capMinutes = computeOfflineCap(state.upgradeLevels['storage'] || 0) * 60;
-    const validMinutes = Math.min(diffMinutes, capMinutes);
-    const reward = Math.floor(state.miningRate * Math.max(0, validMinutes));
-
-    let newState = { ...state, lastActiveAt: now.toISOString() };
-    if (reward > 0) {
-      newState = gameService.addTransaction(newState, 'OFFLINE_MINING', 'Offline Mining', reward);
-      newState.missionProgress = {
-        ...newState.missionProgress,
-        mine_coins: (newState.missionProgress['mine_coins'] || 0) + reward,
-      };
-      if (!newState.offlineClaimedToday) {
-        newState.missionProgress['claim_offline'] = 1;
-        newState.offlineClaimedToday = true;
-      }
-    }
-    return { newState, reward };
   },
 
   claimMining: (state: GameState, minutes: number): { newState: GameState; reward: number } => {
@@ -184,6 +157,15 @@ export const gameService = {
       upgrade_once: (newState.missionProgress['upgrade_once'] || 0) + 1,
     };
     return { newState, success: true };
+  },
+
+  recordAdWatch: (state: GameState): GameState => {
+    let newState = gameService.addTransaction(state, 'ADS_REWARD', 'Reward Iklan', 50);
+    newState.missionProgress = {
+      ...newState.missionProgress,
+      watch_ads: (newState.missionProgress['watch_ads'] || 0) + 1,
+    };
+    return newState;
   },
 
   claimMission: (state: GameState, missionId: string): { newState: GameState; reward: number } => {

@@ -127,7 +127,7 @@ export interface MissionDef {
   id: string;
   title: string;
   description: string;
-  type: 'mining' | 'upgrade' | 'login' | 'claim_offline';
+  type: 'mining' | 'upgrade' | 'login' | 'ads';
   target: number;
   reward: number;
   rewardType: 'coins';
@@ -153,12 +153,12 @@ export const DAILY_MISSIONS: MissionDef[] = [
     rewardType: 'coins',
   },
   {
-    id: 'claim_offline',
-    title: 'Klaim Offline',
-    description: 'Klaim hasil offline mining',
-    type: 'claim_offline',
-    target: 1,
-    reward: 600,
+    id: 'watch_ads',
+    title: 'Tonton Iklan',
+    description: 'Tonton 50 iklan video (50 koin/iklan)',
+    type: 'ads',
+    target: 50,
+    reward: 2500,
     rewardType: 'coins',
   },
 ];

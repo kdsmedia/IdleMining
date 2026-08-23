@@ -6,7 +6,6 @@ import { useGame } from '../../hooks/useGame';
 import { useAuth } from '../../hooks/useAuth';
 import { MiningAnimation } from '../../components/feature/MiningAnimation';
 import { DailyRewardModal } from '../../components/feature/DailyRewardModal';
-import { OfflineRewardModal } from '../../components/feature/OfflineRewardModal';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
 import { AdBanner } from '../../components/ui/AdBanner';
 import { ProgressBar } from '../../components/ui/ProgressBar';
@@ -18,9 +17,9 @@ export default function MiningScreen() {
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const {
-    gameState, showDailyModal, showOfflineModal, offlineReward,
+    gameState, showDailyModal,
     dailyReward, dailyDay,
-    claimDaily, dismissDailyModal, claimOffline, dismissOfflineModal,
+    claimDaily, dismissDailyModal,
     claimMiningTick,
   } = useGame();
 
@@ -167,11 +166,6 @@ export default function MiningScreen() {
         currentStreak={gameState.dailyStreak}
         onClaim={claimDaily}
         onClose={dismissDailyModal}
-      />
-      <OfflineRewardModal
-        visible={showOfflineModal}
-        reward={offlineReward}
-        onClaim={claimOffline}
       />
     </View>
   );

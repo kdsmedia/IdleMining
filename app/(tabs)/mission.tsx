@@ -8,13 +8,29 @@ import { ProgressBar } from '../../components/ui/ProgressBar';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { DAILY_MISSIONS, formatCoins } from '../../constants/gameData';
+import { showRewardedAd, ensureRewardedLoaded } from '../../services/adService';
 import { useAlert } from '@/template';
 
 export default function MissionScreen() {
   const insets = useSafeAreaInsets();
-  const { gameState, claimMission } = useGame();
+  const { gameState, claimMission, recordAdWatch } = useGame();
   const { showAlert } = useAlert();
   const [claimingId, setClaimingId] = useState<string | null>(null);
+  const [watchingAd, setWatchingAd] = useState(false);
+
+  React.useEffect(() => { ensureRewardedLoaded(); }, []);
+
+  const handleWatchAd = async () => {
+    setWatchingAd(true);
+    const earned = await showRewardedAd();
+    setWatchingAd(false);
+    if (earned) {
+      await recordAdWatch();
+      showAlert('Reward Iklan', '+50 Koin ditambahkan ke saldomu!');
+    } else {
+      showAlert('Iklan Belum Siap', 'Coba lagi beberapa saat lagi.');
+    }
+  };
 
   if (!gameState) return null;
 
@@ -119,6 +135,16 @@ export default function MissionScreen() {
                     onPress={() => handleClaim(mission.id)}
                     loading={claimingId === mission.id}
                     size="sm"
+                  />
+                </View>
+              ) : mission.type === 'ads' ? (
+                <View style={styles.claimRow}>
+                  <GoldButton
+                    title="TONTON IKLAN (+50)"
+                    onPress={handleWatchAd}
+                    loading={watchingAd}
+                    size="sm"
+                    variant="secondary"
                   />
                 </View>
               ) : (
