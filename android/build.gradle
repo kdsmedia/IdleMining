@@ -33,15 +33,6 @@ allprojects {
     maven { url 'https://www.jitpack.io' }
   }
 
-  // play-services-ads 25.x is compiled with Kotlin 2.3 metadata (incompatible
-  // with this project's Kotlin 2.0 toolchain), while 24.x removes the
-  // AgeRestrictedTreatment API still used by react-native-google-mobile-ads.
-  // 23.6.0 is the last release that satisfies both constraints.
-  configurations.all {
-    resolutionStrategy {
-      force 'com.google.android.gms:play-services-ads:23.6.0'
-    }
-  }
 }
 
 apply plugin: "expo-root-project"
