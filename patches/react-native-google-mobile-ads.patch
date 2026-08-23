@@ -1,0 +1,55 @@
+diff --git a/src/specs/modules/NativeAppModule.ts b/src/specs/modules/NativeAppModule.ts
+index f315f0571b996cc9bab8eaae5d3d0b588bd7bfff..62d3a176cbe6f2789e9c9872a824063f0ac466ee 100644
+--- a/src/specs/modules/NativeAppModule.ts
++++ b/src/specs/modules/NativeAppModule.ts
+@@ -16,24 +16,24 @@
+ 
+ import type { TurboModule } from 'react-native';
+ import { TurboModuleRegistry } from 'react-native';
+-import type { CodegenTypes } from 'react-native';
++
+ 
+ export interface Spec extends TurboModule {
+   // App initialization
+   initializeApp(
+-    options: CodegenTypes.UnsafeObject,
+-    appConfig: CodegenTypes.UnsafeObject,
+-  ): Promise<CodegenTypes.UnsafeObject>;
++    options: Object,
++    appConfig: Object,
++  ): Promise<Object>;
+   setAutomaticDataCollectionEnabled(appName: string, enabled: boolean): void;
+   deleteApp(appName: string): Promise<void>;
+ 
+   // Events
+   eventsNotifyReady(ready: boolean): void;
+-  eventsGetListeners(): Promise<CodegenTypes.UnsafeObject>;
++  eventsGetListeners(): Promise<Object>;
+   eventsPing(
+     eventName: string,
+-    eventBody: CodegenTypes.UnsafeObject,
+-  ): Promise<CodegenTypes.UnsafeObject>;
++    eventBody: Object,
++  ): Promise<Object>;
+   eventsAddListener(eventName: string): void;
+   eventsRemoveListener(eventName: string, all: boolean): void;
+ 
+@@ -42,15 +42,15 @@ export interface Spec extends TurboModule {
+   removeListeners(count: number): void;
+ 
+   // Meta
+-  metaGetAll(): Promise<CodegenTypes.UnsafeObject>;
++  metaGetAll(): Promise<Object>;
+ 
+   // JSON
+-  jsonGetAll(): Promise<CodegenTypes.UnsafeObject>;
++  jsonGetAll(): Promise<Object>;
+ 
+   // Preferences
+   preferencesSetBool(key: string, value: boolean): Promise<void>;
+   preferencesSetString(key: string, value: string): Promise<void>;
+-  preferencesGetAll(): Promise<CodegenTypes.UnsafeObject>;
++  preferencesGetAll(): Promise<Object>;
+   preferencesClearAll(): Promise<void>;
+ }
+ 

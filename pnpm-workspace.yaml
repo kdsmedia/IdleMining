@@ -6,3 +6,6 @@ allowBuilds:
   protobufjs: false
   react-native-elements: false
   unrs-resolver: false
+
+patchedDependencies:
+  react-native-google-mobile-ads: patches/react-native-google-mobile-ads.patch
