@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useGame } from '../../hooks/useGame';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
-import { formatCoins, formatRupiah, COIN_TO_RUPIAH, WITHDRAW_ADS_REQUIRED } from '../../constants/gameData';
+import { formatCoins, formatRupiah, COIN_TO_RUPIAH } from '../../constants/gameData';
 import { Transaction, gameService } from '../../services/gameService';
 import { CoinIcon } from '../../components/ui/CoinIcon';
 import { useAlert } from '@/template';
@@ -50,14 +50,14 @@ export default function WalletScreen() {
     return true;
   });
 
-  const adsWatched = gameState.totalAdsWatched || 0;
+  const minWithdrawCoins = 1000 * COIN_TO_RUPIAH;
   const withdrawEligible = gameService.canWithdraw(gameState);
 
   const openWithdraw = () => {
     if (!withdrawEligible) {
       showAlert(
-        'Belum Memenuhi Syarat',
-        `Penarikan saldo memerlukan pemenuhan misi bonus. Progres kamu: ${adsWatched}/${WITHDRAW_ADS_REQUIRED}.`
+        'Saldo Belum Cukup',
+        `Minimal penarikan Rp1.000 (${formatCoins(minWithdrawCoins)} koin). Saldo kamu: ${formatCoins(gameState.coins)} koin.`
       );
       return;
     }
@@ -158,8 +158,8 @@ export default function WalletScreen() {
         ) : (
           <Pressable style={styles.lockedBtn} onPress={openWithdraw}>
             <Ionicons name="lock-closed" size={16} color={Colors.textMuted} />
-            <Text style={styles.lockedBtnText}>BELUM MEMENUHI SYARAT</Text>
-            <Text style={styles.lockedBtnSub}>Progres {adsWatched}/{WITHDRAW_ADS_REQUIRED}</Text>
+            <Text style={styles.lockedBtnText}>SALDO BELUM CUKUP</Text>
+            <Text style={styles.lockedBtnSub}>{formatCoins(gameState.coins)}/{formatCoins(minWithdrawCoins)} koin</Text>
           </Pressable>
         )}
 
