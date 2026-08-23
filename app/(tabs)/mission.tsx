@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Share } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useGame } from '../../hooks/useGame';
 import { useAuth } from '../../hooks/useAuth';
 import { GoldButton } from '../../components/ui/GoldButton';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import { CoinDisplay } from '../../components/ui/CoinDisplay';
+import { CoinIcon } from '../../components/ui/CoinIcon';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { DAILY_MISSIONS, formatCoins } from '../../constants/gameData';
 import { PLAYSTORE_URL } from '../../constants/legalContent';
@@ -15,6 +17,7 @@ import { useAlert } from '@/template';
 
 export default function MissionScreen() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const { user } = useAuth();
   const { gameState, claimMission, recordAdWatch, checkInDaily, canCheckInToday } = useGame();
   const { showAlert } = useAlert();
@@ -29,13 +32,13 @@ export default function MissionScreen() {
     setWatchingAd(false);
     if (earned) {
       await recordAdWatch();
-      showAlert('Reward Iklan', '+50 Koin ditambahkan ke saldomu!');
+      showAlert('Bonus Koin', '+50 Koin ditambahkan ke saldomu!');
     } else {
-      showAlert('Iklan Belum Siap', 'Coba lagi beberapa saat lagi.');
+      showAlert('Bonus Belum Siap', 'Coba lagi beberapa saat lagi.');
     }
   };
 
-  // Check-in harian: wajib tonton video, lalu klaim otomatis 75 koin
+  // Check-in harian
   const handleCheckIn = async () => {
     if (!canCheckInToday) {
       showAlert('Sudah Check-in', 'Kamu sudah check-in hari ini. Kembali lagi besok!');
@@ -45,7 +48,7 @@ export default function MissionScreen() {
     const earned = await showRewardedAd();
     setWatchingAd(false);
     if (!earned) {
-      showAlert('Iklan Belum Siap', 'Tonton video untuk menyelesaikan check-in. Coba lagi.');
+      showAlert('Belum Siap', 'Coba lagi beberapa saat lagi.');
       return;
     }
     await checkInDaily();
@@ -109,114 +112,114 @@ export default function MissionScreen() {
           </Text>
         </View>
 
-        <Text style={styles.sectionTitle}>MISI HARIAN</Text>
+        <Text style={styles.sectionTitle}>MISI</Text>
 
-        {DAILY_MISSIONS.map(mission => {
-          const progress = gameState.missionProgress[mission.id] || 0;
-          const claimed = gameState.missionClaimed[mission.id] || false;
-          const completed = progress >= mission.target;
-          const progressRatio = Math.min(progress / mission.target, 1);
+        {/* Grid mini card — 2 sebaris */}
+        <View style={styles.missionGrid}>
+          {DAILY_MISSIONS.map(mission => {
+            const progress = gameState.missionProgress[mission.id] || 0;
+            const claimed = gameState.missionClaimed[mission.id] || false;
+            const completed = progress >= mission.target;
+            const progressRatio = Math.min(progress / mission.target, 1);
 
-          return (
-            <View key={mission.id} style={[styles.missionCard, claimed && styles.missionCardClaimed]}>
-              <View style={styles.missionHeader}>
-                <View style={[styles.missionIcon, claimed && styles.missionIconClaimed, completed && !claimed && styles.missionIconReady]}>
-                  <Ionicons
-                    name={claimed ? 'checkmark' : completed ? 'gift' : 'flag'}
-                    size={20}
-                    color={claimed ? Colors.success : completed ? Colors.primary : Colors.textMuted}
-                  />
-                </View>
-                <View style={styles.missionInfo}>
-                  <Text style={[styles.missionTitle, claimed && styles.missionTitleClaimed]}>
+            return (
+              <View key={mission.id} style={[styles.missionCard, claimed && styles.missionCardClaimed]}>
+                <View style={styles.missionHeader}>
+                  <View style={[styles.missionIcon, claimed && styles.missionIconClaimed, completed && !claimed && styles.missionIconReady]}>
+                    <Ionicons
+                      name={claimed ? 'checkmark' : completed ? 'gift' : 'flag'}
+                      size={14}
+                      color={claimed ? Colors.success : completed ? Colors.primary : Colors.textMuted}
+                    />
+                  </View>
+                  <Text numberOfLines={1} style={[styles.missionTitle, claimed && styles.missionTitleClaimed]}>
                     {mission.title}
                   </Text>
-                  <Text style={styles.missionDesc}>{mission.description}</Text>
                 </View>
+
+                <Text numberOfLines={2} style={styles.missionDesc}>{mission.description}</Text>
+
                 <View style={styles.rewardBadge}>
-                  <Ionicons name="logo-bitcoin" size={12} color={Colors.primary} />
+                  <CoinIcon size={12} />
                   <Text style={styles.rewardText}>+{formatCoins(mission.reward)}</Text>
                 </View>
-              </View>
 
-              {/* Progress */}
-              <View style={styles.progressSection}>
-                <View style={styles.progressHeader}>
-                  <Text style={styles.progressLabel}>Progress</Text>
+                {/* Progress */}
+                <View style={styles.progressSection}>
+                  <ProgressBar
+                    progress={progressRatio}
+                    color={claimed ? Colors.success : completed ? Colors.primary : Colors.info}
+                    height={5}
+                  />
                   <Text style={styles.progressValue}>
-                    {formatCoins(Math.min(progress, mission.target))} / {formatCoins(mission.target)}
+                    {formatCoins(Math.min(progress, mission.target))}/{formatCoins(mission.target)}
                   </Text>
                 </View>
-                <ProgressBar
-                  progress={progressRatio}
-                  color={claimed ? Colors.success : completed ? Colors.primary : Colors.info}
-                  height={6}
-                />
-              </View>
 
-              {/* Action */}
-              {claimed ? (
-                <View style={styles.claimedRow}>
-                  <Ionicons name="checkmark-circle" size={16} color={Colors.success} />
-                  <Text style={styles.claimedText}>Reward Diklaim</Text>
-                </View>
-              ) : completed ? (
-                <View style={styles.claimRow}>
+                {/* Tombol sesuai tugas misi */}
+                {claimed ? (
+                  <View style={styles.claimedRow}>
+                    <Ionicons name="checkmark-circle" size={14} color={Colors.success} />
+                    <Text style={styles.claimedText}>Diklaim</Text>
+                  </View>
+                ) : completed ? (
                   <GoldButton
-                    title="KLAIM REWARD"
+                    title="KLAIM"
                     onPress={() => handleClaim(mission.id)}
                     loading={claimingId === mission.id}
                     size="sm"
+                    fullWidth
                   />
-                </View>
-              ) : mission.type === 'ads' ? (
-                <View style={styles.claimRow}>
+                ) : mission.type === 'ads' ? (
                   <GoldButton
-                    title="TONTON IKLAN (+50)"
+                    title="BONUS +50"
                     onPress={handleWatchAd}
                     loading={watchingAd}
                     size="sm"
                     variant="secondary"
+                    fullWidth
                   />
-                </View>
-              ) : mission.type === 'checkin' ? (
-                <View style={styles.claimRow}>
+                ) : mission.type === 'checkin' ? (
                   <GoldButton
-                    title={canCheckInToday ? 'CHECK-IN (TONTON VIDEO)' : 'SUDAH CHECK-IN'}
+                    title={canCheckInToday ? 'CHECK-IN' : 'SUDAH'}
                     onPress={handleCheckIn}
                     loading={watchingAd}
                     size="sm"
                     variant={canCheckInToday ? 'primary' : 'secondary'}
+                    fullWidth
                   />
-                </View>
-              ) : mission.type === 'referral' ? (
-                <View style={styles.claimRow}>
+                ) : mission.type === 'referral' ? (
                   <GoldButton
-                    title="UNDANG TEMAN"
+                    title="UNDANG"
                     onPress={handleShareReferral}
                     size="sm"
                     variant="secondary"
+                    fullWidth
                   />
-                </View>
-              ) : (
-                <Text style={styles.notReadyText}>
-                  Selesaikan misi untuk klaim reward
-                </Text>
-              )}
-            </View>
-          );
-        })}
-
-        {/* Achievement teaser */}
-        <View style={styles.achievementTeaser}>
-          <Ionicons name="trophy" size={32} color={Colors.primary} />
-          <View style={{ flex: 1 }}>
-            <Text style={styles.achievementTitle}>Achievement</Text>
-            <Text style={styles.achievementSub}>Segera hadir — raih pencapaian jangka panjang</Text>
-          </View>
-          <View style={styles.comingSoon}>
-            <Text style={styles.comingSoonText}>SOON</Text>
-          </View>
+                ) : mission.type === 'mining' ? (
+                  <GoldButton
+                    title="MINING"
+                    onPress={() => router.push('/')}
+                    size="sm"
+                    variant="secondary"
+                    fullWidth
+                  />
+                ) : mission.type === 'upgrade' ? (
+                  <GoldButton
+                    title="UPGRADE"
+                    onPress={() => router.push('/upgrade')}
+                    size="sm"
+                    variant="secondary"
+                    fullWidth
+                  />
+                ) : (
+                  <Text style={styles.notReadyText}>
+                    Selesaikan misi untuk klaim reward
+                  </Text>
+                )}
+              </View>
+            );
+          })}
         </View>
 
         <View style={{ height: 20 }} />
@@ -267,20 +270,26 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textTransform: 'uppercase',
   },
-  missionCard: {
-    backgroundColor: Colors.bgCard,
-    borderRadius: Radius.lg,
-    padding: Spacing.md,
-    borderWidth: 1,
-    borderColor: Colors.border,
+  missionGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: Spacing.sm,
   },
-  missionCardClaimed: { borderColor: Colors.success, opacity: 0.75 },
-  missionHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  missionIcon: {
-    width: 40,
-    height: 40,
+  missionCard: {
+    width: '48%',
+    backgroundColor: Colors.bgCard,
     borderRadius: Radius.md,
+    padding: Spacing.sm,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    gap: Spacing.xs,
+  },
+  missionCardClaimed: { borderColor: Colors.success, opacity: 0.75 },
+  missionHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+  missionIcon: {
+    width: 24,
+    height: 24,
+    borderRadius: Radius.sm,
     backgroundColor: Colors.bgCardElevated,
     alignItems: 'center',
     justifyContent: 'center',
@@ -289,25 +298,23 @@ const styles = StyleSheet.create({
   },
   missionIconClaimed: { backgroundColor: Colors.successBg, borderColor: Colors.success },
   missionIconReady: { backgroundColor: '#1A1200', borderColor: Colors.primaryDark },
-  missionInfo: { flex: 1 },
-  missionTitle: { fontSize: FontSize.body, fontWeight: FontWeight.bold, color: Colors.textPrimary },
+  missionTitle: { flex: 1, fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: Colors.textPrimary },
   missionTitleClaimed: { color: Colors.textMuted },
-  missionDesc: { fontSize: FontSize.xs, color: Colors.textMuted, marginTop: 2 },
+  missionDesc: { fontSize: FontSize.xs, color: Colors.textMuted, minHeight: 28 },
   rewardBadge: {
     flexDirection: 'row',
     alignItems: 'center',
+    alignSelf: 'flex-start',
     gap: 2,
     backgroundColor: '#1A1200',
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 4,
+    paddingHorizontal: Spacing.xs,
+    paddingVertical: 2,
     borderRadius: Radius.sm,
     borderWidth: 1,
     borderColor: Colors.primaryDark,
   },
   rewardText: { fontSize: FontSize.xs, color: Colors.primary, fontWeight: FontWeight.bold },
-  progressSection: { gap: 6 },
-  progressHeader: { flexDirection: 'row', justifyContent: 'space-between' },
-  progressLabel: { fontSize: FontSize.xs, color: Colors.textMuted },
+  progressSection: { gap: 4 },
   progressValue: { fontSize: FontSize.xs, color: Colors.textSecondary, fontWeight: FontWeight.semibold },
   claimedRow: {
     flexDirection: 'row',
@@ -316,27 +323,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: Spacing.xs,
   },
-  claimedText: { fontSize: FontSize.sm, color: Colors.success, fontWeight: FontWeight.semibold },
-  claimRow: { alignItems: 'flex-start' },
+  claimedText: { fontSize: FontSize.xs, color: Colors.success, fontWeight: FontWeight.semibold },
   notReadyText: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'center', paddingVertical: Spacing.xs },
-  achievementTeaser: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.md,
-    backgroundColor: Colors.bgCard,
-    borderRadius: Radius.lg,
-    padding: Spacing.md,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    opacity: 0.7,
-  },
-  achievementTitle: { fontSize: FontSize.body, fontWeight: FontWeight.bold, color: Colors.textSecondary },
-  achievementSub: { fontSize: FontSize.xs, color: Colors.textMuted, marginTop: 2 },
-  comingSoon: {
-    backgroundColor: Colors.bgCardElevated,
-    borderRadius: Radius.sm,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 4,
-  },
-  comingSoonText: { fontSize: FontSize.xs, color: Colors.textMuted, fontWeight: FontWeight.bold },
 });
