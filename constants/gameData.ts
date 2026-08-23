@@ -191,7 +191,7 @@ export interface MissionDef {
   id: string;
   title: string;
   description: string;
-  type: 'mining' | 'upgrade' | 'login' | 'ads' | 'referral' | 'checkin';
+  type: 'mining' | 'upgrade' | 'login' | 'referral' | 'checkin';
   target: number;
   reward: number;
   rewardType: 'coins';
@@ -200,7 +200,7 @@ export interface MissionDef {
 // ---- BONUS & SYARAT ----
 export const SIGNUP_BONUS = 200; // bonus akun baru
 export const REFERRAL_BONUS = 250; // bonus untuk pengundang & yang diundang
-export const WITHDRAW_ADS_REQUIRED = 350;
+// Penarikan tidak bergantung pada aktivitas promosi; validasi saldo dilakukan saat pengajuan.
 
 export const DAILY_MISSIONS: MissionDef[] = [
   {
@@ -219,15 +219,6 @@ export const DAILY_MISSIONS: MissionDef[] = [
     type: 'upgrade',
     target: 1,
     reward: 800,
-    rewardType: 'coins',
-  },
-  {
-    id: 'watch_ads',
-    title: 'Bonus Koin',
-    description: 'Klaim bonus koin harian (50x)',
-    type: 'ads',
-    target: 50,
-    reward: 2500,
     rewardType: 'coins',
   },
   {
