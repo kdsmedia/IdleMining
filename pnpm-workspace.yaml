@@ -1,0 +1,4 @@
+allowBuilds:
+  protobufjs: false
+  react-native-elements: false
+  unrs-resolver: false

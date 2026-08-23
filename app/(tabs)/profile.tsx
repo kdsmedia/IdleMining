@@ -160,7 +160,7 @@ export default function ProfileScreen() {
         {[
           { label: 'Ubah Password', icon: 'lock-closed', action: () => showAlert('Info', 'Fitur ini membutuhkan backend aktif') },
           { label: 'Sesi Login', icon: 'phone-portrait', action: () => showAlert('Sesi Aktif', `Device: ${user.id}\nLogin terakhir: Sekarang`) },
-          { label: 'Tentang Aplikasi', icon: 'information-circle', action: () => showAlert('Idle Mining', 'Versi 1.0 — Blueprint by AI\n100 Koin = Rp1') },
+          { label: 'Tentang Aplikasi', icon: 'information-circle', action: () => showAlert('INDOMINE', 'Versi 1.0 — oleh ALTOMEDIA\nDeveloper: ALTOMEDIA\nKontak: altomediaindonesia@gmail.com\n100 Koin = Rp1') },
         ].map(item => (
           <Pressable key={item.label} style={styles.settingRow} onPress={item.action}>
             <View style={styles.settingLeft}>
