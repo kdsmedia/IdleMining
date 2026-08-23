@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  react-native-google-mobile-ads: 70ba83f96fff15d75923f6423198f59cf351d96399ebbba252104589bb97f3d3
+  react-native-google-mobile-ads: 5f27d03bdf43683b303e78c8223c9329f4262479262f801c50ca88a48413f8b8
 
 importers:
 
@@ -331,7 +331,7 @@ importers:
         version: 2.24.0(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0)
       react-native-google-mobile-ads:
         specifier: ^16.5.0
-        version: 16.5.0(patch_hash=70ba83f96fff15d75923f6423198f59cf351d96399ebbba252104589bb97f3d3)(expo@53.0.27(@babel/core@7.27.4(supports-color@8.1.1))(@expo/metro-runtime@5.0.5(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1)))(graphql@15.10.2)(react-native-webview@13.13.5(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0))(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0)(supports-color@8.1.1))(react@19.0.0)
+        version: 16.5.0(patch_hash=5f27d03bdf43683b303e78c8223c9329f4262479262f801c50ca88a48413f8b8)(expo@53.0.27(@babel/core@7.27.4(supports-color@8.1.1))(@expo/metro-runtime@5.0.5(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1)))(graphql@15.10.2)(react-native-webview@13.13.5(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0))(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0)(supports-color@8.1.1))(react@19.0.0)
       react-native-infinite-scroll-view:
         specifier: ^0.4.5
         version: 0.4.5
@@ -12747,7 +12747,7 @@ snapshots:
       react: 19.0.0
       react-native: 0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1)
 
-  react-native-google-mobile-ads@16.5.0(patch_hash=70ba83f96fff15d75923f6423198f59cf351d96399ebbba252104589bb97f3d3)(expo@53.0.27(@babel/core@7.27.4(supports-color@8.1.1))(@expo/metro-runtime@5.0.5(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1)))(graphql@15.10.2)(react-native-webview@13.13.5(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0))(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0)(supports-color@8.1.1))(react@19.0.0):
+  react-native-google-mobile-ads@16.5.0(patch_hash=5f27d03bdf43683b303e78c8223c9329f4262479262f801c50ca88a48413f8b8)(expo@53.0.27(@babel/core@7.27.4(supports-color@8.1.1))(@expo/metro-runtime@5.0.5(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1)))(graphql@15.10.2)(react-native-webview@13.13.5(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0))(react-native@0.79.6(@babel/core@7.27.4(supports-color@8.1.1))(@types/react@19.0.14)(react@19.0.0)(supports-color@8.1.1))(react@19.0.0)(supports-color@8.1.1))(react@19.0.0):
     dependencies:
       '@iabtcf/core': 1.5.6
       use-deep-compare-effect: 1.8.1(react@19.0.0)
