@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.altomedia.idlemining"
+      "bundleIdentifier": "com.altomedia.indomine"
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +18,8 @@
         "backgroundColor": "#0A0A0F"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.altomedia.idlemining"
+      "package": "com.altomedia.indomine",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -56,7 +57,8 @@
       ],
       "@react-native-community/datetimepicker",
       "expo-asset",
-      "expo-font"
+      "expo-font",
+      "@react-native-firebase/app"
     ],
     "experiments": {
       "typedRoutes": true

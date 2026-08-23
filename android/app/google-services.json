@@ -1,0 +1,180 @@
+{
+  "project_info": {
+    "project_number": "739146490998",
+    "firebase_url": "https://altomedia-indonesia-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "altomedia-indonesia",
+    "storage_bucket": "altomedia-indonesia.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739146490998:android:0e361072707b66514eeb57",
+        "android_client_info": {
+          "package_name": "com.altomedia.beruang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739146490998-iijbggao4ie25fo9aae57omml4evtamt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.altomedia.beruang",
+            "certificate_hash": "2edb983a9e4fb39b3934fd0ce27d202148f22d6c"
+          }
+        },
+        {
+          "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsMHZDFF-93Z1xJDWEpsaqyi6s2juXkLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739146490998:android:5e559fe1ec5190854eeb57",
+        "android_client_info": {
+          "package_name": "com.altomedia.danaplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsMHZDFF-93Z1xJDWEpsaqyi6s2juXkLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739146490998:android:4659da3428467f8a4eeb57",
+        "android_client_info": {
+          "package_name": "com.altomedia.indomine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsMHZDFF-93Z1xJDWEpsaqyi6s2juXkLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739146490998:android:78408b6ad38444cf4eeb57",
+        "android_client_info": {
+          "package_name": "com.altomedia.multicraft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739146490998-55qhqdjrnerc4osacnbj6a6uvafc43j6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.altomedia.multicraft",
+            "certificate_hash": "503c052a110c93f2ba209712cd9f3e2a72600065"
+          }
+        },
+        {
+          "client_id": "739146490998-j22u791fqdnfjhqd0qts73alfn1ndpu0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.altomedia.multicraft",
+            "certificate_hash": "6894cb4db18795b616260b311fbf2fcab7fd92ef"
+          }
+        },
+        {
+          "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsMHZDFF-93Z1xJDWEpsaqyi6s2juXkLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739146490998:android:1cb3cf09800cf10f4eeb57",
+        "android_client_info": {
+          "package_name": "com.altomedia.stonekingdom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsMHZDFF-93Z1xJDWEpsaqyi6s2juXkLI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739146490998-2l95n34bgjf06rfcvsfh8brov1sjlnsp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

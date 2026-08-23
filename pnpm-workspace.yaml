@@ -2,6 +2,7 @@ packages:
   - "."
 
 allowBuilds:
+  '@firebase/util': false
   protobufjs: false
   react-native-elements: false
   unrs-resolver: false

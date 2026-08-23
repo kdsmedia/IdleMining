@@ -1,4 +1,4 @@
-package com.altomedia.idlemining
+package com.altomedia.indomine
 
 import android.app.Application
 import android.content.res.Configuration

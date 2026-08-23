@@ -1,4 +1,5 @@
 import { storage } from './storageService';
+import { db, isFirebaseAvailable } from './firebaseService';
 import {
   computeMiningRate, computeOfflineCap,
   getUpgradeCost, UPGRADES, DAILY_MISSIONS, DAILY_REWARDS,
@@ -66,24 +67,48 @@ const defaultState = (userId: string): GameState => ({
 
 export const gameService = {
   getState: async (userId: string): Promise<GameState> => {
+    // Prioritaskan data cloud (Firestore) agar progress tersimpan lintas perangkat
+    if (isFirebaseAvailable()) {
+      try {
+        const snap = await db().collection('gameStates').doc(userId).get();
+        if (snap.exists()) {
+          const cloud = snap.data() as GameState;
+          await storage.set(`game_${userId}`, cloud);
+          return gameService._applyDailyReset(cloud);
+        }
+      } catch {}
+    }
     const saved = await storage.get<GameState>(`game_${userId}`);
     if (!saved) {
       const state = defaultState(userId);
       await storage.set(`game_${userId}`, state);
+      gameService._syncToCloud(state);
       return state;
     }
+    return gameService._applyDailyReset(saved);
+  },
+
+  _applyDailyReset: (state: GameState): GameState => {
     // Reset daily missions if date changed
-    if (saved.lastMissionResetDate !== today()) {
-      saved.missionProgress = { mine_coins: 0, upgrade_once: 0, watch_ads: 0 };
-      saved.missionClaimed = { mine_coins: false, upgrade_once: false, watch_ads: false };
-      saved.lastMissionResetDate = today();
-      await storage.set(`game_${userId}`, saved);
+    if (state.lastMissionResetDate !== today()) {
+      state.missionProgress = { mine_coins: 0, upgrade_once: 0, watch_ads: 0 };
+      state.missionClaimed = { mine_coins: false, upgrade_once: false, watch_ads: false };
+      state.lastMissionResetDate = today();
+      storage.set(`game_${state.userId}`, state);
+      gameService._syncToCloud(state);
     }
-    return saved;
+    return state;
+  },
+
+  _syncToCloud: (state: GameState): void => {
+    if (!isFirebaseAvailable()) return;
+    db().collection('gameStates').doc(state.userId).set(state)
+      .catch(() => {});
   },
 
   saveState: async (state: GameState): Promise<void> => {
     await storage.set(`game_${state.userId}`, state);
+    gameService._syncToCloud(state);
   },
 
   addTransaction: (state: GameState, type: string, label: string, amount: number): GameState => {

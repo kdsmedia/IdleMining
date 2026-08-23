@@ -1,4 +1,4 @@
-package com.altomedia.idlemining
+package com.altomedia.indomine
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

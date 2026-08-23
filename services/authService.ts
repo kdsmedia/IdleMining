@@ -1,4 +1,5 @@
 import { storage } from './storageService';
+import { fbAuth, db, phoneToEmail, derivePassword, isFirebaseAvailable } from './firebaseService';
 
 export interface User {
   id: string;
@@ -9,59 +10,90 @@ export interface User {
   xp: number;
   vipLevel: number;
   referralCode: string;
+  referredBy?: string;
   createdAt: string;
 }
 
-const generateId = () => 'USR-' + Math.random().toString(36).substring(2, 10).toUpperCase();
 const generateReferralCode = () => Math.random().toString(36).substring(2, 8).toUpperCase();
+
+const cacheUser = (user: User) => storage.set('current_user', user);
 
 export const authService = {
   register: async (username: string, phone: string, password: string, referralCode?: string): Promise<{ user: User; error?: string }> => {
-    const existing = await storage.get<User[]>('users');
-    const users = existing || [];
+    if (isFirebaseAvailable()) {
+      try {
+        // Cek username unik di Firestore
+        const dup = await db().collection('users')
+          .where('usernameLower', '==', username.toLowerCase()).limit(1).get();
+        if (!dup.empty) return { user: null as any, error: 'Username sudah digunakan' };
 
-    if (users.find(u => u.phone === phone)) {
-      return { user: null as any, error: 'Nomor HP sudah terdaftar' };
+        const cred = await fbAuth().createUserWithEmailAndPassword(phoneToEmail(phone), derivePassword(phone, password));
+        let referredBy = '';
+        if (referralCode) {
+          const ref = await db().collection('users')
+            .where('referralCode', '==', referralCode.toUpperCase()).limit(1).get();
+          if (!ref.empty) referredBy = ref.docs[0].id;
+        }
+
+        const user: User = {
+          id: cred.user.uid,
+          username,
+          phone,
+          avatar: 'avatar' + (Math.floor(Math.random() * 6) + 1),
+          level: 1,
+          xp: 0,
+          vipLevel: 0,
+          referralCode: generateReferralCode(),
+          referredBy,
+          createdAt: new Date().toISOString(),
+        };
+        await db().collection('users').doc(user.id).set({
+          ...user,
+          usernameLower: username.toLowerCase(),
+        });
+        await cacheUser(user);
+        await storage.set('session_token', user.id + '_' + Date.now());
+        return { user };
+      } catch (e: any) {
+        const code = e?.code || '';
+        if (code === 'auth/email-already-in-use') return { user: null as any, error: 'Nomor HP sudah terdaftar' };
+        if (code === 'auth/invalid-email') return { user: null as any, error: 'Nomor HP tidak valid' };
+        if (code === 'auth/weak-password') return { user: null as any, error: 'Password terlalu lemah' };
+        return { user: null as any, error: 'Registrasi gagal: ' + (e?.message || 'coba lagi') };
+      }
     }
-    if (users.find(u => u.username.toLowerCase() === username.toLowerCase())) {
-      return { user: null as any, error: 'Username sudah digunakan' };
-    }
-
-    const user: User = {
-      id: generateId(),
-      username,
-      phone,
-      avatar: `avatar${Math.floor(Math.random() * 6) + 1}`,
-      level: 1,
-      xp: 0,
-      vipLevel: 0,
-      referralCode: generateReferralCode(),
-      createdAt: new Date().toISOString(),
-    };
-
-    users.push(user);
-    await storage.set('users', users);
-    await storage.set(`pwd_${phone}`, password);
-    await storage.set('current_user', user);
-    await storage.set('session_token', user.id + '_' + Date.now());
-
-    return { user };
+    return { user: null as any, error: 'Koneksi server tidak tersedia. Coba lagi.' };
   },
 
   login: async (phone: string, password: string): Promise<{ user: User; error?: string }> => {
-    const users = await storage.get<User[]>('users') || [];
-    const user = users.find(u => u.phone === phone);
-    if (!user) return { user: null as any, error: 'Nomor HP tidak ditemukan' };
-
-    const storedPwd = await storage.get<string>(`pwd_${phone}`);
-    if (storedPwd !== password) return { user: null as any, error: 'Password salah' };
-
-    await storage.set('current_user', user);
-    await storage.set('session_token', user.id + '_' + Date.now());
-    return { user };
+    if (isFirebaseAvailable()) {
+      try {
+        const cred = await fbAuth().signInWithEmailAndPassword(phoneToEmail(phone), derivePassword(phone, password));
+        const snap = await db().collection('users').doc(cred.user.uid).get();
+        if (!snap.exists()) {
+          await fbAuth().signOut();
+          return { user: null as any, error: 'Data akun tidak ditemukan' };
+        }
+        const data = snap.data() as any;
+        const { usernameLower, ...user } = data;
+        await cacheUser(user as User);
+        await storage.set('session_token', (user as User).id + '_' + Date.now());
+        return { user: user as User };
+      } catch (e: any) {
+        const code = e?.code || '';
+        if (code === 'auth/user-not-found' || code === 'auth/invalid-credential') {
+          return { user: null as any, error: 'Nomor HP tidak ditemukan atau password salah' };
+        }
+        if (code === 'auth/wrong-password') return { user: null as any, error: 'Password salah' };
+        if (code === 'auth/network-request-failed') return { user: null as any, error: 'Tidak ada koneksi internet' };
+        return { user: null as any, error: 'Login gagal: ' + (e?.message || 'coba lagi') };
+      }
+    }
+    return { user: null as any, error: 'Koneksi server tidak tersedia. Coba lagi.' };
   },
 
   logout: async () => {
+    try { if (isFirebaseAvailable()) await fbAuth().signOut(); } catch {}
     await storage.remove('current_user');
     await storage.remove('session_token');
   },
@@ -69,6 +101,20 @@ export const authService = {
   getCurrentUser: async (): Promise<User | null> => {
     const token = await storage.get<string>('session_token');
     if (!token) return null;
+    // Segarkan dari Firestore bila tersedia agar data selalu terkoneksi
+    if (isFirebaseAvailable()) {
+      try {
+        const fbUser = fbAuth().currentUser;
+        if (fbUser) {
+          const snap = await db().collection('users').doc(fbUser.uid).get();
+          if (snap.exists()) {
+            const { usernameLower, ...user } = snap.data() as any;
+            await cacheUser(user as User);
+            return user as User;
+          }
+        }
+      } catch {}
+    }
     return storage.get<User>('current_user');
   },
 
@@ -76,10 +122,15 @@ export const authService = {
     const current = await storage.get<User>('current_user');
     if (!current) return null;
     const updated = { ...current, ...updates };
-    await storage.set('current_user', updated);
-    const users = await storage.get<User[]>('users') || [];
-    const idx = users.findIndex(u => u.id === current.id);
-    if (idx >= 0) { users[idx] = updated; await storage.set('users', users); }
+    await cacheUser(updated);
+    if (isFirebaseAvailable()) {
+      try {
+        await db().collection('users').doc(current.id).set({
+          ...updated,
+          usernameLower: updated.username.toLowerCase(),
+        }, { merge: true });
+      } catch {}
+    }
     return updated;
   },
 };
