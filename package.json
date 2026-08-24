@@ -157,10 +157,5 @@
     "react-dev-inspector": "^2.0.1",
     "typescript": "~5.8.3"
   },
-  "private": true,
-  "pnpm": {
-    "patchedDependencies": {
-      "react-native-google-mobile-ads": "patches/react-native-google-mobile-ads.patch"
-    }
-  }
+  "private": true
 }
