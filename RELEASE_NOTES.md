@@ -1,6 +1,37 @@
 # Catatan Rilis INDOMINE
 
-## Versi 1.0.2 (Rilis Terbaru)
+## Versi 1.0.3 (Rilis Terbaru)
+
+### Perbaikan Build & Stabilitas
+- Beralih dari pnpm ke npm untuk kompatibilitas EAS Build yang andal.
+- Downgrade `react-native-google-mobile-ads` ke v15.0.0 (GMA SDK 24.1.0) — kompatibel penuh dengan Kotlin 2.0.
+- Menghapus penggunaan API `AgeRestrictedTreatment` yang dihapus di GMA SDK terbaru.
+- Mengganti `getLargeAnchoredAdaptiveBannerAdSize` yang dihapus dengan API yang didukung.
+- Konfigurasi AdMob manual di `AndroidManifest.xml` (menghapus config plugin yang bermasalah).
+- Pin `play-services-ads:24.1.0` di `android/build.gradle` untuk stabilitas build.
+- Menghapus konfigurasi pnpm yang sudah tidak digunakan.
+
+### Fitur & Penyempurnaan (kumulatif dari 1.0.2)
+- Ikon koin seragam 🪙 di seluruh tampilan.
+- Teks tombol dan menu diperpendek agar lebih rapi.
+- Hasil mining diperlambat dengan algoritma SHA-256 dan tampilan hash rate (H/s).
+- Mining wajib internet: otomatis berhenti saat offline atau aplikasi ditutup.
+- Statistik mining tampil sebagai 3 kartu mini sebaris dengan label singkat.
+- Misi tampil sebagai kartu mini 2 sebaris, masing-masing dengan tombol sesuai tugasnya.
+- Paket upgrade kini tersedia 10 jenis.
+- ID user/referral 6 digit dari nomor ponsel yang dipakai login/daftar.
+- Tombol kontak admin tanpa menampilkan email; tombol WhatsApp hanya ikon + teks "WHATSAPP".
+- Fitur achievement dihapus.
+- Syarat penarikan: saldo minimal Rp1.000 dan 350 sesi bonus (rewarded) terselesaikan — progres tampil di halaman Wallet.
+- Seluruh teks terkait promosi pihak ketiga dihilangkan dari UI.
+
+### Rilis
+- Ditandatangani dengan keystore ALTOMEDIA.jks (alias `kdsmedia`).
+- Build APK (preview) dan AAB (production) via EAS.
+- APK: https://expo.dev/artifacts/eas/mNJqOqBrokpBnuj14LLDec0jp7FM15v4Jh9Y0m-cBxc.apk
+- AAB: https://expo.dev/artifacts/eas/_rBQtj4rLzuwKFX14iiA0LHBzYi0JeP8S37ioND_eT4.aab
+
+## Versi 1.0.2
 
 ### Perbaikan Bug
 - Memperbaiki import `AdBanner` yang hilang di halaman Mining (error kompilasi).
