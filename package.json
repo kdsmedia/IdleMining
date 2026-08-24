@@ -8,7 +8,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "postinstall": "node scripts/apply-gma-patch.js"
   },
   "dependencies": {
     "@apollo/client": "^3.4.10",
