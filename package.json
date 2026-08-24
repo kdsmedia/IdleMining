@@ -77,7 +77,6 @@
     "expo-mail-composer": "^14.1.5",
     "expo-manifests": "~0.16.6",
     "expo-media-library": "^17.1.7",
-    "expo-modules-autolinking": "*",
     "expo-navigation-bar": "~4.2.7",
     "expo-network": "^7.1.5",
     "expo-notifications": "~0.31.2",
@@ -151,7 +150,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.0.10",
-    "babel-preset-expo": "^13.2.5",
+    "babel-preset-expo": "^13.0.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
     "react-dev-inspector": "^2.0.1",
