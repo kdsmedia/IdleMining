@@ -48,13 +48,6 @@
           }
         }
       ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-6881903056221433~2359431376",
-          "iosAppId": "ca-app-pub-6881903056221433~2359431376"
-        }
-      ],
       "@react-native-community/datetimepicker",
       "expo-asset",
       "expo-font",
