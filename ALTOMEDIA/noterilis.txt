@@ -43,11 +43,24 @@ Perbaikan & perubahan di versi ini:
 7. BUILD: AdMob App ID resmi dikonfigurasi langsung di AndroidManifest.
 8. BUILD: Migrasi pnpm ke npm agar EAS Build stabil.
 
-Tautan artifact build 1.0.3:
-- APK (pengujian) : https://expo.dev/artifacts/eas/mNJqOqBrokpBnuj14LLDec0jp7FM15v4Jh9Y0m-cBxc.apk
-- AAB (Play Store): https://expo.dev/artifacts/eas/_rBQtj4rLzuwKFX14iiA0LHBzYi0JeP8S37ioND_eT4.aab
-(Artifact build 1.0.3 final tercatat di bawah setelah build selesai —
-lihat bagian "RIWAYAT BUILD".)
+Tautan artifact build 1.0.3 (FINAL, ditandatangani ALTOMEDIA.jks):
+- APK (pengujian langsung di perangkat):
+  https://github.com/kdsmedia/IdleMining/releases/download/v1.0.3/indomine-1.0.3.apk
+- AAB (upload ke Play Console):
+  https://github.com/kdsmedia/IdleMining/releases/download/v1.0.3/indomine-1.0.3.aab
+
+Spesifikasi build final:
+- Package    : com.altomedia.indomine
+- VersionName: 1.0.3 | VersionCode: 3
+- minSdk 24 (Android 7.0+) | targetSdk 36 (Android 16)
+- Ditandatangani: ALTOMEDIA.jks (alias kdsmedia), SHA-256 cert:
+  aa94356579d8f8604735dbc5ab92b891660a44790f5251171960a863c4f5ca67
+
+Catatan: minSdk 23 diminta tetapi tidak memungkinkan secara teknis —
+engine Hermes bawaan React Native 0.79 dikompilasi untuk API 24, sehingga
+Android 7.0 (API 24) adalah minimum yang dapat didukung (~99% perangkat
+aktif). targetSdk 37 belum ada (API 37 belum dirilis Google); targetSdk 36
+adalah persyaratan Play Console saat ini.
 
 ----------------------------------------------------------------------
 VERSI 1.0.2 (24 Agustus 2026)

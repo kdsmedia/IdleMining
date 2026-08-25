@@ -41,3 +41,4 @@ app-example
 # local machine config
 android/local.properties
 credentials.json
+android/app/ALTOMEDIA.jks
