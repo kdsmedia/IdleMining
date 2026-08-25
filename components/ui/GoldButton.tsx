@@ -1,5 +1,5 @@
-import React from 'react';
-import { Pressable, Text, StyleSheet, ActivityIndicator, View } from 'react-native';
+import React, { useRef } from 'react';
+import { Pressable, Text, StyleSheet, ActivityIndicator, View, Animated } from 'react-native';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 
 interface Props {
@@ -13,11 +13,21 @@ interface Props {
   fullWidth?: boolean;
 }
 
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
 export function GoldButton({ title, onPress, disabled, loading, variant = 'primary', size = 'md', icon, fullWidth }: Props) {
   const isDisabled = disabled || loading;
+  const scale = useRef(new Animated.Value(1)).current;
+
+  const animateTo = (value: number) => {
+    Animated.spring(scale, { toValue: value, useNativeDriver: true, speed: 40, bounciness: 6 }).start();
+  };
+
   return (
-    <Pressable
+    <AnimatedPressable
       onPress={onPress}
+      onPressIn={() => !isDisabled && animateTo(0.95)}
+      onPressOut={() => animateTo(1)}
       disabled={isDisabled}
       style={({ pressed }) => [
         styles.base,
@@ -26,6 +36,7 @@ export function GoldButton({ title, onPress, disabled, loading, variant = 'prima
         fullWidth && styles.fullWidth,
         isDisabled && styles.disabled,
         pressed && !isDisabled && styles.pressed,
+        { transform: [{ scale }] },
       ]}
     >
       {loading ? (
@@ -36,7 +47,7 @@ export function GoldButton({ title, onPress, disabled, loading, variant = 'prima
           <Text style={[styles.text, styles[`text_${variant}`], styles[`textSize_${size}`]]}>{title}</Text>
         </View>
       )}
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 
