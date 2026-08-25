@@ -64,6 +64,15 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // ---------- users/{userId}/withdrawals/{wdId} (subkoleksi, opsional) ----------
+    // Apabila nanti penarikan dipindah ke subkoleksi per user, blok ini siap:
+    match /users/{userId}/withdrawals/{wdId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && request.resource.data.status == 'pending';
+      allow update, delete: if false;
+    }
+
     // ---------- default: tolak semua lainnya ----------
     match /{document=**} {
       allow read, write: if false;
@@ -78,4 +87,11 @@ service cloud.firestore {
 // 2. Firestore Database → Create database → Production mode
 // 3. (Opsional) Buat composite index jika diminta saat query:
 //    users: referralCode ASC, referredBy ASC
+//
+// CATATAN KEAMANAN (dibaca, tidak perlu disalin):
+// - Koleksi yang dipakai aplikasi saat ini: users, gameStates.
+// - Koleksi withdrawals tersedia untuk panel admin (diproses manual).
+// - Penulisan gameStates dari client diizinkan agar sinkronisasi lokal→cloud
+//   berjalan; untuk proteksi saldo penuh, pindahkan logika ekonomi ke
+//   Cloud Functions di kemudian hari.
 // ============================================
