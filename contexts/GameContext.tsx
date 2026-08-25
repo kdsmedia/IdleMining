@@ -1,7 +1,6 @@
-import React, { createContext, useState, useEffect, useCallback, ReactNode, useRef } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useContext, ReactNode, useRef } from 'react';
 import { gameService, GameState } from '../services/gameService';
 import { authService } from '../services/authService';
-import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 
 interface GameContextType {
@@ -19,6 +18,7 @@ interface GameContextType {
   canCheckInToday: boolean;
   grantReferralBonus: () => Promise<void>;
   claimMiningTick: (minutes: number) => void;
+  requestWithdrawal: (amountRupiah: number, danaNumber: string) => Promise<{ success: boolean; error?: string }>;
   refreshState: () => Promise<void>;
 }
 
@@ -95,9 +95,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const { newState, reward, day } = gameService.claimDaily(gameState);
     setDailyReward(reward);
     setDailyDay(day);
-    if (reward > 0) { save(newState); }
+    if (reward > 0) { save(newState).catch(() => {}); }
     setShowDailyModal(false);
-    if (reward > 0) { setShowDailyModal(false); }
   };
 
   const dismissDailyModal = () => setShowDailyModal(false);
@@ -142,8 +141,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
     if (!gameState) return;
     const { newState } = gameService.claimMining(gameState, minutes);
     setGameState(newState);
-    gameService.saveState(newState);
+    gameService.saveState(newState).catch(() => {});
   }, [gameState]);
+
+  const requestWithdrawal = async (amountRupiah: number, danaNumber: string): Promise<{ success: boolean; error?: string }> => {
+    if (!gameState) return { success: false, error: 'Game belum dimuat' };
+    const result = gameService.requestWithdrawal(gameState, amountRupiah, danaNumber);
+    if (result.success && result.newState) await save(result.newState);
+    return { success: result.success, error: result.error };
+  };
 
   const refreshState = async () => {
     if (!auth?.user || !gameState) return;
@@ -157,7 +163,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       showDailyModal, dailyReward, dailyDay,
       claimDaily, dismissDailyModal,
       upgrade, claimMission, recordAdWatch, checkInDaily, canCheckInToday, grantReferralBonus,
-      claimMiningTick, refreshState,
+      claimMiningTick, requestWithdrawal, refreshState,
     }}>
       {children}
     </GameContext.Provider>

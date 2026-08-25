@@ -36,7 +36,7 @@ const TX_ICONS: Record<string, any> = {
 
 export default function WalletScreen() {
   const insets = useSafeAreaInsets();
-  const { gameState, recordAdWatch } = useGame();
+  const { gameState, recordAdWatch, requestWithdrawal } = useGame();
   const { showAlert } = useAlert();
   const [filter, setFilter] = useState<'ALL' | 'INCOME' | 'EXPENSE'>('ALL');
   const [showWithdraw, setShowWithdraw] = useState(false);
@@ -62,6 +62,9 @@ export default function WalletScreen() {
   const bonusComplete = bonusDone >= WITHDRAW_ADS_REQUIRED;
   const balanceEnough = gameState.coins >= minWithdrawCoins;
   const withdrawEligible = gameService.canWithdraw(gameState);
+  const pendingWithdrawCoins = gameState.transactions
+    .filter(tx => tx.type === 'WITHDRAWAL' && tx.status === 'pending')
+    .reduce((sum, tx) => sum + Math.abs(tx.amount), 0);
 
   const handleClaimBonus = async () => {
     if (claimingBonus) return;
@@ -87,15 +90,20 @@ export default function WalletScreen() {
     setShowWithdraw(true);
   };
 
-  const handleWithdraw = () => {
+  const handleWithdraw = async () => {
     if (!selectedAmount) { showAlert('Pilih Nominal', 'Pilih nominal penarikan terlebih dahulu'); return; }
     if (!danaNumber.trim() || danaNumber.length < 10) { showAlert('Nomor DANA', 'Masukkan nomor DANA yang valid'); return; }
     const coinsNeeded = selectedAmount * COIN_TO_RUPIAH;
     if (gameState.coins < coinsNeeded) { showAlert('Koin Tidak Cukup', `Kamu butuh ${formatCoins(coinsNeeded)} koin`); return; }
+    const result = await requestWithdrawal(selectedAmount, danaNumber);
+    if (!result.success) {
+      showAlert('Penarikan Gagal', result.error || 'Terjadi kesalahan, coba lagi.');
+      return;
+    }
     setShowWithdraw(false);
     showAlert(
       'Penarikan Diajukan',
-      `Permintaan Rp${selectedAmount.toLocaleString('id-ID')} ke DANA ${danaNumber} sedang diproses (fitur payout membutuhkan backend aktif).`
+      `Permintaan Rp${selectedAmount.toLocaleString('id-ID')} ke DANA ${danaNumber} berhasil diajukan dan sedang diproses admin. Status dapat dipantau di riwayat transaksi.`
     );
     setSelectedAmount(null);
     setDanaNumber('');
@@ -158,7 +166,7 @@ export default function WalletScreen() {
           <View style={styles.detailDivider} />
           <View style={styles.balanceDetailItem}>
             <Text style={styles.balanceDetailLabel}>Pending</Text>
-            <Text style={styles.balanceDetailValue}>0</Text>
+            <Text style={styles.balanceDetailValue}>{formatCoins(pendingWithdrawCoins)}</Text>
           </View>
           <View style={styles.detailDivider} />
           <View style={styles.balanceDetailItem}>

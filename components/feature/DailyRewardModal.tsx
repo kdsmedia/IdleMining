@@ -14,7 +14,8 @@ interface Props {
 }
 
 export function DailyRewardModal({ visible, currentStreak, onClaim, onClose }: Props) {
-  const nextDay = Math.min((currentStreak % 7) + 1, 7);
+  // Harus konsisten dengan logika claimDaily di gameService (streak di-cap di 7)
+  const nextDay = Math.min(currentStreak + 1, 7);
   const reward = DAILY_REWARDS[nextDay - 1];
 
   return (

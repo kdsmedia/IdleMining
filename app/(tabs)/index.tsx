@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, AppState } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useGame } from '../../hooks/useGame';
@@ -11,7 +11,6 @@ import { ProgressBar } from '../../components/ui/ProgressBar';
 import { AdBanner } from '../../components/ui/AdBanner';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { formatCoins, formatRupiah, MINES, xpForLevel, computeHashRate, MINING_ALGORITHM } from '../../constants/gameData';
-import { AppState } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 
 export default function MiningScreen() {
@@ -67,7 +66,7 @@ export default function MiningScreen() {
   const currentMine = MINES.find(m => m.id === gameState.currentMineId) || MINES[0];
   const xpNeeded = xpForLevel(user.level);
   const xpProgress = Math.min(user.xp / xpNeeded, 1);
-  const nextMine = MINES.find(m => m.unlockCoins > gameState.coins && gameState.currentMineId !== m.id);
+  const nextMine = MINES.find(m => m.unlockCoins > gameState.totalEarned);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>

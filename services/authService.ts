@@ -137,6 +137,8 @@ export const authService = {
   grantReferrerBonus: async (referrerId: string): Promise<void> => {
     if (!isFirebaseAvailable()) return;
     try {
+      // Dynamic require untuk menghindari circular import dengan gameService
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { gameService } = require('./gameService');
       const state = await gameService.getState(referrerId);
       const { newState } = gameService.claimReferralBonus(state);

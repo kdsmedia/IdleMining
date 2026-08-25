@@ -3,7 +3,7 @@ import { db, isFirebaseAvailable } from './firebaseService';
 import {
   computeMiningRate, computeOfflineCap,
   getUpgradeCost, UPGRADES, DAILY_MISSIONS, DAILY_REWARDS,
-  xpForLevel, MissionDef, SIGNUP_BONUS, COIN_TO_RUPIAH, WITHDRAW_ADS_REQUIRED,
+  SIGNUP_BONUS, COIN_TO_RUPIAH, WITHDRAW_ADS_REQUIRED,
 } from '../constants/gameData';
 
 export interface Transaction {
@@ -261,4 +261,31 @@ export const gameService = {
   // Penarikan: saldo minimum Rp1.000 DAN 350 sesi bonus (rewarded) terselesaikan
   canWithdraw: (state: GameState): boolean =>
     state.coins >= 1000 * COIN_TO_RUPIAH && (state.totalAdsWatched || 0) >= WITHDRAW_ADS_REQUIRED,
+
+  // Ajukan penarikan nyata: potong koin & catat transaksi pending untuk diproses admin
+  requestWithdrawal: (state: GameState, amountRupiah: number, danaNumber: string): { newState?: GameState; success: boolean; error?: string } => {
+    const coinsNeeded = amountRupiah * COIN_TO_RUPIAH;
+    const cleanNumber = danaNumber.trim();
+    if (!gameService.canWithdraw(state)) return { success: false, error: 'Syarat penarikan belum terpenuhi' };
+    if (!/^08\d{8,13}$/.test(cleanNumber)) return { success: false, error: 'Nomor DANA tidak valid' };
+    if (amountRupiah < 1000) return { success: false, error: 'Nominal penarikan minimal Rp1.000' };
+    if (state.coins < coinsNeeded) return { success: false, error: 'Koin tidak mencukupi' };
+
+    const tx: Transaction = {
+      id: genTxId(),
+      type: 'WITHDRAWAL',
+      label: `Penarikan Rp${amountRupiah.toLocaleString('id-ID')} ke DANA ${cleanNumber}`,
+      amount: -coinsNeeded,
+      balanceBefore: state.coins,
+      balanceAfter: state.coins - coinsNeeded,
+      timestamp: new Date().toISOString(),
+      status: 'pending',
+    };
+    const newState: GameState = {
+      ...state,
+      coins: state.coins - coinsNeeded,
+      transactions: [tx, ...state.transactions].slice(0, 200),
+    };
+    return { newState, success: true };
+  },
 };
