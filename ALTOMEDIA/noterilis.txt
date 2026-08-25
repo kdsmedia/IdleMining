@@ -5,7 +5,39 @@ Selalu salin bagian versi teratas ke kolom "Release notes" Play Console.
 ======================================================================
 
 ----------------------------------------------------------------------
-VERSI 1.0.3 — Build terbaru (25 Agustus 2026)
+VERSI 1.0.4 — Build terbaru (25 Agustus 2026)
+----------------------------------------------------------------------
+
+Catatan rilis untuk Play Console (salin teks ini):
+
+"Update tampilan dan ekonomi:
+• Tampilan mining kini full animasi 2D: hujan koin, kereta tambang
+  berjalan, percikan api, dan denyut dinamis
+• Tombol-tombol kini merespons sentuhan dengan animasi memantul halus
+• Harga seluruh 10 paket upgrade disesuaikan (naik 5x) agar progres
+  lebih menantang
+• Perbaikan stabilitas"
+
+Detail teknis build ini:
+- Package       : com.altomedia.indomine
+- Version name  : 1.0.4 | VersionCode: 4
+- minSdk 24 (Android 7.0+) | targetSdk 36 (Android 16)
+- Signing       : keystore ALTOMEDIA.jks (alias kdsmedia)
+
+Perubahan di versi ini:
+1. UI: MiningAnimation diperkaya menjadi full animasi 2D (hujan koin,
+   kereta tambang bolak-balik, denyut ring, 5 percikan api bergantian,
+   glow dinamis).
+2. UI: GoldButton memakai animasi spring saat ditekan.
+3. EKONOMI: baseCost seluruh 10 upgrade dinaikkan 5x lipat.
+4. KODE: tsc 0 error, eslint bersih.
+
+Tautan artifact build 1.0.4 (FINAL, ditandatangani ALTOMEDIA.jks):
+- APK: https://github.com/kdsmedia/IdleMining/releases/download/v1.0.4/indomine-1.0.4.apk
+- AAB: https://github.com/kdsmedia/IdleMining/releases/download/v1.0.4/indomine-1.0.4.aab
+
+----------------------------------------------------------------------
+VERSI 1.0.3 (25 Agustus 2026)
 ----------------------------------------------------------------------
 
 Catatan rilis untuk Play Console (salin teks ini):
@@ -106,10 +138,10 @@ VERSI 1.0.0 (23 Agustus 2026)
 RIWAYAT BUILD (diperbarui setiap build EAS selesai)
 ----------------------------------------------------------------------
 
-[2026-08-25] v1.0.3 — APK preview   : https://expo.dev/artifacts/eas/mNJqOqBrokpBnuj14LLDec0jp7FM15v4Jh9Y0m-cBxc.apk
-[2026-08-25] v1.0.3 — AAB production: https://expo.dev/artifacts/eas/_rBQtj4rLzuwKFX14iiA0LHBzYi0JeP8S37ioND_eT4.aab
-[2026-08-25] v1.0.3 — Build final bugfix + minSdk23/targetSdk36:
-  (tautan dicatat setelah build ea4ee399 & 4ab0b1a5 selesai)
+[2026-08-25] v1.0.4 — APK: https://github.com/kdsmedia/IdleMining/releases/download/v1.0.4/indomine-1.0.4.apk
+[2026-08-25] v1.0.4 — AAB: https://github.com/kdsmedia/IdleMining/releases/download/v1.0.4/indomine-1.0.4.aab
+[2026-08-25] v1.0.3 — APK: https://github.com/kdsmedia/IdleMining/releases/download/v1.0.3/indomine-1.0.3.apk
+[2026-08-25] v1.0.3 — AAB: https://github.com/kdsmedia/IdleMining/releases/download/v1.0.3/indomine-1.0.3.aab
 
 ----------------------------------------------------------------------
 PANDUAN UPDATE FILE INI

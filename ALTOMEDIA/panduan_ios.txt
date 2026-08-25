@@ -1,0 +1,118 @@
+======================================================================
+PANDUAN BUILD & RILIS iOS — INDOMINE
+Aplikasi: INDOMINE (com.altomedia.indomine)
+======================================================================
+
+STATUS SAAT INI: Build iOS BELUM bisa dijalankan dari environment ini.
+Dokumen ini menjelaskan penyebabnya dan langkah yang harus Anda lakukan.
+
+======================================================================
+1. KENAPA BUILD iOS TIDAK BISA OTOMATIS DARI SINI
+======================================================================
+
+Berbeda dengan Android, build iOS memiliki persyaratan keras dari Apple
+yang tidak dapat digantikan oleh otomasi tanpa kredensial Anda:
+
+a. WAJIB akun Apple Developer Program berbayar (USD 99/tahun).
+   Tanpa akun ini, tidak ada distribution certificate, provisioning
+   profile, maupun akses App Store Connect. Daftar di:
+   https://developer.apple.com/programs/enroll/
+
+b. Build iOS hanya bisa berjalan di macOS (Xcode) atau di EAS Build.
+   Environment ini Linux, jadi satu-satunya jalur adalah EAS Build.
+
+c. EAS Build memerlukan "Distribution Certificate" dan "Provisioning
+   Profile" yang HANYA bisa dibuat dengan login ke akun Apple Anda.
+   Percobaan build non-interaktif dari sini gagal dengan pesan:
+   "Distribution Certificate is not validated for non-interactive builds.
+    Credentials are not set up."
+
+d. Aplikasi memakai @react-native-firebase yang memerlukan file
+   GoogleService-Info.plist (khusus iOS) — terpisah dari
+   google-services.json milik Android.
+
+Kesimpulan: saya tidak dapat menyelesaikan build iOS tanpa Anda terlebih
+dahulu (1) punya akun Apple Developer berbayar, dan (2) menautkannya ke
+EAS. Langkah di bawah memandu Anda menyelesaikannya.
+
+======================================================================
+2. YANG SUDAH SAYA SIAPKAN DI KODE (siap build begitu akun ada)
+======================================================================
+
+- ios.bundleIdentifier: com.altomedia.indomine
+- ios.supportsTablet: true (iPhone + iPad)
+- ios.infoPlist.ITSAppUsesNonExemptEncryption = false
+  (deklarasi enkripsi standar agar lolos App Review tanpa pertanyaan
+  tambahan mengenai enkripsi)
+- AdMob iOS App ID sudah disiapkan di konfigurasi:
+  ca-app-pub-6881903056221433~2359431376
+  (gunakan unit ID Banner/Interstitial/Rewarded yang sama)
+
+======================================================================
+3. LANGKAH YANG HARUS ANDA LAKUKAN (SEKALI SAJA)
+======================================================================
+
+LANGKAH A — Daftar Apple Developer Program
+  1. Buka https://developer.apple.com/programs/enroll/
+  2. Bayar USD 99/tahun, tunggu approval (biasanya 1-2 hari).
+
+LANGKAH B — Buat App ID di Apple Developer
+  1. https://developer.apple.com/account/resources/identifiers/list
+  2. "+" > App IDs > ketik:
+     - Description : INDOMINE
+     - Bundle ID   : Explicit > com.altomedia.indomine
+  3. Centang capability: Associated Domains tidak perlu; cukup default.
+
+LANGKAH C — Buat app di App Store Connect
+  1. https://appstoreconnect.apple.com > My Apps > "+"
+  2. Platform iOS, Name: INDOMINE, Bundle ID: com.altomedia.indomine
+  3. SKU: indomine, Bahasa: Indonesian.
+
+LANGKAH D — Ambil GoogleService-Info.plist (Firebase iOS)
+  1. Firebase Console > Project altomedia-indonesia > Project settings
+  2. "Add app" > pilih iOS > Bundle ID: com.altomedia.indomine
+  3. Unduh GoogleService-Info.plist
+  4. Letakkan di root repository: /GoogleService-Info.plist
+  5. Daftarkan di app.json (saya akan bantu jika file sudah Anda unggah):
+       "ios": { "googleServicesFile": "./GoogleService-Info.plist" }
+
+LANGKAH E — Tautkan kredensial Apple ke EAS (butuh langkah interaktif)
+  Jalankan di komputer Anda sendiri (butuh login Apple ID interaktif):
+    npm install -g eas-cli
+    eas login
+    cd IdleMining
+    eas credentials --platform ios
+  Pilih: iOS > Production > Set up distribution certificate +
+  provisioning profile. EAS akan memandu login Apple ID Anda.
+
+LANGKAH F — Build iOS
+    eas build --platform ios --profile production
+  Hasilnya file .ipa yang bisa diupload ke App Store Connect via
+  Transporter atau: eas submit --platform ios
+
+======================================================================
+4. ALTERNATIF TANPA AKUN APPLE BERBAYAR (SEMENTARA)
+======================================================================
+
+Jika Anda belum ingin membayar USD 99, opsi sementara:
+- Bagikan aplikasi via Expo Go / development build untuk demo internal
+  (bukan distribusi publik App Store).
+- Fokus rilis Android terlebih dahulu (sudah siap), lalu rilis iOS
+  setelah akun Apple Developer aktif.
+
+======================================================================
+5. RINGKASAN STATUS
+======================================================================
+
+[✓] Konfigurasi iOS di app.json siap (bundle ID, tablet, enkripsi)
+[✓] AdMob iOS App ID disiapkan
+[ ] Akun Apple Developer berbayar — HARUS ANDA DAFTAR
+[ ] GoogleService-Info.plist — HARUS ANDA UNDUH dari Firebase
+[ ] Distribution certificate + provisioning profile — via eas credentials
+[ ] Build .ipa — bisa dijalankan setelah 2 langkah di atas selesai
+
+Catatan: Saya bisa langsung menjalankan `eas build --platform ios` begitu
+Anda mengonfirmasi akun Apple Developer sudah aktif DAN file
+GoogleService-Info.plist sudah ada di repository.
+
+--- Dokumen ini adalah bagian resmi dari paket rilis INDOMINE v1.0.4 ---
