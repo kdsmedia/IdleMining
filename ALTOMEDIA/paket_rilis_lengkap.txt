@@ -1,0 +1,133 @@
+======================================================================
+PAKET RILIS LENGKAP INDOMINE — GOOGLE PLAY STORE
+Checklist master seluruh komponen paket rilis
+Aplikasi : INDOMINE (com.altomedia.indomine)
+Developer: ALTOMEDIA — Karawang, Jawa Barat, Indonesia
+======================================================================
+
+STRUKTUR FOLDER PAKET RILIS
+----------------------------------------------------------------------
+ALTOMEDIA/
+├── grafis/
+│   ├── ic_launcher_512.png          Ikon aplikasi 512x512 (wajib)
+│   ├── feature_graphic_1024x500.png Grafis fitur 1024x500 (wajib)
+│   └── screenshots/
+│       ├── 01_mining.png            Screenshot 1080x1920 (min 2, maks 8)
+│       ├── 02_upgrade.png
+│       ├── 03_misi.png
+│       ├── 04_wallet.png
+│       └── 05_profil.png
+├── privacy_policy.txt               Kebijakan Privasi (wajib, host ke URL publik)
+├── terms_of_service.txt             Syarat & Ketentuan Layanan
+├── panduan_upload_rilis.txt         Panduan upload AAB & rilis ke Play Console
+├── panduan_store_listing.txt        Konten listing siap salin-tempel
+├── artikel_blog.txt                 Artikel promosi blog 4000+ karakter
+├── noterilis.txt                    Catatan rilis (update tiap build baru)
+└── paket_rilis_lengkap.txt          Dokumen ini
+
+======================================================================
+CHECKLIST MASTER
+======================================================================
+
+A. IDENTITAS APLIKASI
+[✓] Nama aplikasi     : INDOMINE
+[✓] Package name      : com.altomedia.indomine
+[✓] Versi             : 1.0.3
+[✓] Kategori          : Game > Simulasi
+[✓] Bahasa default    : Indonesia
+[✓] Harga             : Gratis
+
+B. KEPATUHAN TEKNIS PLAY CONSOLE
+[✓] minSdkVersion     : 23 (Android 6.0+)
+[✓] targetSdkVersion  : 36 (Android 16 — syarat Play Console terkini)
+[✓] Format rilis      : AAB (Android App Bundle) — wajib Play Store
+[✓] Penandatanganan   : keystore ALTOMEDIA.jks (alias kdsmedia)
+[✓] Play App Signing  : aktif (dikelola Google)
+
+C. FILE RILIS
+[✓] AAB production    : lihat tautan di noterilis.txt
+[✓] APK pengujian     : lihat tautan di noterilis.txt
+
+D. GRAFIS STORE
+[✓] Ikon 512x512
+[✓] Feature graphic 1024x500
+[✓] 5 screenshot ponsel 1080x1920
+
+E. DOKUMEN HUKUM
+[✓] Privacy policy    : privacy_policy.txt (UU PDP 2022 compliant)
+[✓] Terms of service  : terms_of_service.txt
+[ ] Privacy policy URL: WAJIB dihost publik sebelum submit. Opsi:
+    1. GitHub (gratis, instan):
+       https://github.com/kdsmedia/IdleMining/blob/main/ALTOMEDIA/privacy_policy.txt
+    2. Google Sites / website pribadi.
+
+F. FORMULIR PLAY CONSOLE
+[ ] App access              (lihat panduan_upload_rilis.txt bagian 3)
+[ ] Ads declaration = Yes
+[ ] Content rating IARC     (tanpa unsur perjudian)
+[ ] Target audience = 13+
+[ ] Data safety form        (jawaban di panduan_store_listing.txt bagian 5)
+[ ] Financial features declaration
+[ ] Main store listing      (konten di panduan_store_listing.txt)
+
+G. KONTEN PEMASARAN
+[✓] Deskripsi singkat 79 karakter
+[✓] Deskripsi panjang ~1800 karakter (aman dari klaim menyesatkan)
+[✓] Artikel blog 7800+ karakter (artikel_blog.txt)
+[✓] Kata kunci ASO          (panduan_store_listing.txt bagian 7)
+
+H. ALUR RILIS YANG DISARANKAN
+[ ] 1. Internal testing  → uji di perangkat nyata (checklist di
+        panduan_upload_rilis.txt bagian 6)
+[ ] 2. Closed testing    → 12 tester / 14 hari (wajib akun personal baru)
+[ ] 3. Production        → rollout 10% → 50% → 100% (staged rollout)
+
+I. PASCA RILIS
+[ ] Pantau Android vitals (crash/ANR)
+[ ] Balas ulasan pengguna maksimal 1x24 jam
+[ ] Update noterilis.txt setiap build baru
+[ ] Proses antrean penarikan DANA pengguna secara berkala
+
+======================================================================
+KREDENSIAL PENTING (SIMPAN RAHASIA — JANGAN COMMIT KE REPO PUBLIK)
+======================================================================
+
+Keystore file       : ALTOMEDIA.jks (di root repository)
+Keystore password   : Kdsmedia@123
+Key alias           : kdsmedia
+Key password        : Kdsmedia@123
+Validity            : 10000 hari (sampai Januari 2054)
+Distinguished name  : CN=ALTOMEDIA, OU=Developer, O=ALTOMEDIA,
+                      L=Karawang, ST=Jawa Barat, C=ID
+SHA1 sertifikat     : 2F:59:B4:86:98:7F:D7:48:0F:90:5B:21:5E:8A:5C:5F:FE:E5:E4:6B
+
+PERINGATAN KEAMANAN:
+- Keystore adalah satu-satunya kunci untuk mengupdate aplikasi selamanya.
+  Buat minimal 2 salinan cadangan di lokasi berbeda.
+- Jangan bagikan keystore, password, token Expo, maupun token Git ke
+  pihak mana pun.
+- Pertimbangkan memindahkan kredensial dari repository ke penyimpanan
+  rahasia (password manager / secrets vault) dan menambahkan file
+  kredensial ke .gitignore apabila repository bersifat publik.
+
+======================================================================
+KONFIGURASI MONETISASI (AdMob)
+======================================================================
+
+AdMob App ID   : ca-app-pub-6881903056221433~2359431376
+Banner         : ca-app-pub-6881903056221433/1046349704
+Interstitial   : ca-app-pub-6881903056221433/7420186360
+Rewarded       : ca-app-pub-6881903056221433/1055912398
+
+Semua ID di atas sudah tertanam di dalam build aplikasi.
+
+======================================================================
+KONTAK RESMI
+======================================================================
+
+Developer : ALTOMEDIA
+Email     : altomediaindonesia@gmail.com
+Alamat    : Karawang, Jawa Barat, Indonesia
+
+--- Dokumen ini adalah bagian resmi dari paket rilis INDOMINE v1.0.3 ---
+======================================================================

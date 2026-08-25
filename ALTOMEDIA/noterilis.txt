@@ -1,0 +1,112 @@
+======================================================================
+NOTERILIS — INDOMINE (com.altomedia.indomine)
+Catatan rilis resmi yang diperbarui setiap build terbaru.
+Selalu salin bagian versi teratas ke kolom "Release notes" Play Console.
+======================================================================
+
+----------------------------------------------------------------------
+VERSI 1.0.3 — Build terbaru (25 Agustus 2026)
+----------------------------------------------------------------------
+
+Catatan rilis untuk Play Console (salin teks ini):
+
+"Update stabilitas dan kepatuhan Play Store terbaru:
+• Target Android 16 (API 36) dan dukungan perangkat Android 6.0+ (minSdk 23)
+• Penarikan saldo kini nyata: koin terpotong otomatis, tercatat di riwayat
+  transaksi dengan status yang bisa dipantau
+• Perbaikan tampilan daily reward dan area tambang berikutnya
+• Perbaikan bug dan peningkatan performa"
+
+Detail teknis build ini:
+- Package       : com.altomedia.indomine
+- Version name  : 1.0.3
+- minSdk        : 23
+- targetSdk     : 36 (persyaratan Play Console terkini; API 37 belum
+                  didukung toolchain build saat ini)
+- Signing       : keystore ALTOMEDIA.jks (alias kdsmedia)
+- Build system  : EAS Build (Expo)
+
+Perbaikan & perubahan di versi ini:
+1. FIX: Penarikan wallet bukan lagi stub — sekarang benar-benar memotong
+   koin, memvalidasi nomor DANA, dan mencatat transaksi WITHDRAWAL
+   berstatus pending untuk diproses admin.
+2. FIX: Saldo "Pending" di wallet dihitung dari transaksi penarikan
+   pending, bukan angka hardcoded.
+3. FIX: Preview reward pada DailyRewardModal konsisten dengan logika
+   streak (tercap di hari ke-7).
+4. FIX: Kartu "Area Berikutnya" memakai total koin yang diperoleh secara
+   konsisten dengan progress bar.
+5. FIX: Duplikasi kode dan import dibersihkan; seluruh warning lint
+   dihilangkan (0 error, 0 warning).
+6. BUILD: Downgrade react-native-google-mobile-ads ke 15.0.0 (GMA SDK
+   24.1.0) agar kompatibel dengan toolchain Kotlin 2.0.
+7. BUILD: AdMob App ID resmi dikonfigurasi langsung di AndroidManifest.
+8. BUILD: Migrasi pnpm ke npm agar EAS Build stabil.
+
+Tautan artifact build 1.0.3:
+- APK (pengujian) : https://expo.dev/artifacts/eas/mNJqOqBrokpBnuj14LLDec0jp7FM15v4Jh9Y0m-cBxc.apk
+- AAB (Play Store): https://expo.dev/artifacts/eas/_rBQtj4rLzuwKFX14iiA0LHBzYi0JeP8S37ioND_eT4.aab
+(Artifact build 1.0.3 final tercatat di bawah setelah build selesai —
+lihat bagian "RIWAYAT BUILD".)
+
+----------------------------------------------------------------------
+VERSI 1.0.2 (24 Agustus 2026)
+----------------------------------------------------------------------
+
+- Perbaikan import AdBanner yang hilang di halaman Mining.
+- Perbaikan cabang misi kedaluwarsa yang mereferensikan handler
+  tidak terdefinisi.
+- Penghapusan konstanta penarikan usang di halaman Wallet.
+- Nama aplikasi resmi INDOMINE di layar masuk.
+- Ikon koin seragam di seluruh tampilan.
+- Teks tombol & menu diperpendek.
+- Mining diperlambat dengan algoritma SHA-256 + tampilan hash rate.
+- Mining wajib internet; berhenti otomatis saat offline/aplikasi ditutup.
+- Statistik mining 3 kartu mini sebaris.
+- Misi tampil 2 kartu sebaris dengan tombol sesuai tugas.
+- 10 paket upgrade.
+- ID user/referral 6 digit dari nomor ponsel.
+- Kontak admin tanpa email di UI; tombol WhatsApp ikon + teks.
+- Fitur achievement dihapus.
+- Syarat penarikan: saldo min Rp1.000 + 350 sesi bonus.
+
+----------------------------------------------------------------------
+VERSI 1.0.1 (24 Agustus 2026)
+----------------------------------------------------------------------
+
+- Perbaikan error render grid Statistik di halaman Profil.
+- Perbaikan error lint react/no-unescaped-entities.
+- Perbaikan duplikasi import di halaman Misi.
+- Pembersihan variabel dan import tidak terpakai.
+- Perbaikan dependency useEffect yang hilang.
+- Penandatanganan rilis dengan keystore ALTOMEDIA.
+
+----------------------------------------------------------------------
+VERSI 1.0.0 (23 Agustus 2026)
+----------------------------------------------------------------------
+
+- Rilis perdana INDOMINE.
+- Fitur: mining koin, upgrade, misi harian, wallet, profil.
+- Integrasi Firebase Auth, Firestore, dan AdMob.
+
+----------------------------------------------------------------------
+RIWAYAT BUILD (diperbarui setiap build EAS selesai)
+----------------------------------------------------------------------
+
+[2026-08-25] v1.0.3 — APK preview   : https://expo.dev/artifacts/eas/mNJqOqBrokpBnuj14LLDec0jp7FM15v4Jh9Y0m-cBxc.apk
+[2026-08-25] v1.0.3 — AAB production: https://expo.dev/artifacts/eas/_rBQtj4rLzuwKFX14iiA0LHBzYi0JeP8S37ioND_eT4.aab
+[2026-08-25] v1.0.3 — Build final bugfix + minSdk23/targetSdk36:
+  (tautan dicatat setelah build ea4ee399 & 4ab0b1a5 selesai)
+
+----------------------------------------------------------------------
+PANDUAN UPDATE FILE INI
+----------------------------------------------------------------------
+
+Setiap kali ada build baru:
+1. Tambahkan blok "VERSI x.y.z — Build terbaru (tanggal)" paling atas.
+2. Isi catatan rilis singkat untuk Play Console (maks 500 karakter,
+   bahasa santai, tanpa klaim berlebihan).
+3. Isi detail teknis dan daftar perbaikan.
+4. Tambahkan tautan artifact pada bagian RIWAYAT BUILD.
+5. Commit & push bersama kode build terkait.
+======================================================================

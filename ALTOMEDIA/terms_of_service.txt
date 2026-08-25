@@ -1,0 +1,365 @@
+SYARAT DAN KETENTUAN LAYANAN INDOMINE
+Terakhir diperbarui: 25 Agustus 2026
+Berlaku efektif: 25 Agustus 2026
+
+======================================================================
+SYARAT DAN KETENTUAN LAYANAN APLIKASI INDOMINE
+Dikembangkan dan dikelola oleh ALTOMEDIA
+Paket aplikasi: com.altomedia.indomine
+Kontak resmi: altomediaindonesia@gmail.com
+======================================================================
+
+Dokumen Syarat dan Ketentuan Layanan ini ("Ketentuan") merupakan perjanjian
+hukum yang mengikat antara Anda ("Pengguna", "Anda") dan ALTOMEDIA
+("Pengembang", "kami") yang mengatur akses dan penggunaan aplikasi seluler
+INDOMINE ("Aplikasi") beserta seluruh fitur, konten, dan layanan di
+dalamnya ("Layanan").
+
+DENGAN MENGUNDUH, MENGINSTAL, MENDAFTAR, MENGAKSES, ATAU MENGGUNAKAN
+APLIKASI, ANDA MENYATAKAN BAHWA ANDA TELAH MEMBACA, MEMAHAMI, DAN
+MENYETUJUI UNTUK TERIKAT OLEH SELURUH KETENTUAN INI, TERMASUK KEBIJAKAN
+PRIVASI KAMI YANG MERUPAKAN BAGIAN TIDAK TERPISAHKAN DARI DOKUMEN INI.
+
+Apabila Anda tidak menyetujui Ketentuan ini, Anda tidak diperkenankan
+menggunakan Aplikasi.
+
+======================================================================
+1. DEFINISI
+======================================================================
+
+Dalam Ketentuan ini, istilah-istilah berikut memiliki arti sebagai berikut:
+
+a. "Aplikasi" berarti aplikasi permainan seluler INDOMINE untuk platform
+   Android yang dikembangkan oleh ALTOMEDIA.
+b. "Koin" berarti mata uang virtual di dalam permainan yang diperoleh
+   melalui aktivitas mining, reward harian, penyelesaian misi, bonus, dan
+   referral. Koin adalah elemen permainan virtual dan BUKAN merupakan
+   uang elektronik, aset kripto, surat berharga, atau instrumen keuangan
+   dalam bentuk apa pun.
+c. "Mining" berarti aktivitas permainan simulasi penambangan virtual yang
+   menghasilkan Koin berdasarkan laju mining, algoritma, dan hash rate
+   yang ditampilkan di dalam Aplikasi.
+d. "Sesi Bonus" berarti penyelesaian satu sesi konten sponsor (rewarded)
+   hingga selesai yang dihitung oleh sistem sebagai satu sesi yang sah.
+e. "Penarikan" berarti proses pengajuan penukaran Koin menjadi saldo DANA
+   sesuai dengan ketentuan yang berlaku di dalam Aplikasi.
+f. "Akun" berarti akun pengguna yang terdaftar pada Aplikasi yang
+   terhubung dengan nomor ponsel Pengguna.
+
+======================================================================
+2. KELAYAKAN PENGGUNA
+======================================================================
+
+2.1. Anda harus berusia minimal 13 tahun untuk menggunakan Aplikasi.
+Pengguna berusia 13 hingga 17 tahun wajib menggunakan Aplikasi dengan izin
+dan di bawah pengawasan orang tua atau wali yang sah.
+
+2.2. Dengan mendaftar, Anda menyatakan dan menjamin bahwa:
+a. Anda memiliki kapasitas hukum untuk terikat dalam perjanjian ini;
+b. Seluruh informasi yang Anda berikan adalah benar, akurat, dan terkini;
+c. Anda adalah pemilik sah dari nomor ponsel yang digunakan untuk
+   pendaftaran;
+d. Anda akan menjaga kerahasiaan kredensial akun Anda dan bertanggung
+   jawab penuh atas seluruh aktivitas yang terjadi pada akun Anda.
+
+2.3. Satu orang hanya diperkenankan memiliki SATU akun. Pembuatan akun
+ganda untuk tujuan apa pun merupakan pelanggaran terhadap Ketentuan ini.
+
+======================================================================
+3. AKUN DAN KEAMANAN
+======================================================================
+
+3.1. Pendaftaran dilakukan menggunakan nomor ponsel yang valid. Sistem kami
+akan menghasilkan ID pengguna dan kode referral unik 6 digit yang
+diturunkan dari nomor ponsel Anda.
+
+3.2. Anda bertanggung jawab menjaga keamanan perangkat dan akun Anda.
+Segala aktivitas yang terjadi melalui akun Anda dianggap sebagai aktivitas
+yang dilakukan oleh Anda.
+
+3.3. Segera laporkan kepada kami apabila terdapat dugaan penggunaan akun
+Anda oleh pihak yang tidak berwenang melalui kontak resmi kami.
+
+3.4. Kami berhak menangguhkan atau menonaktifkan akun yang terindikasi
+melakukan pelanggaran terhadap Ketentuan ini, termasuk namun tidak
+terbatas pada kecurangan, penggunaan perangkat lunak pihak ketiga yang
+tidak sah, atau penyalahgunaan sistem reward.
+
+======================================================================
+4. KETENTUAN PERMAINAN
+======================================================================
+
+4.1. Sifat Permainan. INDOMINE adalah permainan simulasi penambangan idle
+untuk tujuan hiburan. Seluruh elemen di dalamnya — termasuk Koin, area
+tambang, peralatan, pekerja, mesin, algoritma, dan hash rate — adalah
+elemen virtual permainan dan tidak merepresentasikan aktivitas penambangan
+nyata, kepemilikan aset fisik, investasi, atau janji keuntungan finansial
+dalam bentuk apa pun.
+
+4.2. Mining. Fitur mining menghasilkan Koin berdasarkan laju mining akun
+Anda. Mining memerlukan koneksi internet yang aktif dan hanya berjalan
+selama Aplikasi terbuka. Apabila koneksi internet terputus atau Aplikasi
+ditutup, proses mining otomatis berhenti dan tidak menghasilkan Koin.
+
+4.3. Koin Virtual. Koin yang Anda peroleh:
+a. Hanya dapat digunakan di dalam ekosistem Aplikasi;
+b. Tidak dapat dipindahtangankan antar pengguna, diperjualbelikan di luar
+   Aplikasi, atau ditukarkan dengan mata uang kripto;
+c. Tidak memiliki nilai tunai di luar mekanisme Penarikan resmi yang
+   diatur dalam Ketentuan ini;
+d. Dapat disesuaikan, dikoreksi, atau dibatalkan oleh kami apabila
+   diperoleh melalui cara yang melanggar Ketentuan ini atau akibat
+   kesalahan teknis (bug/error sistem).
+
+4.4. Daily Reward, Misi, dan Bonus. Reward harian, misi, dan bonus diberikan
+sesuai ketentuan yang ditampilkan di dalam Aplikasi dan dapat berubah dari
+waktu ke waktu. Sesi Bonus hanya dihitung apabila diselesaikan hingga
+tuntas sesuai standar yang ditentukan oleh penyedia konten sponsor.
+
+4.5. Program Referral. Anda dapat membagikan kode referral 6 digit Anda.
+Bonus referral diberikan sesuai ketentuan yang berlaku apabila pengguna
+baru mendaftar menggunakan kode Anda secara sah. Referral yang diperoleh
+melalui akun palsu, perangkat ganda, emulator masal, atau cara curang
+lainnya tidak akan dihitung dan dapat menyebabkan penangguhan akun.
+
+======================================================================
+5. PENARIKAN SALDO
+======================================================================
+
+5.1. Syarat Penarikan. Penarikan dapat diajukan apabila memenuhi seluruh
+syarat berikut secara kumulatif:
+a. Saldo Koin mencukupi nominal minimum yang ditetapkan di dalam Aplikasi
+   (minimum Rp1.000 dengan kurs konversi yang tercantum di Aplikasi); dan
+b. Jumlah Sesi Bonus yang telah diselesaikan memenuhi ambang yang
+   ditetapkan di dalam Aplikasi (350 sesi); dan
+c. Akun dalam status aktif dan tidak sedang dalam peninjauan pelanggaran.
+
+5.2. Proses Penarikan. Penarikan diajukan melalui menu Wallet dengan
+memilih nominal dan memasukkan nomor DANA tujuan yang valid milik Anda
+sendiri. Setelah diajukan, Koin Anda akan dipotong dan permintaan dicatat
+dengan status "pending" untuk diverifikasi dan diproses oleh tim kami
+secara manual. Waktu pemrosesan dapat bervariasi dan akan diupayakan
+secepat mungkin.
+
+5.3. Verifikasi dan Penolakan. Kami berhak melakukan verifikasi atas setiap
+permintaan Penarikan dan menolak atau membatalkan Penarikan apabila:
+a. Ditemukan indikasi kecurangan atau pelanggaran Ketentuan;
+b. Data tujuan penarikan tidak valid atau bukan milik Anda;
+c. Saldo atau Sesi Bonus diperoleh melalui cara yang tidak sah.
+Koin dari Penarikan yang ditolak karena kesalahan sistem akan dikembalikan
+ke akun Anda.
+
+5.4. Batas Tanggung Jawab Penarikan. Nilai tukar Koin, ambang syarat, dan
+ketersediaan fitur Penarikan dapat berubah sewaktu-waktu dengan
+pemberitahuan melalui Aplikasi. Kami tidak menjanjikan dan tidak
+menjamin tingkat penghasilan tertentu dari penggunaan Aplikasi.
+
+======================================================================
+6. PERILAKU YANG DILARANG
+======================================================================
+
+Anda dilarang untuk:
+a. Menggunakan bot, skrip, auto-clicker, emulator masal, atau perangkat
+   lunak otomatisasi apa pun untuk menghasilkan Koin atau Sesi Bonus;
+b. Memanipulasi, memodifikasi, mendekompilasi, atau merekayasa balik
+   (reverse engineer) Aplikasi atau bagian mana pun darinya;
+c. Memanfaatkan bug, celah keamanan, atau kesalahan sistem untuk
+   keuntungan tidak sah;
+d. Membuat lebih dari satu akun atau menggunakan identitas palsu;
+e. Menjual, membeli, atau memperdagangkan akun atau Koin di luar
+   mekanisme resmi Aplikasi;
+f. Mengganggu atau merusak server, jaringan, atau infrastruktur kami;
+g. Melakukan tindakan yang melanggar hukum yang berlaku di Republik
+   Indonesia atau hukum di yurisdiksi tempat Anda berada;
+h. Mengunggah atau menyebarkan konten yang melanggar hukum, mengandung
+   SARA, pornografi, atau melanggar hak pihak lain melalui fitur Aplikasi;
+i. Menyalahgunakan program referral dalam bentuk apa pun.
+
+Pelanggaran terhadap ketentuan ini dapat mengakibatkan pengurangan atau
+penghapusan Koin, penolakan Penarikan, penangguhan akun, hingga pemblokiran
+permanen tanpa kompensasi apa pun.
+
+======================================================================
+7. KONTEN SPONSOR (PERIKLANAN)
+======================================================================
+
+7.1. Aplikasi menampilkan konten sponsor dari pihak ketiga (Google AdMob)
+untuk mendukung operasional dan menjaga Aplikasi tetap gratis.
+
+7.2. Kami tidak bertanggung jawab atas isi, keakuratan, atau ketersediaan
+produk/layanan yang ditampilkan dalam konten sponsor pihak ketiga.
+Interaksi Anda dengan konten sponsor merupakan hubungan langsung antara
+Anda dengan penyedia konten tersebut.
+
+7.3. Penyelesaian Sesi Bonus dicatat berdasarkan sinyal resmi dari
+penyedia konten sponsor. Upaya memanipulasi pencatatan sesi (misalnya
+dengan VPN masal, klik otomatis, atau perangkat palsu) merupakan
+pelanggaran serius terhadap Ketentuan ini.
+
+======================================================================
+8. HAK KEKAYAAN INTELEKTUAL
+======================================================================
+
+8.1. Seluruh hak kekayaan intelektual atas Aplikasi — termasuk namun tidak
+terbatas pada kode sumber, desain antarmuka, grafis, ilustrasi, logo,
+nama INDOMINE, teks, musik, dan dokumentasi — adalah milik ALTOMEDIA
+atau pemberi lisensinya dan dilindungi oleh hukum hak cipta yang berlaku.
+
+8.2. Kami memberikan Anda lisensi terbatas, non-eksklusif, tidak dapat
+dipindahtangankan, dan dapat dicabut untuk menginstal dan menggunakan
+Aplikasi pada perangkat pribadi Anda semata-mata untuk tujuan hiburan
+non-komersial sesuai Ketentuan ini.
+
+8.3. Anda tidak diperkenankan menyalin, memodifikasi, mendistribusikan,
+menjual, menyewakan, atau membuat karya turunan dari Aplikasi atau konten
+di dalamnya tanpa izin tertulis dari kami.
+
+======================================================================
+9. KETERSEDIAAN LAYANAN
+======================================================================
+
+9.1. Kami berupaya menjaga Aplikasi tetap tersedia, namun tidak menjamin
+Layanan akan selalu tersedia tanpa gangguan, tepat waktu, aman, atau bebas
+dari kesalahan.
+
+9.2. Kami berhak mengubah, menangguhkan, atau menghentikan sebagian atau
+seluruh fitur Aplikasi kapan saja untuk pemeliharaan, pembaruan, atau
+alasan operasional lainnya, dengan atau tanpa pemberitahuan terlebih
+dahulu.
+
+9.3. Aplikasi memerlukan koneksi internet. Biaya data yang timbul dari
+penggunaan Aplikasi sepenuhnya menjadi tanggung jawab Anda.
+
+======================================================================
+10. PENAFIAN JAMINAN
+======================================================================
+
+SEJAUH DIPERKENANKAN OLEH HUKUM YANG BERLAKU, APLIKASI DISEDIAKAN "SEBAGAIMANA
+ADANYA" (AS IS) DAN "SEBAGAIMANA TERSEDIA" (AS AVAILABLE) TANPA JAMINAN DALAM
+BENTUK APA PUN, BAIK TERSURAT MAUPUN TERSIRAT, TERMASUK NAMUN TIDAK TERBATAS
+PADA JAMINAN TERSIRAT ATAS KELAYAKAN UNTUK DIPERDAGANGKAN, KESESUAIAN UNTUK
+TUJUAN TERTENTU, ATAU NON-PELANGGARAN.
+
+KAMI TIDAK MENJAMIN BAHWA:
+a. Aplikasi akan memenuhi harapan atau kebutuhan spesifik Anda;
+b. Aplikasi akan bebas dari kesalahan, virus, atau komponen berbahaya;
+c. Hasil yang diperoleh dari penggunaan Aplikasi akan akurat atau andal
+   setiap saat;
+d. Tingkat perolehan Koin atau keberhasilan Penarikan tertentu akan
+   tercapai dalam jangka waktu tertentu.
+
+======================================================================
+11. PEMBATASAN TANGGUNG JAWAB
+======================================================================
+
+SEJAUH DIPERKENANKAN OLEH HUKUM YANG BERLAKU, ALTOMEDIA, BESERTA DIREKSI,
+KARYAWAN, MITRA, DAN AFILIASINYA, TIDAK BERTANGGUNG JAWAB ATAS:
+
+a. Kerugian tidak langsung, insidental, khusus, konsekuensial, atau
+   hukuman, termasuk kehilangan keuntungan, kehilangan data, atau
+   kehilangan goodwill;
+b. Kerugian yang timbul dari ketidakmampuan Anda mengakses atau menggunakan
+   Aplikasi;
+c. Gangguan, kesalahan, atau keterlambatan transmisi data;
+d. Tindakan pihak ketiga, termasuk penyedia konten sponsor dan penyedia
+   layanan pembayaran;
+e. Kehilangan saldo Koin yang disebabkan oleh pelanggaran yang Anda
+   lakukan atau kesalahan data tujuan Penarikan yang Anda masukkan.
+
+Total tanggung jawab kumulatif kami kepada Anda atas segala klaim yang
+timbul dari penggunaan Aplikasi tidak akan melebihi nilai Penarikan yang
+secara sah belum diproses pada akun Anda, atau Rp100.000 (seratus ribu
+rupiah), mana yang lebih rendah.
+
+======================================================================
+12. GANTI RUGI
+======================================================================
+
+Anda setuju untuk membela, mengganti rugi, dan membebaskan ALTOMEDIA dari
+dan terhadap segala klaim, kerugian, kewajiban, biaya, dan pengeluaran
+(termasuk biaya hukum yang wajar) yang timbul dari atau berkaitan dengan:
+a. Pelanggaran Anda terhadap Ketentuan ini;
+b. Penyalahgunaan Aplikasi oleh Anda;
+c. Pelanggaran Anda terhadap hak pihak ketiga mana pun;
+d. Data tidak akurat atau tidak sah yang Anda berikan.
+
+======================================================================
+13. PENGAKHIRAN
+======================================================================
+
+13.1. Anda dapat menghentikan penggunaan Aplikasi kapan saja dengan
+menghapus Aplikasi dari perangkat Anda. Permintaan penghapusan akun dan
+data dapat diajukan melalui kontak resmi kami.
+
+13.2. Kami dapat menangguhkan atau mengakhiri akses Anda ke Aplikasi
+dengan segera, tanpa pemberitahuan terlebih dahulu, apabila Anda melanggar
+Ketentuan ini atau apabila kami diwajibkan oleh hukum.
+
+13.3. Setelah pengakhiran akun, hak Anda untuk menggunakan Aplikasi segera
+berakhir, dan seluruh saldo Koin, progres, serta riwayat Anda dapat
+dihapus secara permanen tanpa dapat dikembalikan. Ketentuan yang menurut
+sifatnya harus tetap berlaku (termasuk pembatasan tanggung jawab, ganti
+rugi, dan penyelesaian sengketa) tetap berlaku setelah pengakhiran.
+
+======================================================================
+14. PERUBAHAN KETENTUAN
+======================================================================
+
+Kami berhak mengubah Ketentuan ini dari waktu ke waktu. Perubahan material
+akan diberitahukan melalui pembaruan Aplikasi dan/atau pemberitahuan di
+dalam Aplikasi sebelum berlaku efektif. Tanggal "Terakhir diperbarui" di
+bagian atas menunjukkan revisi terakhir. Penggunaan Aplikasi secara
+berkelanjutan setelah perubahan berlaku merupakan persetujuan Anda
+terhadap Ketentuan yang diperbarui.
+
+======================================================================
+15. KETENTUAN UMUM
+======================================================================
+
+15.1. Keseluruhan Perjanjian. Ketentuan ini bersama dengan Kebijakan
+Privasi merupakan keseluruhan perjanjian antara Anda dan kami terkait
+penggunaan Aplikasi.
+
+15.2. Keterpisahan. Apabila suatu ketentuan dalam dokumen ini dinyatakan
+tidak sah atau tidak dapat dilaksanakan, ketentuan lainnya tetap berlaku
+penuh.
+
+15.3. Pengesampingan. Tidak dilaksanakannya suatu hak oleh kami bukan
+merupakan pengesampingan atas hak tersebut.
+
+15.4. Pengalihan. Anda tidak dapat mengalihkan hak atau kewajiban Anda
+berdasarkan Ketentuan ini tanpa persetujuan tertulis kami. Kami dapat
+mengalihkan hak dan kewajiban kami kepada pihak lain dalam rangka
+restrukturisasi, penggabungan, atau pengalihan usaha.
+
+15.5. Bahasa. Dokumen ini dibuat dalam Bahasa Indonesia. Apabila terdapat
+terjemahan, versi Bahasa Indonesia yang berlaku dan mengikat.
+
+======================================================================
+16. HUKUM YANG BERLAKU DAN PENYELESAIAN SENGKETA
+======================================================================
+
+Ketentuan ini diatur oleh dan ditafsirkan sesuai dengan hukum Republik
+Indonesia. Setiap sengketa yang timbul akan diselesaikan terlebih dahulu
+secara musyawarah untuk mufakat dalam jangka waktu 30 (tiga puluh) hari
+kalender. Apabila musyawarah tidak berhasil, sengketa akan diselesaikan
+melalui Badan Arbitrase Nasional Indonesia (BANI) atau pengadilan yang
+berwenang di wilayah Kabupaten Karawang, Jawa Barat, Indonesia, sesuai
+kesepakatan para pihak.
+
+======================================================================
+17. HUBUNGI KAMI
+======================================================================
+
+Untuk pertanyaan, keluhan, atau pemberitahuan hukum terkait Ketentuan ini:
+
+Nama Pengembang   : ALTOMEDIA
+Email             : altomediaindonesia@gmail.com
+Alamat            : Karawang, Jawa Barat, Indonesia
+Jam Layanan       : Senin - Jumat, 09.00 - 17.00 WIB
+
+Dengan menggunakan Aplikasi INDOMINE, Anda menyatakan telah membaca,
+memahami, dan menyetujui Syarat dan Ketentuan Layanan ini secara
+keseluruhan.
+
+--- Dokumen ini adalah bagian resmi dari paket rilis INDOMINE v1.0.3 ---

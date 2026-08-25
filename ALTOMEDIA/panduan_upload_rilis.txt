@@ -1,0 +1,253 @@
+======================================================================
+PANDUAN UPLOAD RILIS INDOMINE KE GOOGLE PLAY CONSOLE
+Dokumen resmi paket rilis ALTOMEDIA
+Aplikasi: INDOMINE (com.altomedia.indomine)
+======================================================================
+
+DAFTAR ISI
+1. Prasyarat sebelum upload
+2. File rilis yang dihasilkan
+3. Langkah upload AAB ke Play Console
+4. Pembuatan rilis produksi
+5. Mengisi konten listing (ringkas, detail di panduan_store_listing.txt)
+6. Pengujian internal/tertutup/terbuka
+7. Checklist akhir sebelum kirim untuk ditinjau
+8. Masalah umum dan solusinya
+
+======================================================================
+1. PRASYARAT SEBELUM UPLOAD
+======================================================================
+
+Sebelum mengupload, pastikan hal-hal berikut sudah siap:
+
+a. Akun Google Play Console aktif (biaya pendaftaran satu kali $25).
+   Daftar di: https://play.google.com/console
+
+b. Aplikasi sudah dibuat di Play Console:
+   - Masuk ke Play Console > "Create app"
+   - App name: INDOMINE
+   - Default language: Indonesian (id-ID)
+   - App or game: Game
+   - Free or paid: Free
+   - Centang deklarasi kepatuhan (Declarations)
+
+c. File AAB hasil build EAS sudah diunduh ke komputer Anda.
+   Lihat Bagian 2 untuk tautan unduhan terbaru.
+
+d. Keystore dan kredensial penandatanganan tersimpan aman:
+   - File keystore : ALTOMEDIA.jks (tersedia di root repository)
+   - Keystore pass : Kdsmedia@123
+   - Alias         : kdsmedia
+   - Key pass      : Kdsmedia@123
+   PENTING: Jangan pernah membagikan atau menghilangkan keystore ini.
+   Tanpa keystore yang sama, Anda tidak dapat mengupdate aplikasi.
+   Simpan salinan cadangan di lokasi yang aman (Google Drive pribadi,
+   hard disk eksternal, dan manajer kata sandi).
+
+e. Grafis store sudah siap di folder ALTOMEDIA/grafis/:
+   - ic_launcher_512.png        (ikon 512x512)
+   - feature_graphic_1024x500.png (grafis fitur 1024x500)
+   - screenshots/01..05.png      (screenshot 1080x1920)
+
+======================================================================
+2. FILE RILIS YANG DIHASILKAN
+======================================================================
+
+Build dilakukan via EAS Build (Expo) dengan signing keystore ALTOMEDIA.
+
+Versi aplikasi : 1.0.3
+Package name   : com.altomedia.indomine
+minSdk         : 23 (Android 6.0+)
+targetSdk      : 36 (Android 16 — persyaratan Play Console terkini)
+compileSdk     : 36
+
+Tautan unduhan build terbaru (dicatat juga di noterilis.txt):
+
+APK (untuk pengujian langsung di perangkat):
+  https://expo.dev/artifacts/eas/mNJqOqBrokpBnuj14LLDec0jp7FM15v4Jh9Y0m-cBxc.apk
+
+AAB (untuk diupload ke Play Console):
+  https://expo.dev/artifacts/eas/_rBQtj4rLzuwKFX14iiA0LHBzYi0JeP8S37ioND_eT4.aab
+
+CATATAN: Selalu gunakan AAB untuk Play Console. APK hanya untuk
+pengujian manual di perangkat fisik/emulator.
+
+Cara membangun ulang (apabila perlu build baru):
+  export EXPO_TOKEN=<token expo Anda>
+  cd IdleMining
+  eas build --platform android --profile production --non-interactive
+
+Profil build tersedia di eas.json:
+  - preview    : menghasilkan APK (pengujian)
+  - production : menghasilkan AAB (rilis Play Store)
+
+======================================================================
+3. LANGKAH UPLOAD AAB KE PLAY CONSOLE
+======================================================================
+
+Langkah 1 — Buat aplikasi (sekali saja)
+  1. Buka https://play.google.com/console
+  2. Klik "Create app" dan isi:
+     - App name            : INDOMINE
+     - Default language    : Indonesian (Bahasa Indonesia)
+     - App or game         : Game
+     - Free or paid        : Free
+  3. Centang seluruh deklarasi lalu klik "Create app".
+
+Langkah 2 — Lengkapi Dashboard (Set up your app)
+  Play Console akan memandu Anda melalui daftar tugas wajib:
+  a. App access        : pilih "All or some functionality is restricted"
+                         jika perlu login; berikan akun demo/instruksi
+                         login untuk tim peninjau Google, ATAU pilih
+                         "All functionality is available" jika peninjau
+                         dapat mendaftar sendiri dengan nomor ponsel.
+  b. Ads declaration   : pilih "Yes, my app contains ads".
+  c. Content rating    : isi kuesioner IARC. Rekomendasi jawaban:
+                         - Kategori: Game
+                         - Kekerasan: tidak ada
+                         - Perjudian: TIDAK ADA (jawab "No" untuk seluruh
+                           pertanyaan perjudian/judi/simulasi judi)
+                         - Hasil umum: Everyone / PEGI 3 / Semua Umur.
+  d. Target audience   : pilih usia 13+ (sesuai Terms of Service).
+                         Jangan pilih kategori anak-anak.
+  e. News apps         : No.
+  f. COVID-19 contact tracing: No.
+  g. Data safety       : isi formulir keamanan data (lihat Bagian 5.4
+                         panduan_store_listing.txt untuk jawaban lengkap).
+  h. Government apps   : No.
+  i. Financial features: pilih "None" kecuali diminta; penarikan DANA
+                         diproses manual di luar Play billing.
+  j. Health apps       : No.
+  k. Privacy policy URL: WAJIB. Host isi privacy_policy.txt pada URL
+                         publik (contoh: halaman GitHub repository,
+                         Google Sites, atau website Anda). Contoh URL:
+                         https://github.com/kdsmedia/IdleMining/blob/main/ALTOMEDIA/privacy_policy.txt
+
+Langkah 3 — Buat rilis pertama
+  1. Menu kiri: Release > Production (atau Testing > Internal testing
+     untuk uji coba dulu — SANGAT DISARANKAN mulai dari Internal).
+  2. Klik "Create new release".
+  3. Pada bagian "App integrity", biarkan Google Play App Signing aktif
+     (direkomendasikan). Upload key Anda adalah keystore ALTOMEDIA.jks
+     yang dipakai EAS; Google akan menandatangani ulang dengan app
+     signing key yang dikelola Google.
+  4. Upload file AAB hasil unduhan dari tautan di Bagian 2.
+  5. Release name: 1.0.3
+  6. Release notes (Bahasa Indonesia) — salin dari noterilis.txt bagian
+     versi terbaru, contoh:
+     "Rilis perdana INDOMINE! Mainkan simulasi mining seru: tambang koin,
+      upgrade 10 jenis alat, selesaikan misi harian, kumpulkan daily
+      reward, dan tarik saldo ke DANA. Selamat menambang!"
+  7. Klik "Next" > tinjau peringatan (warning) > "Save" > "Review release"
+     > "Start rollout to Production" (atau Internal).
+
+Langkah 4 — Tunggu peninjauan
+  - Peninjauan pertama biasanya memakan waktu 1-7 hari.
+  - Pantau status di dashboard. Jika ditolak, baca alasan penolakan,
+    perbaiki, dan kirim ulang.
+
+======================================================================
+4. PEMBUATAN RILIS PRODUKSI BERIKUTNYA (UPDATE)
+======================================================================
+
+Setiap kali ada build baru:
+  1. Build AAB baru via EAS (profil production). Version code otomatis
+     naik (autoIncrement di eas.json).
+  2. Update noterilis.txt dengan catatan build baru.
+  3. Release > Production > "Create new release" > upload AAB baru.
+  4. Isi release notes dari noterilis.txt versi terbaru.
+  5. Review > Start rollout.
+
+JANGAN PERNAH mengubah package name (com.altomedia.indomine) atau
+keystore — Play Store akan menolak update jika keduanya berubah.
+
+======================================================================
+5. MENGISI KONTEN LISTING
+======================================================================
+
+Isi lengkap (nama, deskripsi singkat, deskripsi panjang, kategori,
+kontak, jawaban Data Safety) tersedia di:
+  ALTOMEDIA/panduan_store_listing.txt
+
+Ringkasan aset yang diupload di Main store listing:
+  - App icon       : ALTOMEDIA/grafis/ic_launcher_512.png
+  - Feature graphic: ALTOMEDIA/grafis/feature_graphic_1024x500.png
+  - Phone screenshots (min 2, maks 8):
+      ALTOMEDIA/grafis/screenshots/01_mining.png
+      ALTOMEDIA/grafis/screenshots/02_upgrade.png
+      ALTOMEDIA/grafis/screenshots/03_misi.png
+      ALTOMEDIA/grafis/screenshots/04_wallet.png
+      ALTOMEDIA/grafis/screenshots/05_profil.png
+
+======================================================================
+6. PENGUJIAN SEBELUM PRODUKSI
+======================================================================
+
+Sangat disarankan mengikuti alur berikut:
+  1. Internal testing  : upload AAB ke track internal, tambahkan email
+                         tester (maks 100), unduh dari tautan opt-in,
+                         uji semua fitur utama.
+  2. Closed testing    : wajib untuk akun developer personal baru
+                         (minimal 12 tester selama 14 hari terakhir
+                         sebelum akses produksi diberikan — kebijakan
+                         Google untuk akun personal baru).
+  3. Production        : setelah pengujian memenuhi syarat.
+
+Hal yang wajib diuji pada perangkat nyata:
+  - Registrasi/login dengan nomor ponsel
+  - Mining berjalan dan menghasilkan koin
+  - Mining berhenti saat offline / aplikasi ditutup
+  - Klaim daily reward
+  - Upgrade (pastikan 10 paket tampil dan bisa dibeli)
+  - Klaim misi
+  - Penarikan (pengajuan tercatat sebagai transaksi pending)
+  - Banner, interstitial, dan rewarded tampil dengan benar
+  - Tombol WhatsApp dan kontak admin berfungsi
+
+======================================================================
+7. CHECKLIST AKHIR SEBELUM KIRIM TINJAUAN
+======================================================================
+
+[ ] AAB dibangun dari source terbaru (git main bersih)
+[ ] versionCode lebih tinggi dari rilis sebelumnya (otomatis via EAS)
+[ ] targetSdk 36, minSdk 23
+[ ] AAB ditandatangani keystore ALTOMEDIA.jks (alias kdsmedia)
+[ ] Store listing lengkap: judul, deskripsi singkat + panjang, ikon,
+    feature graphic, minimal 2 screenshot
+[ ] Privacy policy URL dapat diakses publik
+[ ] Data safety form terisi dan konsisten dengan privacy policy
+[ ] Content rating (IARC) selesai — tanpa unsur perjudian
+[ ] Ads declaration: Yes
+[ ] Target audience: 13+
+[ ] Release notes terisi dari noterilis.txt
+[ ] Sudah lulus internal testing tanpa crash
+
+======================================================================
+8. MASALAH UMUM DAN SOLUSINYA
+======================================================================
+
+Masalah: "You uploaded an APK or AAB signed with a different certificate"
+Solusi : Anda memakai keystore berbeda. Gunakan ALTOMEDIA.jks asli.
+
+Masalah: "Version code X has already been used"
+Solusi : Build ulang via EAS (autoIncrement menaikkan versionCode),
+         atau naikkan versionCode secara manual di Play Console.
+
+Masalah: Rilis ditolak karena "Misleading claims / penghasil uang"
+Solusi : Pastikan deskripsi listing tidak menjanjikan penghasilan tetap.
+         Gunakan kata "kesempatan menukar koin", bukan "dijamin cuan".
+         Deskripsi di panduan_store_listing.txt sudah disusun agar aman.
+
+Masalah: Ditolak karena kategori perjudian
+Solusi : Pastikan kuesioner IARC menjawab "No" untuk semua pertanyaan
+         perjudian. INDOMINE tidak mengandung elemen judi; mining adalah
+         simulasi idle biasa.
+
+Masalah: "App not eligible for production" (akun personal baru)
+Solusi : Selesaikan closed testing 12 tester / 14 hari terlebih dahulu.
+
+Masalah: Build EAS gagal gradle
+Solusi : Periksa log fase "Run gradlew" di expo.dev. Jangan gunakan
+         compileSdk di atas 36 sampai toolchain EAS mendukungnya.
+
+--- Dokumen ini adalah bagian resmi dari paket rilis INDOMINE v1.0.3 ---

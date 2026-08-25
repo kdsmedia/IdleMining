@@ -1,0 +1,313 @@
+KEBIJAKAN PRIVASI INDOMINE
+Terakhir diperbarui: 25 Agustus 2026
+Berlaku efektif: 25 Agustus 2026
+
+======================================================================
+KEBIJAKAN PRIVASI APLIKASI INDOMINE
+Dikembangkan dan dikelola oleh ALTOMEDIA
+Paket aplikasi: com.altomedia.indomine
+Kontak resmi: altomediaindonesia@gmail.com
+======================================================================
+
+Selamat datang di INDOMINE. Kebijakan Privasi ini menjelaskan bagaimana
+ALTOMEDIA ("kami", "milik kami", atau "pengembang") mengumpulkan,
+menggunakan, menyimpan, melindungi, dan membagikan informasi Anda ketika
+Anda mengunduh, menginstal, mendaftar, mengakses, atau menggunakan aplikasi
+seluler INDOMINE ("Aplikasi") beserta seluruh layanan yang terkait
+dengannya ("Layanan").
+
+Dengan menggunakan Aplikasi, Anda menyatakan telah membaca, memahami, dan
+menyetujui seluruh ketentuan dalam Kebijakan Privasi ini. Apabila Anda
+tidak menyetujui sebagian atau seluruh isi kebijakan ini, mohon untuk
+tidak menggunakan Aplikasi dan segera menghapusnya dari perangkat Anda.
+
+Kebijakan Privasi ini disusun dengan mengacu pada peraturan perundang-
+undangan yang berlaku di Republik Indonesia, termasuk namun tidak terbatas
+pada Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi
+(UU PDP), Peraturan Pemerintah Nomor 71 Tahun 2019 tentang Penyelenggaraan
+Sistem dan Transaksi Elektronik, serta Peraturan Menteri Komunikasi dan
+Informatika Nomor 20 Tahun 2016 tentang Perlindungan Data Pribadi dalam
+Sistem Elektronik.
+
+======================================================================
+1. INFORMASI YANG KAMI KUMPULKAN
+======================================================================
+
+1.1. Informasi yang Anda Berikan Secara Langsung
+
+a. Data Pendaftaran Akun. Saat Anda mendaftar atau masuk ke Aplikasi,
+   kami mengumpulkan:
+   - Nama pengguna (username) yang Anda pilih;
+   - Nomor telepon seluler yang Anda gunakan untuk login/pendaftaran;
+   - Kode verifikasi atau kredensial autentikasi yang diperlukan oleh
+     sistem autentikasi kami (Firebase Authentication);
+   - Kode referral yang Anda masukkan secara sukarela (jika ada).
+
+b. Data Profil Permainan. Selama Anda menggunakan Aplikasi, sistem kami
+   mencatat dan menyimpan:
+   - ID pengguna unik dan ID referral 6 digit yang dihasilkan dari nomor
+     ponsel Anda;
+   - Saldo koin virtual, total koin yang pernah diperoleh, dan riwayat
+     transaksi di dalam permainan;
+   - Level, XP, streak harian, progres misi, dan tingkat upgrade;
+   - Riwayat klaim daily reward dan bonus;
+   - Jumlah sesi bonus yang telah diselesaikan.
+
+c. Data Penarikan. Ketika Anda mengajukan penarikan saldo, kami
+   mengumpulkan:
+   - Nominal penarikan yang Anda pilih;
+   - Nomor DANA yang Anda masukkan sebagai tujuan penarikan;
+   - Waktu pengajuan dan status pemrosesan penarikan.
+
+1.2. Informasi yang Dikumpulkan Secara Otomatis
+
+a. Data Perangkat. Kami dan mitra layanan kami dapat mengumpulkan
+   informasi teknis dari perangkat Anda secara otomatis, meliputi:
+   - Model perangkat, merek, dan produsen;
+   - Versi sistem operasi Android;
+   - Pengenal perangkat unik (termasuk ID Iklan Android/AAID yang
+     disediakan oleh Google Play Services);
+   - Alamat IP dan jenis koneksi jaringan;
+   - Bahasa dan zona waktu perangkat;
+   - Informasi versi aplikasi dan build.
+
+b. Data Penggunaan. Kami mengumpulkan informasi tentang bagaimana Anda
+   berinteraksi dengan Aplikasi, seperti fitur yang digunakan, durasi
+   sesi, layar yang dikunjungi, dan peristiwa di dalam permainan (misalnya
+   penyelesaian misi atau upgrade), yang digunakan untuk keperluan analisis
+   dan peningkatan layanan.
+
+c. Data Iklan. Aplikasi kami menampilkan iklan yang disediakan oleh Google
+   AdMob. Google AdMob dapat mengumpulkan dan menggunakan data tertentu
+   dari perangkat Anda, termasuk ID Iklan, alamat IP, dan interaksi dengan
+   iklan, sesuai dengan kebijakan privasi Google. Informasi lebih lanjut
+   dapat Anda baca di Bagian 5 dokumen ini.
+
+1.3. Informasi yang TIDAK Kami Kumpulkan
+
+Kami tidak mengumpulkan:
+- Kontak, SMS, riwayat panggilan, atau data komunikasi pribadi Anda;
+- Foto, video, audio, atau file pribadi di perangkat Anda;
+- Lokasi geografis presisi (GPS);
+- Data biometrik;
+- Isi pesan atau percakapan Anda di aplikasi lain;
+- Data kartu pembayaran atau rekening bank (penarikan hanya melalui
+  nomor DANA yang Anda berikan secara sukarela).
+
+======================================================================
+2. DASAR HUKUM PENGOLAHAN DATA
+======================================================================
+
+Kami memproses data pribadi Anda berdasarkan dasar hukum berikut, sesuai
+dengan ketentuan UU PDP:
+
+a. Persetujuan (consent) — Anda memberikan persetujuan saat mendaftar dan
+   menggunakan Aplikasi, termasuk untuk penggunaan data oleh layanan
+   periklanan pihak ketiga;
+b. Pelaksanaan kontrak — pemrosesan data diperlukan untuk menyediakan
+   layanan permainan yang Anda minta, termasuk perhitungan saldo, misi,
+   reward, dan pemrosesan penarikan;
+c. Kepentingan yang sah (legitimate interest) — untuk keamanan sistem,
+   pencegahan kecurangan (fraud), analisis performa aplikasi, dan
+   peningkatan kualitas layanan;
+d. Kewajiban hukum — apabila diwajibkan oleh peraturan perundang-undangan
+   yang berlaku di Republik Indonesia.
+
+======================================================================
+3. TUJUAN PENGGUNAAN INFORMASI
+======================================================================
+
+Kami menggunakan informasi yang dikumpulkan untuk tujuan berikut:
+
+a. Menyediakan dan Mengoperasikan Layanan
+   - Membuat dan mengelola akun pengguna Anda;
+   - Menghasilkan ID pengguna/referral 6 digit dari nomor ponsel Anda;
+   - Menyimpan dan menyinkronkan progres permainan Anda antar sesi dan
+     perangkat melalui cloud (Firebase);
+   - Menghitung dan mengkreditkan koin hasil mining, reward harian, misi,
+     dan bonus;
+   - Memproses permintaan penarikan saldo yang Anda ajukan.
+
+b. Autentikasi dan Keamanan
+   - Memverifikasi identitas Anda saat login;
+   - Mencegah pembuatan akun ganda, penyalahgunaan sistem reward,
+     penggunaan bot, dan bentuk kecurangan lainnya;
+   - Mendeteksi dan mencegah aktivitas yang melanggar Syarat dan
+     Ketentuan kami.
+
+c. Peningkatan dan Pengembangan Layanan
+   - Menganalisis pola penggunaan untuk memperbaiki fitur, stabilitas,
+     dan performa Aplikasi;
+   - Mengembangkan fitur dan konten baru;
+   - Melakukan riset dan analisis statistik secara agregat.
+
+d. Komunikasi
+   - Menanggapi pertanyaan, keluhan, atau permintaan dukungan yang Anda
+     kirimkan melalui kontak resmi kami;
+   - Mengirimkan pemberitahuan penting terkait akun, perubahan kebijakan,
+     atau status penarikan Anda (apabila diperlukan).
+
+e. Monetisasi
+   - Menampilkan iklan melalui Google AdMob agar Aplikasi dapat tetap
+     gratis digunakan;
+   - Menghitung pemenuhan syarat sesi bonus yang diperlukan untuk
+     penarikan.
+
+======================================================================
+4. PENYIMPANAN DAN KEAMANAN DATA
+======================================================================
+
+4.1. Lokasi Penyimpanan. Data akun dan progres permainan Anda disimpan di
+server Google Cloud (Firebase) yang berlokasi di pusat data Google yang
+dapat berada di luar wilayah Indonesia. Dengan menggunakan Aplikasi, Anda
+menyetujui transfer data tersebut dengan perlindungan yang memadai sesuai
+hukum yang berlaku. Sebagian data permainan juga disimpan secara lokal di
+perangkat Anda untuk akses cepat.
+
+4.2. Jangka Waktu Penyimpanan. Kami menyimpan data pribadi Anda selama akun
+Anda aktif dan selama diperlukan untuk tujuan yang dijelaskan dalam
+kebijakan ini. Data penarikan disimpan untuk keperluan audit dan
+pembukuan. Apabila Anda menghapus akun, kami akan menghapus atau
+menganonimkan data pribadi Anda dalam jangka waktu paling lambat 90
+(sembilan puluh) hari, kecuali data yang wajib disimpan berdasarkan
+ketentuan hukum yang berlaku.
+
+4.3. Langkah Keamanan. Kami menerapkan langkah-langkah teknis dan
+organisasi yang wajar untuk melindungi data Anda, termasuk:
+- Enkripsi transmisi data melalui HTTPS/TLS;
+- Kontrol akses berbasis autentikasi Firebase;
+- Aturan keamanan database (security rules) yang membatasi akses data
+  antar pengguna;
+- Pemantauan aktivitas mencurigakan;
+- Pembatasan akses internal hanya kepada personel yang memerlukan.
+
+Meskipun demikian, tidak ada sistem transmisi atau penyimpanan elektronik
+yang 100% aman. Kami tidak dapat menjamin keamanan mutlak, namun kami
+berkomitmen untuk segera menangani dan memberitahukan setiap insiden
+pelanggaran data sesuai ketentuan UU PDP.
+
+======================================================================
+5. LAYANAN PIHAK KETIGA
+======================================================================
+
+Aplikasi kami menggunakan layanan pihak ketiga berikut yang memiliki
+kebijakan privasi masing-masing:
+
+a. Google Firebase (Authentication, Cloud Firestore) — digunakan untuk
+   autentikasi pengguna dan penyimpanan data permainan. Kebijakan privasi:
+   https://firebase.google.com/support/privacy
+
+b. Google AdMob — digunakan untuk menampilkan iklan di dalam Aplikasi.
+   AdMob dapat menggunakan ID Iklan perangkat Anda untuk menampilkan iklan
+   yang relevan dan mengukur performa iklan. Anda dapat mengatur
+   personalisasi iklan melalui pengaturan iklan di perangkat Android Anda
+   (Pengaturan > Google > Iklan). Kebijakan privasi Google:
+   https://policies.google.com/privacy
+
+c. Google Play Services — menyediakan ID Iklan dan layanan dasar Android.
+
+Kami tidak menjual data pribadi Anda kepada pihak ketiga mana pun. Data
+yang dibagikan kepada penyedia layanan di atas dibatasi hanya pada yang
+diperlukan untuk menjalankan fungsi layanan mereka.
+
+======================================================================
+6. HAK-HAK ANDA SEBAGAI SUBJEK DATA
+======================================================================
+
+Sesuai dengan UU PDP dan peraturan terkait, Anda memiliki hak untuk:
+
+a. Mengakses — meminta salinan data pribadi Anda yang kami simpan;
+b. Memperbaiki — meminta koreksi data yang tidak akurat atau tidak lengkap;
+c. Menghapus — meminta penghapusan akun dan data pribadi Anda, dengan
+   memahami bahwa penghapusan akun bersifat permanen dan seluruh saldo
+   koin, progres, dan riwayat Anda akan hilang dan tidak dapat
+   dikembalikan;
+d. Menarik Persetujuan — menarik persetujuan pemrosesan data kapan saja,
+   dengan konsekuensi Anda mungkin tidak dapat menggunakan sebagian atau
+   seluruh fitur Aplikasi;
+e. Membatasi atau Menolak Pemrosesan — dalam kondisi tertentu yang
+   diatur oleh hukum;
+f. Mengajukan Keluhan — kepada kami dan/atau kepada otoritas pelindungan
+   data pribadi yang berwenang di Indonesia.
+
+Untuk menggunakan hak-hak tersebut, silakan hubungi kami melalui email
+resmi altomediaindonesia@gmail.com dengan subjek "Permintaan Data Pribadi
+INDOMINE". Kami akan merespons dalam jangka waktu paling lambat 3x24 jam
+hari kerja dan menyelesaikan permintaan sesuai batas waktu yang diatur
+hukum yang berlaku.
+
+======================================================================
+7. PRIVASI ANAK-ANAK
+======================================================================
+
+Aplikasi ini tidak ditujukan untuk anak-anak di bawah usia 13 tahun, dan
+kami tidak dengan sengaja mengumpulkan data pribadi dari anak di bawah 13
+tahun. Apabila Anda adalah orang tua atau wali dan mengetahui bahwa anak
+Anda telah memberikan data pribadi kepada kami tanpa persetujuan Anda,
+silakan hubungi kami agar data tersebut dapat segera dihapus.
+
+Pengguna berusia 13 hingga 17 tahun disarankan menggunakan Aplikasi di
+bawah pengawasan orang tua atau wali, dan dinyatakan telah memperoleh
+izin dari orang tua/wali untuk menggunakan Aplikasi.
+
+======================================================================
+8. COOKIE DAN TEKNOLOGI PELACAKAN
+======================================================================
+
+Aplikasi tidak menggunakan cookie browser, namun menggunakan pengenal
+perangkat (ID Iklan Android) dan penyimpanan lokal perangkat untuk
+menyimpan sesi login, preferensi, dan progres permainan. Anda dapat
+mengatur ulang atau membatasi ID Iklan melalui pengaturan privasi Android
+Anda.
+
+======================================================================
+9. TRANSFER DATA INTERNASIONAL
+======================================================================
+
+Sebagaimana dijelaskan pada Bagian 4.1, data Anda dapat diproses di server
+yang berlokasi di luar Indonesia melalui infrastruktur Google Cloud dan
+Firebase. Transfer tersebut dilakukan dengan mengandalkan perlindungan
+kontraktual dan teknis yang memadai dari penyedia layanan, sesuai standar
+perlindungan data yang diakui secara internasional.
+
+======================================================================
+10. PERUBAHAN KEBIJAKAN PRIVASI
+======================================================================
+
+Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu untuk
+mencerminkan perubahan praktik kami, perubahan fitur Aplikasi, atau
+perubahan peraturan perundang-undangan. Setiap perubahan akan
+diberitahukan melalui pembaruan Aplikasi dan/atau pemberitahuan di dalam
+Aplikasi sebelum berlaku efektif. Tanggal "Terakhir diperbarui" di bagian
+atas dokumen ini menunjukkan kapan kebijakan ini terakhir direvisi.
+Penggunaan Aplikasi secara berkelanjutan setelah perubahan berlaku
+dianggap sebagai persetujuan Anda terhadap kebijakan yang diperbarui.
+
+======================================================================
+11. HUKUM YANG BERLAKU DAN PENYELESAIAN SENGKETA
+======================================================================
+
+Kebijakan Privasi ini diatur oleh dan ditafsirkan sesuai dengan hukum
+Republik Indonesia. Setiap perselisihan yang timbul dari atau berkaitan
+dengan kebijakan ini akan diselesaikan terlebih dahulu secara musyawarah
+untuk mufakat. Apabila musyawarah tidak mencapai kesepakatan, sengketa
+akan diselesaikan melalui jalur hukum yang berlaku di wilayah hukum
+Kabupaten Karawang, Jawa Barat, Indonesia.
+
+======================================================================
+12. HUBUNGI KAMI
+======================================================================
+
+Apabila Anda memiliki pertanyaan, komentar, keluhan, atau permintaan
+terkait Kebijakan Privasi ini atau praktik penanganan data kami, silakan
+hubungi:
+
+Nama Pengembang   : ALTOMEDIA
+Email             : altomediaindonesia@gmail.com
+Alamat            : Karawang, Jawa Barat, Indonesia
+Jam Layanan       : Senin - Jumat, 09.00 - 17.00 WIB
+
+Dengan menggunakan Aplikasi INDOMINE, Anda menyatakan telah membaca dan
+menyetujui Kebijakan Privasi ini secara keseluruhan.
+
+--- Dokumen ini adalah bagian resmi dari paket rilis INDOMINE v1.0.3 ---

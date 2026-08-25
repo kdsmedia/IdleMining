@@ -1,0 +1,230 @@
+======================================================================
+PANDUAN STORE LISTING INDOMINE — GOOGLE PLAY
+Konten siap salin-tempel untuk Main Store Listing di Play Console
+======================================================================
+
+DAFTAR ISI
+1. Nama aplikasi & kategori
+2. Deskripsi singkat (maks 80 karakter)
+3. Deskripsi panjang (maks 4000 karakter)
+4. Aset grafis yang diupload
+5. Formulir Data Safety (jawaban lengkap)
+6. Deklarasi konten lainnya
+7. Tag & kata kunci yang disarankan
+8. Tips ASO (App Store Optimization)
+
+======================================================================
+1. NAMA APLIKASI & KATEGORI
+======================================================================
+
+App name        : INDOMINE
+Package name    : com.altomedia.indomine
+Kategori utama  : Game > Simulasi (Simulation)
+Tag kategori    : Simulation, Idle / Incremental, Casual, Single player,
+                  Offline-compatible UI (memerlukan internet untuk bermain)
+Bahasa default  : Indonesia (id-ID)
+Harga           : Gratis (Free) — mengandung konten sponsor
+
+======================================================================
+2. DESKRIPSI SINGKAT (salin persis, 79 karakter)
+======================================================================
+
+Mainkan simulasi mining seru, kumpulkan koin, upgrade alat, raih reward!
+
+======================================================================
+3. DESKRIPSI PANJANG (salin persis ke Play Console)
+======================================================================
+
+INDOMINE — Game Simulasi Mining Paling Seru di Indonesia!
+
+Pernah membayangkan punya tambang sendiri? Di INDOMINE, kamu memulai dari
+sebuah lembah batu sederhana dan membangun kerajaan tambangmu langkah demi
+langkah. Aktifkan mesin, pantau hash rate, dan saksikan koinmu terus
+bertambah!
+
+CARA BERMAIN
+• Buka aplikasi dan biarkan mesin mining bekerja dengan algoritma SHA-256
+  dan tampilan hash rate real-time.
+• Mining hanya berjalan saat aplikasi terbuka dan terhubung internet —
+  pantau tambangmu secara aktif!
+• Kumpulkan koin, lalu beli upgrade untuk mempercepat hasil tambang.
+
+FITUR UTAMA
+• SISTEM MINING REALISTIS — Laju mining, hash rate (H/s), dan statistik
+  lengkap dalam 3 kartu mini yang rapi.
+• 10 PAKET UPGRADE — Mulai dari Pickaxe Dasar hingga Robot Penambang.
+  Setiap upgrade menambah kecepatan miningmu secara signifikan.
+• MISI HARIAN SERU — Kartu misi mini 2 sebaris, masing-masing dengan
+  tombol aksi sesuai tugasnya. Selesaikan dan klaim rewardnya!
+• DAILY REWARD 7 HARI — Login setiap hari untuk reward yang makin besar.
+  Jangan putus streakmu!
+• 5 AREA TAMBANG — Buka Stone Valley, Iron Cave, Gold Mountain, Crystal
+  Cavern, hingga Diamond Depths dengan ore makin langka.
+• WALLET & PENARIKAN — Pantau saldo koin dan nilai rupiahnya. Ajukan
+  penarikan ke DANA setelah memenuhi syarat yang tercantum di aplikasi.
+• KODE REFERRAL — Setiap pemain punya ID referral 6 digit unik dari nomor
+  ponselnya. Undang teman, dapatkan bonus bersama!
+• STATISTIK LENGKAP — Total koin, nilai saldo, jumlah upgrade, level,
+  XP, dan streak dalam tampilan profil yang rapi.
+
+KENAPA INDOMINE?
+• Tampilan modern bernuansa emas yang elegan dan mudah digunakan.
+• Ukuran aplikasi ringan, berjalan lancar di Android 6.0 ke atas.
+• Sistem reward yang jelas dan transparan — semua syarat ditampilkan apa
+  adanya di dalam aplikasi.
+• Dikembangkan oleh ALTOMEDIA, developer Indonesia, dengan dukungan
+  Bahasa Indonesia penuh.
+
+CATATAN PENTING
+• INDOMINE adalah permainan simulasi untuk hiburan. Koin di dalam game
+  adalah mata uang virtual permainan, bukan aset kripto atau instrumen
+  investasi.
+• Fitur penarikan tunduk pada syarat dan ketentuan yang ditampilkan di
+  dalam aplikasi. Tidak ada jaminan penghasilan dalam bentuk apa pun.
+• Aplikasi memerlukan koneksi internet untuk bermain.
+• Aplikasi ini gratis dan didukung oleh konten sponsor.
+
+UNDUH SEKARANG dan mulai petualangan menambangmu!
+Ada pertanyaan? Hubungi kami melalui menu Hubungi Admin di dalam aplikasi.
+
+======================================================================
+4. ASET GRAFIS YANG DIUPLOAD
+======================================================================
+
+a. App icon (wajib, 512x512 PNG, maks 1 MB):
+   ALTOMEDIA/grafis/ic_launcher_512.png
+
+b. Feature graphic (wajib, 1024x500 PNG/JPEG):
+   ALTOMEDIA/grafis/feature_graphic_1024x500.png
+
+c. Phone screenshots (wajib min 2, disarankan 4-8; 1080x1920 PNG):
+   ALTOMEDIA/grafis/screenshots/01_mining.png   → layar utama mining
+   ALTOMEDIA/grafis/screenshots/02_upgrade.png  → 10 paket upgrade
+   ALTOMEDIA/grafis/screenshots/03_misi.png     → misi harian
+   ALTOMEDIA/grafis/screenshots/04_wallet.png   → wallet & penarikan
+   ALTOMEDIA/grafis/screenshots/05_profil.png   → profil & referral
+
+d. Video YouTube (opsional): belum tersedia. Apabila dibuat, gunakan
+   video gameplay 30-60 detik tanpa klaim penghasilan berlebihan.
+
+======================================================================
+5. FORMULIR DATA SAFETY (jawaban lengkap)
+======================================================================
+
+Pertanyaan: Apakah aplikasi Anda mengumpulkan atau membagikan data
+pengguna yang diwajibkan? → YA
+
+a. LOKASI (Location)
+   - Approximate location / Precise location: TIDAK dikumpulkan.
+
+b. INFO PRIBADI (Personal info)
+   - Name: TIDAK dikumpulkan (kami hanya memakai username pilihan pengguna
+     → jawab "User IDs: Yes").
+   - User IDs: YA
+       · Dikumpulkan: Yes | Dibagikan: No
+       · Tujuan: App functionality, Account management
+       · Wajib/opsional: Required | Dienkripsi saat transit: Yes
+   - Phone number: YA
+       · Dikumpulkan: Yes | Dibagikan: No
+       · Tujuan: App functionality, Account management, Fraud prevention
+       · Required | Encrypted in transit: Yes
+   - Email address: TIDAK dikumpulkan dari pengguna.
+
+c. INFO KEUANGAN (Financial info)
+   - TIDAK dikumpulkan (nomor DANA hanya diminta saat pengajuan penarikan
+     → jawab "Other financial info: Yes")
+   - Other financial info: YA
+       · Dikumpulkan: Yes | Dibagikan: No
+       · Tujuan: App functionality (pemrosesan penarikan)
+       · Optional (hanya saat pengguna mengajukan penarikan)
+       · Encrypted in transit: Yes
+
+d. PESAN (Messages): TIDAK dikumpulkan.
+
+e. FOTO & VIDEO (Photos and videos): TIDAK dikumpulkan.
+
+f. FILE & DOKUMEN (Files and docs): TIDAK dikumpulkan.
+
+g. KALENDER (Calendar): TIDAK dikumpulkan.
+
+h. KONTAK (Contacts): TIDAK dikumpulkan.
+
+i. AKTIVITAS APLIKASI (App activity)
+   - App interactions: YA
+       · Dikumpulkan: Yes | Dibagikan: No
+       · Tujuan: Analytics, App functionality
+       · Optional | Encrypted in transit: Yes
+
+j. INFO & PERFORMA APLIKASI (App info and performance)
+   - Crash logs: YA — tujuan: Analytics | Optional | Encrypted: Yes
+   - Diagnostics: YA — tujuan: Analytics | Optional | Encrypted: Yes
+
+k. PERANGKAT ATAU ID LAIN (Device or other IDs)
+   - Device or other IDs: YA
+       · Dikumpulkan: Yes | Dibagikan: Yes (kepala Google AdMob untuk
+         fungsi periklanan)
+       · Tujuan: Advertising or marketing, Analytics
+       · Optional | Encrypted in transit: Yes
+
+Pernyataan tambahan di formulir:
+  - Data is encrypted in transit: YES
+  - Data can be deleted on request: YES (pengguna dapat meminta
+    penghapusan akun melalui email altomediaindonesia@gmail.com)
+  - Committed to Google Play Families Policy: NO (bukan aplikasi anak)
+  - Independent security review: NO
+
+======================================================================
+6. DEKLARASI KONTEN LAINNYA
+======================================================================
+
+Ads declaration          : Yes, my app contains ads
+Content rating (IARC)    : Everyone / Semua Umur
+                           - Violence: None
+                           - Gambling: None (jawab NO semua)
+                           - User interaction: Yes (referral/share)
+                           - Shares location: No
+Target audience & content: Ages 13+
+                           - TIDAK mencentang kategori anak-anak
+                           - Appeal to children: No
+News app                 : No
+Government app           : No
+Financial features       : None (penarikan diproses manual, bukan
+                           fitur keuangan Play Billing)
+Health                   : No
+Privacy policy URL       : (wajib) host privacy_policy.txt di URL publik,
+                           misalnya:
+  https://github.com/kdsmedia/IdleMining/blob/main/ALTOMEDIA/privacy_policy.txt
+
+Kontak developer (tampil publik di listing):
+  Email  : altomediaindonesia@gmail.com
+  Website: (opsional)
+  Alamat : Karawang, Jawa Barat, Indonesia
+
+======================================================================
+7. TAG & KATA KUNCI YANG DISARANKAN (ASO)
+======================================================================
+
+Kata kunci utama untuk deskripsi & promosi:
+  mining game, game mining indonesia, idle miner, simulasi tambang,
+  game santai penghasil koin, clicker game, tap game, indomine,
+  game indonesia, game offline ringan (hindari kata "offline" karena
+  aplikasi butuh internet — gunakan "game ringan")
+
+Custom store listing (opsional): buat varian untuk kata kunci
+"game penghasil saldo dana" dengan tetap mencantumkan disclaimer bahwa
+penarikan tunduk pada syarat di aplikasi.
+
+======================================================================
+8. TIPS ASO TAMBAHAN
+======================================================================
+
+a. Screenshot: urutan menentukan konversi. Letakkan 01_mining dan
+   04_wallet di dua posisi pertama.
+b. Balas ulasan pengguna maksimal 1x24 jam untuk rating yang lebih baik.
+c. Jangan gunakan kata "dijamin", "pasti cair", atau nominal rupiah
+   spesifik di deskripsi — berisiko penolakan "misleading claims".
+d. Update noterilis.txt dan release notes setiap build untuk sinyal
+   aplikasi aktif dirawat.
+e. Pantau Android vitals (crash rate < 1.09%, ANR < 0.47%) setelah rilis.
+
+--- Dokumen ini adalah bagian resmi dari paket rilis INDOMINE v1.0.3 ---
