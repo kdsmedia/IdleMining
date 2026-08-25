@@ -34,9 +34,8 @@ allprojects {
   }
 
   // play-services-ads 25.x ships Kotlin 2.3 metadata that this project's
-  // Kotlin 2.0 toolchain cannot read; 24.6.0 is the newest release whose
-  // metadata is still compatible. The AgeRestrictedTreatment API removed in
-  // 24.x is patched out of react-native-google-mobile-ads via pnpm patch.
+  // Kotlin 2.0 toolchain cannot read; pin 24.1.0 (dipakai oleh
+  // react-native-google-mobile-ads 15.0.0) agar metadata tetap kompatibel.
   configurations.all {
     resolutionStrategy {
       force 'com.google.android.gms:play-services-ads:24.1.0'

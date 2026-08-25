@@ -2,7 +2,7 @@
   "expo": {
     "name": "INDOMINE",
     "slug": "indomine",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "scheme": "indomine",
@@ -42,9 +42,10 @@
         "expo-build-properties",
         {
           "android": {
-            "compileSdkVersion": 36,
-            "targetSdkVersion": 36,
-            "minSdkVersion": 21
+            "compileSdkVersion": 37,
+            "targetSdkVersion": 37,
+            "minSdkVersion": 23,
+            "buildToolsVersion": "36.0.0"
           }
         }
       ],
