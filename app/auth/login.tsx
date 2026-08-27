@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useRef, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Platform, Animated, Easing } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { useAuth } from '../../hooks/useAuth';
 import { GoldButton } from '../../components/ui/GoldButton';
+import { AnimatedBackground } from '../../components/ui/AnimatedBackground';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { useAlert } from '@/template';
 
@@ -18,6 +19,24 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const fadeIn = useRef(new Animated.Value(0)).current;
+  const slideUp = useRef(new Animated.Value(40)).current;
+  const logoPulse = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeIn, { toValue: 1, duration: 700, easing: Easing.out(Easing.quad), useNativeDriver: true }),
+      Animated.timing(slideUp, { toValue: 0, duration: 700, easing: Easing.out(Easing.quad), useNativeDriver: true }),
+    ]).start();
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(logoPulse, { toValue: 1.07, duration: 1200, useNativeDriver: true }),
+        Animated.timing(logoPulse, { toValue: 1, duration: 1200, useNativeDriver: true }),
+      ])
+    ).start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogin = async () => {
     if (!phone.trim() || !password.trim()) {
@@ -36,17 +55,20 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <AnimatedBackground variant="coins" count={7} />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={[styles.container, { paddingTop: insets.top + Spacing.lg, paddingBottom: insets.bottom + Spacing.xl }]}
         keyboardShouldPersistTaps="handled"
       >
         {/* Logo */}
-        <View style={styles.logoWrap}>
-          <Image source={require('../../assets/images/logo.png')} style={styles.logo} contentFit="contain" />
+        <Animated.View style={[styles.logoWrap, { opacity: fadeIn, transform: [{ translateY: slideUp }] }]}>
+          <Animated.View style={{ transform: [{ scale: logoPulse }] }}>
+            <Image source={require('../../assets/images/logo.png')} style={styles.logo} contentFit="contain" />
+          </Animated.View>
           <Text style={styles.appName}>INDOMINE</Text>
           <Text style={styles.tagline}>Tambang koin, raih reward</Text>
-        </View>
+        </Animated.View>
 
         {/* Form */}
         <View style={styles.form}>

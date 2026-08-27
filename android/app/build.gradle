@@ -92,8 +92,19 @@ android {
         applicationId 'com.altomedia.indomine'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 5
+        versionName "1.0.5"
+        // Hanya ARM (32+64 bit). x86/x86_64 dibuang agar native libs jauh
+        // lebih kecil. Di Play Store, AAB dikirim per-ABI sehingga ukuran
+        // unduhan < 40-50 MB.
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a'
+            universalApk false
+        }
     }
     signingConfigs {
         debug {

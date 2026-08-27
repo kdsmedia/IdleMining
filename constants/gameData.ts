@@ -280,4 +280,7 @@ export const VIP_LEVELS: VIPLevel[] = [
   { level: 1, name: 'VIP 1', miningBonus: 0.05, offlineBonus: 0.05, color: '#C0C0C0' },
   { level: 2, name: 'VIP 2', miningBonus: 0.10, offlineBonus: 0.10, color: '#FFD700' },
   { level: 3, name: 'VIP 3', miningBonus: 0.15, offlineBonus: 0.15, color: '#A855F7' },
+  { level: 4, name: 'VIP 4', miningBonus: 0.20, offlineBonus: 0.20, color: '#22D3EE' },
+  { level: 5, name: 'VIP 5', miningBonus: 0.25, offlineBonus: 0.25, color: '#4ADE80' },
+  { level: 6, name: 'VIP 6', miningBonus: 0.30, offlineBonus: 0.30, color: '#FF4444' },
 ];

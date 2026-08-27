@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useRef, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, KeyboardAvoidingView, Platform, Animated, Easing } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../hooks/useAuth';
 import { GoldButton } from '../../components/ui/GoldButton';
+import { AnimatedBackground } from '../../components/ui/AnimatedBackground';
 import { Colors, FontSize, FontWeight, Radius, Spacing } from '../../constants/theme';
 import { useAlert } from '@/template';
 
@@ -13,6 +14,17 @@ export default function RegisterScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { showAlert } = useAlert();
+
+  const fadeIn = useRef(new Animated.Value(0)).current;
+  const slideUp = useRef(new Animated.Value(30)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeIn, { toValue: 1, duration: 600, easing: Easing.out(Easing.quad), useNativeDriver: true }),
+      Animated.timing(slideUp, { toValue: 0, duration: 600, easing: Easing.out(Easing.quad), useNativeDriver: true }),
+    ]).start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [username, setUsername] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -50,21 +62,24 @@ export default function RegisterScreen() {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <AnimatedBackground variant="coins" count={6} />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={[styles.container, { paddingTop: insets.top + Spacing.md, paddingBottom: insets.bottom + Spacing.xl }]}
         keyboardShouldPersistTaps="handled"
       >
         {/* Header */}
-        <View style={styles.header}>
+        <Animated.View style={[styles.header, { opacity: fadeIn, transform: [{ translateY: slideUp }] }]}>
           <Pressable onPress={() => router.back()} style={styles.backBtn} hitSlop={8}>
             <Ionicons name="arrow-back" size={24} color={Colors.textPrimary} />
           </Pressable>
           <Text style={styles.title}>Daftar Akun</Text>
           <View style={{ width: 32 }} />
-        </View>
+        </Animated.View>
 
-        <Text style={styles.subtitle}>Buat akun dan mulai mining koin sekarang!</Text>
+        <Animated.View style={{ opacity: fadeIn, transform: [{ translateY: slideUp }] }}>
+          <Text style={styles.subtitle}>Buat akun dan mulai mining koin sekarang!</Text>
+        </Animated.View>
 
         <View style={styles.form}>
           {[
